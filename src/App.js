@@ -22,13 +22,13 @@ import MiscDemo from "./components/MiscDemo";
 import OverlayDemo from "./components/OverlayDemo";
 import MediaDemo from "./components/MediaDemo";
 import PanelDemo from "./components/PanelDemo";
-import TableDemo from "./components/TableDemo";
 import TreeDemo from "./components/TreeDemo";
 import InvalidStateDemo from "./components/InvalidStateDemo";
 import BlocksDemo from "./components/BlocksDemo";
 import IconsDemo from "./components/IconsDemo";
 
 import ListaParos from "./pages/ListaParos";
+import CatalogoPlantas from "./pages/CatalogoPlantas";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 
@@ -158,7 +158,7 @@ const App = () => {
             items: [
                 {
                     label: "Dashboard",
-                    icon: "pi pi-fw pi-home",
+                    icon: "pi pi-fw pi-home text-blue-500",
                     to: "/",
                 },
             ],
@@ -167,12 +167,45 @@ const App = () => {
             label: "Secciones del sistema",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Indicadores de Turno", icon: "pi pi-fw pi-id-card", to: "/formlayout" },
-                { label: "Status Lineas", icon: "pi pi-fw pi-check-square", to: "/input" },
-                { label: "Lista de Paros", icon: "pi pi-fw pi-bookmark", to: "/listaParos" },
-                { label: "Reportes", icon: "pi pi-fw pi-exclamation-circle", to: "invalidstate" },
-                { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile", to: "/button" },
-                { label: "Configuración", icon: "pi pi-fw pi-table", to: "/table" },
+                { label: "Indicadores de Turno", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/formlayout" },
+                { label: "Status Lineas", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/input" },
+                { label: "Lista de Paros", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/listaParos" },
+                { label: "Reportes", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "invalidstate" },
+                { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
+                { label: "Catalogo Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
+                { label: "Configuración", icon: "pi pi-fw pi-table text-blue-500", to: "/table" },
+            ],
+        },
+        {
+            label: "Catalogos",
+            icon: "pi pi-fw pi-search ",
+            items: [
+                {
+                    label: "Catalogo",
+                    icon: "pi pi-fw pi-bookmark text-blue-500",
+                    items: [
+                        {
+                            label: "Planta",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                        },
+                        {
+                            label: "Area",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                        },
+                        {
+                            label: "Linea",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                        },
+                        {
+                            label: "Maquina",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                        },
+                        {
+                            label: "Modo de Falla",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                        },
+                    ],
+                },
             ],
         },
     ];
@@ -216,7 +249,7 @@ const App = () => {
                     <Route path="/listaParos" component={ListaParos} />
                     <Route path="/invalidstate" component={InvalidStateDemo} />
                     <Route path="/button" component={ButtonDemo} />
-                    <Route path="/table" component={TableDemo} />
+                    <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />

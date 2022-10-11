@@ -11,7 +11,8 @@ import { InputText } from "primereact/inputtext";
 import { ProductService } from "../service/ProductService";
 
 const ListaParos = () => {
-    let emptyProduct = {
+    //--------------------| Producto vacio |--------------------
+    let emptyParos = {
         id: null,
         fecha: "",
         planta: "",
@@ -24,11 +25,12 @@ const ListaParos = () => {
         tiempo: null,
     };
 
+    //--------------------| Uso de estados |--------------------
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
+    const [product, setProduct] = useState(emptyParos);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -40,8 +42,9 @@ const ListaParos = () => {
         productService.getProducts().then((data) => setProducts(data));
     }, []);
 
+    //--------------------| Funciones para mostrar dialogos |--------------------
     const openNew = () => {
-        setProduct(emptyProduct);
+        setProduct(emptyParos);
         setSubmitted(false);
         setProductDialog(true);
     };
@@ -59,6 +62,7 @@ const ListaParos = () => {
         setDeleteProductsDialog(false);
     };
 
+    //--------------------| Acciones de crud |--------------------
     const saveProduct = () => {
         setSubmitted(true);
 
@@ -78,7 +82,7 @@ const ListaParos = () => {
 
             setProducts(_products);
             setProductDialog(false);
-            setProduct(emptyProduct);
+            setProduct(emptyParos);
         }
     };
 
@@ -96,7 +100,7 @@ const ListaParos = () => {
         let _products = products.filter((val) => val.id !== product.id);
         setProducts(_products);
         setDeleteProductDialog(false);
-        setProduct(emptyProduct);
+        setProduct(emptyParos);
         toast.current.show({ severity: "success", summary: "Successful", detail: "Paro Deleted", life: 3000 });
     };
 
@@ -108,7 +112,6 @@ const ListaParos = () => {
                 break;
             }
         }
-
         return index;
     };
 

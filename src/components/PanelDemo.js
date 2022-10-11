@@ -1,18 +1,13 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
 import { SplitButton } from "primereact/splitbutton";
-import { Panel } from "primereact/panel";
-import { Fieldset } from "primereact/fieldset";
-import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
 import { Splitter, SplitterPanel } from "primereact/splitter";
 import { Password } from "primereact/password";
-import { Menu } from "primereact/menu";
 
 const PanelDemo = () => {
-    const menu1 = useRef(null);
     const toolbarItems = [
         {
             label: "Save",
@@ -47,20 +42,6 @@ const PanelDemo = () => {
         );
     };
     const toolbarRightTemplate = <SplitButton label="Options" icon="pi pi-check" model={toolbarItems} menuStyle={{ width: "12rem" }}></SplitButton>;
-    const cardHeader = (
-        <div className="flex align-items-center justify-content-between mb-0 p-3 pb-0">
-            <h5 className="m-0">Card</h5>
-            <Button icon="pi pi-plus" className="p-button-text" onClick={(event) => menu1.current.toggle(event)} />
-            <Menu
-                ref={menu1}
-                popup
-                model={[
-                    { label: "Add New", icon: "pi pi-fw pi-plus" },
-                    { label: "Remove", icon: "pi pi-fw pi-minus" },
-                ]}
-            />
-        </div>
-    );
 
     return (
         <div className="grid">

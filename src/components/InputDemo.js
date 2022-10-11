@@ -1,354 +1,278 @@
-import React, { useEffect, useState } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { AutoComplete } from 'primereact/autocomplete';
-import { Calendar } from 'primereact/calendar';
-import { Chips } from 'primereact/chips';
-import { Slider } from 'primereact/slider';
-import { Knob } from 'primereact/knob';
-import { Rating } from 'primereact/rating';
-import { ColorPicker } from 'primereact/colorpicker';
-import { RadioButton } from 'primereact/radiobutton';
-import { Checkbox } from 'primereact/checkbox';
-import { InputSwitch } from 'primereact/inputswitch';
-import { ListBox } from 'primereact/listbox';
-import { Dropdown } from 'primereact/dropdown';
-import { ToggleButton } from 'primereact/togglebutton';
-import { MultiSelect } from 'primereact/multiselect';
-import { TreeSelect } from 'primereact/treeselect';
-import { SelectButton } from 'primereact/selectbutton';
-import { Button } from 'primereact/button';
-import { InputNumber } from 'primereact/inputnumber';
-import { CountryService } from '../service/CountryService';
-import { NodeService } from '../service/NodeService';
+import React, { useState, useEffect, useRef } from "react";
+import { ProductService } from "../service/ProductService";
+import { DataView, DataViewLayoutOptions } from "primereact/dataview";
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
+import { Rating } from "primereact/rating";
+import { Badge } from "primereact/badge";
 
-export const InputDemo = () => {
-    const [floatValue, setFloatValue] = useState('');
-    const [autoValue, setAutoValue] = useState(null);
-    const [selectedAutoValue, setSelectedAutoValue] = useState(null);
-    const [autoFilteredValue, setAutoFilteredValue] = useState([]);
-    const [calendarValue, setCalendarValue] = useState(null);
-    const [inputNumberValue, setInputNumberValue] = useState(null);
-    const [chipsValue, setChipsValue] = useState([]);
-    const [sliderValue, setSliderValue] = useState('');
-    const [ratingValue, setRatingValue] = useState(null);
-    const [colorValue, setColorValue] = useState('1976D2');
-    const [knobValue, setKnobValue] = useState(20);
-    const [radioValue, setRadioValue] = useState(null);
-    const [checkboxValue, setCheckboxValue] = useState([]);
-    const [switchValue, setSwitchValue] = useState(false);
-    const [listboxValue, setListboxValue] = useState(null);
-    const [dropdownValue, setDropdownValue] = useState(null);
-    const [multiselectValue, setMultiselectValue] = useState(null);
-    const [toggleValue, setToggleValue] = useState(false);
-    const [selectButtonValue1, setSelectButtonValue1] = useState(null);
-    const [selectButtonValue2, setSelectButtonValue2] = useState(null);
-    const [inputGroupValue, setInputGroupValue] = useState(false);
-    const [selectedNode, setSelectedNode] = useState(null);
-    const [treeSelectNodes, setTreeSelectNodes] = useState(null);
+const Dashboard = (props) => {
+    const [products, setProducts] = useState(null);
+    const menu1 = useRef(null);
+    const menu2 = useRef(null);
+    const [lineOptions, setLineOptions] = useState(null);
+    const [dataviewValue, setDataviewValue] = useState(null);
+    const [layout, setLayout] = useState("grid");
+    const [sortKey, setSortKey] = useState(null);
+    const [sortOrder, setSortOrder] = useState(null);
+    const [sortField, setSortField] = useState(null);
 
-    const listboxValues = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+    const applyLightTheme = () => {
+        const lineOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#495057",
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: "#495057",
+                    },
+                    grid: {
+                        color: "#ebedef",
+                    },
+                },
+                y: {
+                    ticks: {
+                        color: "#495057",
+                    },
+                    grid: {
+                        color: "#ebedef",
+                    },
+                },
+            },
+        };
 
-    const dropdownValues = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+        setLineOptions(lineOptions);
+    };
 
-    const multiselectValues = [
-        { name: 'Australia', code: 'AU' },
-        { name: 'Brazil', code: 'BR' },
-        { name: 'China', code: 'CN' },
-        { name: 'Egypt', code: 'EG' },
-        { name: 'France', code: 'FR' },
-        { name: 'Germany', code: 'DE' },
-        { name: 'India', code: 'IN' },
-        { name: 'Japan', code: 'JP' },
-        { name: 'Spain', code: 'ES' },
-        { name: 'United States', code: 'US' }
-    ];
+    const applyDarkTheme = () => {
+        const lineOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#ebedef",
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: "#ebedef",
+                    },
+                    grid: {
+                        color: "rgba(160, 167, 181, .3)",
+                    },
+                },
+                y: {
+                    ticks: {
+                        color: "#ebedef",
+                    },
+                    grid: {
+                        color: "rgba(160, 167, 181, .3)",
+                    },
+                },
+            },
+        };
 
-    const selectButtonValues1 = [
-        { name: 'Option 1', code: 'O1' },
-        { name: 'Option 2', code: 'O2' },
-        { name: 'Option 3', code: 'O3' },
-    ];
-
-    const selectButtonValues2 = [
-        { name: 'Option 1', code: 'O1' },
-        { name: 'Option 2', code: 'O2' },
-        { name: 'Option 3', code: 'O3' },
-    ];
+        setLineOptions(lineOptions);
+    };
 
     useEffect(() => {
-        const countryService = new CountryService();
-        const nodeService = new NodeService();
-        countryService.getCountries().then(data => setAutoValue(data));
-        nodeService.getTreeNodes().then(data => setTreeSelectNodes(data));
+        const productService = new ProductService();
+        productService.getProductsSmall().then((data) => setProducts(data));
+        productService.getProducts().then((data) => setDataviewValue(data));
     }, []);
 
-    const searchCountry = (event) => {
-        setTimeout(() => {
-            if (!event.query.trim().length) {
-                setAutoFilteredValue([...autoValue]);
-            }
-            else {
-                setAutoFilteredValue(autoValue.filter((country) => {
-                    return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-                }));
-            }
-        }, 250);
+    const sortOptions = [
+        { label: "Linea", value: "!price" },
+        { label: "Proucto", value: "price" },
+        { label: "Maquina", value: "price" },
+    ];
+
+    const onSortChange = (event) => {
+        const value = event.value;
+
+        if (value.indexOf("!") === 0) {
+            setSortOrder(-1);
+            setSortField(value.substring(1, value.length));
+            setSortKey(value);
+        } else {
+            setSortOrder(1);
+            setSortField(value);
+            setSortKey(value);
+        }
     };
 
-    const onCheckboxChange = (e) => {
-        let selectedValue = [...checkboxValue];
-        if (e.checked)
-            selectedValue.push(e.value);
-        else
-            selectedValue.splice(selectedValue.indexOf(e.value), 1);
+    const dataviewHeader = (
+        <div className="grid grid-nogutter">
+            <div className="col-6" style={{ textAlign: "left" }}>
+                <Dropdown value={sortKey} options={sortOptions} optionLabel="label" placeholder="Sort By Price" onChange={onSortChange} />
+            </div>
+            <div className="col-6" style={{ textAlign: "right" }}>
+                <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
+            </div>
+        </div>
+    );
 
-        setCheckboxValue(selectedValue);
-    };
-
-    const itemTemplate = (option) => {
+    const dataviewListItem = (data) => {
         return (
-            <div className="flex align-items-center">
-                <span className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px', height: '12px' }} />
-                <span>{option.name}</span>
+            <div className="col-12">
+                <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
+                    <div className="flex-1 text-center md:text-left">
+                        <div className="font-bold text-2xl">{data.name}</div>
+                        <div className="mb-3">{data.description}</div>
+                    </div>
+                </div>
             </div>
         );
     };
 
-    const selectedItemTemplate = (option) => {
-        if (option) {
-            return (
-                <div className="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2">
-                    <span className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px', height: '12px' }}/>
-                    <span>{option.name}</span>
+    const dataviewGridItem = (data) => {
+        return (
+            <div className="col-12 md:col-4">
+                <div className="card m-6 border-1 surface-border" style={{ background: "red", color: "white" }}>
+                    <div className="text-center">
+                        {/*<div className="text-2xl font-bold">{data.name}</div>*/}
+                        <h2 className="text-2xl font-bold">Maquina 2</h2>
+                        {/*<div className="mb-3">{data.description}</div>*/}
+                        <div className="font-bold" style={{ fontSize: "25px" }}>
+                            59%
+                        </div>
+                    </div>
                 </div>
-            );
+
+                <div className="card m-6 border-1 surface-border" style={{ background: "green", color: "white" }}>
+                    <div className="text-center">
+                        {/*<div className="text-2xl font-bold">{data.name}</div>*/}
+                        <h2 className="text-2xl font-bold">Maquina 3</h2>
+                        {/*<div className="mb-3">{data.description}</div>*/}
+                        <div className="font-bold" style={{ fontSize: "25px" }}>
+                            96%
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card m-6 border-1 surface-border" style={{ background: "#FFDE00", color: "white" }}>
+                    <div className="text-center">
+                        {/*<div className="text-2xl font-bold">{data.name}</div>*/}
+                        <h2 className="text-2xl font-bold">Maquina 1</h2>
+                        {/*<div className="mb-3">{data.description}</div>*/}
+                        <div className="font-bold" style={{ fontSize: "25px" }}>
+                            82%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const itemTemplate = (data, layout) => {
+        if (!data) {
+            return;
         }
 
-        return 'Select Countries';
+        if (layout === "list") {
+            return dataviewListItem(data);
+        } else if (layout === "grid") {
+            return dataviewGridItem(data);
+        }
     };
 
     return (
-        <div className="grid p-fluid">
-            <div className="col-12 md:col-6">
-                <div className="card">
-                    <h5>InputText</h5>
-                    <div className="grid formgrid">
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <InputText type="text" placeholder="Default"></InputText>
-                        </div>
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <InputText type="text" placeholder="Disabled" disabled></InputText>
-                        </div>
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <InputText type="text" placeholder="Invalid" className="p-invalid" />
-                        </div>
-                    </div>
-
-                    <h5>Icons</h5>
-                    <div className="grid formgrid">
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <span className="p-input-icon-left">
-                                <i className="pi pi-user" />
-                                <InputText type="text" placeholder="Username" />
-                            </span>
-                        </div>
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <span className="p-input-icon-right">
-                                <InputText type="text" placeholder="Search" />
-                                <i className="pi pi-search" />
-                            </span>
-                        </div>
-                        <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                            <span className="p-input-icon-left p-input-icon-right">
-                                <i className="pi pi-user" />
-                                <InputText type="text" placeholder="Search" />
-                                <i className="pi pi-search" />
-                            </span>
-                        </div>
-                    </div>
-
-                    <h5>Float Label</h5>
-                    <span className="p-float-label">
-                        <InputText id="username" type="text" value={floatValue} onChange={(e) => setFloatValue(e.target.value)} />
-                        <label htmlFor="username">Username</label>
+        <div className="grid">
+            <div className="col-12 ">
+                <div className="card mb-0" style={{ textAlign: "center" }}>
+                    <span className=" font-bold" style={{ fontSize: "25px" }}>
+                        {" "}
+                        Linea 1 :{" "}
                     </span>
-
-                    <h5>Textarea</h5>
-                    <InputTextarea placeholder="Your Message" autoResize rows="3" cols="30" />
-
-                    <h5>AutoComplete</h5>
-                    <AutoComplete placeholder="Search" id="dd" dropdown multiple value={selectedAutoValue} onChange={(e) => setSelectedAutoValue(e.value)} suggestions={autoFilteredValue} completeMethod={searchCountry} field="name" />
-
-                    <h5>Calendar</h5>
-                    <Calendar showIcon showButtonBar value={calendarValue} onChange={(e) => setCalendarValue(e.value)}></Calendar>
-
-                    <h5>InputNumber</h5>
-                    <InputNumber value={inputNumberValue} onValueChange={(e) => setInputNumberValue(e.value)} showButtons mode="decimal"></InputNumber>
-
-                    <h5>Chips</h5>
-                    <Chips value={chipsValue} onChange={(e) => setChipsValue(e.value)} />
+                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
+                        SKU 34
+                    </span>
                 </div>
-
-                <div className="card">
-                    <div className="grid">
-                        <div className="col-12">
-                            <h5>Slider</h5>
-                            <InputText value={sliderValue} onChange={(e) => setSliderValue(parseInt(e.target.value), 10)} />
-                            <Slider value={sliderValue} onChange={(e) => setSliderValue(e.value)} />
+            </div>
+            <div className="col-12 lg:col-6 xl:col-4">
+                <div className="card mb-0">
+                    <div className="flex justify-content-between mb-3">
+                        <div>
+                            <span className="block text-900 font-bold mb-3" style={{ fontSize: "25px" }}>
+                                Turno Actual{" "}
+                            </span>
                         </div>
-                        <div className="col-12 md:col-6">
-                            <h5>Rating</h5>
-                            <Rating value={ratingValue} onChange={(e) => setRatingValue(e.value)} />
-                        </div>
-                        <div className="col-12 md:col-6">
-                            <h5>ColorPicker</h5>
-                            <ColorPicker value={colorValue} onChange={(e) => setColorValue(e.value)} style={{ width: '2rem' }} />
-                        </div>
-                        <div className="col-12">
-                            <h5>Knob</h5>
-                            <Knob value={knobValue} valueTemplate={"{value}%"} onChange={(e) => setKnobValue(e.value)} step={10} min={-50} max={50} />
+                        <div className="flex align-items-center justify-content-center border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
+                            <Badge style={{ minWidth: "4rem", height: "4rem", lineHeight: "4rem" }} value="76%" size="xlarge" severity="warning"></Badge>
                         </div>
                     </div>
+                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
+                        27, 000{" "}
+                    </span>
+                    <span className="text-500" style={{ fontSize: "25px" }}>
+                        PT [KG]
+                    </span>
+                </div>
+            </div>
+            <div className="col-12 lg:col-6 xl:col-4">
+                <div className="card mb-0">
+                    <div className="flex justify-content-between mb-3">
+                        <div>
+                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
+                                Turno Pasado
+                            </span>
+                        </div>
+                        <div className="flex align-items-center justify-content-center border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
+                            <Badge style={{ minWidth: "4rem", height: "4rem", lineHeight: "4rem" }} value="56%" size="xlarge" severity="danger"></Badge>
+                        </div>
+                    </div>
+                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
+                        20, 000{" "}
+                    </span>
+                    <span className="text-500" style={{ fontSize: "25px" }}>
+                        PT [KG]
+                    </span>
+                </div>
+            </div>
+            <div className="col-12 lg:col-6 xl:col-4">
+                <div className="card mb-0">
+                    <div className="flex justify-content-between mb-3">
+                        <div>
+                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
+                                Ultima Hora
+                            </span>
+                        </div>
+                        <div className="flex align-items-center justify-content-center border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
+                            <Badge style={{ minWidth: "4rem", height: "4rem", lineHeight: "4rem" }} value="96%" size="xlarge" severity="success"></Badge>
+                        </div>
+                    </div>
+                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
+                        3,300{" "}
+                    </span>
+                    <span className="text-500" style={{ fontSize: "25px" }}>
+                        PT [KG]
+                    </span>
                 </div>
             </div>
 
-            <div className="col-12 md:col-6">
-                <div className="card">
-                    <h5>RadioButton</h5>
-                    <div className="grid">
-                        <div className="col-12 md:col-4">
-                            <div className="field-radiobutton">
-                                <RadioButton inputId="option1" name="option" value="Chicago" checked={radioValue === 'Chicago'} onChange={(e) => setRadioValue(e.value)} />
-                                <label htmlFor="option1">Chicago</label>
-                            </div>
+            <div className="grid list-demo">
+                <div className="col-12 ">
+                    <div className="card">
+                        <div className="flex justify-content-between">
+                            <h5>Status Linea</h5>
+                            <Button label="Filtrar" className="p-button-raised p-button-success mr-2 mb-2" />
                         </div>
-                        <div className="col-12 md:col-4">
-                            <div className="field-radiobutton">
-                                <RadioButton inputId="option2" name="option" value="Los Angeles" checked={radioValue === 'Los Angeles'} onChange={(e) => setRadioValue(e.value)} />
-                                <label htmlFor="option2">Los Angeles</label>
-                            </div>
-                        </div>
-                        <div className="col-12 md:col-4">
-                            <div className="field-radiobutton">
-                                <RadioButton inputId="option3" name="option" value="New York" checked={radioValue === 'New York'} onChange={(e) => setRadioValue(e.value)} />
-                                <label htmlFor="option3">New York</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h5>Checkbox</h5>
-                    <div className="grid">
-                        <div className="col-12 md:col-4">
-                            <div className="field-checkbox">
-                                <Checkbox inputId="checkOption1" name="option" value="Chicago" checked={checkboxValue.indexOf('Chicago') !== -1} onChange={onCheckboxChange} />
-                                <label htmlFor="checkOption1">Chicago</label>
-                            </div>
-                        </div>
-                        <div className="col-12 md:col-4">
-                            <div className="field-checkbox">
-                                <Checkbox inputId="checkOption2" name="option" value="Los Angeles" checked={checkboxValue.indexOf('Los Angeles') !== -1} onChange={onCheckboxChange} />
-                                <label htmlFor="checkOption2">Los Angeles</label>
-                            </div>
-                        </div>
-                        <div className="col-12 md:col-4">
-                            <div className="field-checkbox">
-                                <Checkbox inputId="checkOption3" name="option" value="New York" checked={checkboxValue.indexOf('New York') !== -1} onChange={onCheckboxChange} />
-                                <label htmlFor="checkOption3">New York</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h5>Input Switch</h5>
-                    <InputSwitch checked={switchValue} onChange={(e) => setSwitchValue(e.value)} />
-                </div>
-
-                <div className="card">
-                    <h5>Listbox</h5>
-                    <ListBox value={listboxValue} onChange={(e) => setListboxValue(e.value)} options={listboxValues} optionLabel="name" filter />
-
-                    <h5>Dropdown</h5>
-                    <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
-
-                    <h5>MultiSelect</h5>
-                    <MultiSelect value={multiselectValue} onChange={(e) => setMultiselectValue(e.value)} options={multiselectValues} optionLabel="name" placeholder="Select Countries" filter
-                        itemTemplate={itemTemplate} selectedItemTemplate={selectedItemTemplate} />
-
-                    <h5>TreeSelect</h5>
-                    <TreeSelect value={selectedNode} onChange={(e) => setSelectedNode(e.value)} options={treeSelectNodes} placeholder="Select Item"></TreeSelect>
-                </div>
-
-                <div className="card">
-                    <h5>ToggleButton</h5>
-                    <ToggleButton checked={toggleValue} onChange={(e) => setToggleValue(e.value)} onLabel="Yes" offLabel="No" />
-
-                    <h5>SelectButton</h5>
-                    <SelectButton value={selectButtonValue1} onChange={(e) => setSelectButtonValue1(e.value)} options={selectButtonValues1} optionLabel="name" />
-
-                    <h5>SelectButton - Multiple</h5>
-                    <SelectButton value={selectButtonValue2} onChange={(e) => setSelectButtonValue2(e.value)} options={selectButtonValues2} optionLabel="name" multiple />
-                </div>
-            </div>
-
-            <div className="col-12">
-                <div className="card">
-                    <h5>Input Groups</h5>
-                    <div className="grid p-fluid">
-                        <div className="col-12 md:col-6">
-                            <div className="p-inputgroup">
-                                <span className="p-inputgroup-addon">
-                                    <i className="pi pi-user"></i>
-                                </span>
-                                <InputText placeholder="Username" />
-                            </div>
-                        </div>
-
-                        <div className="col-12 md:col-6">
-                            <div className="p-inputgroup">
-                                <span className="p-inputgroup-addon"><i className="pi pi-shopping-cart"></i></span>
-                                <span className="p-inputgroup-addon"><i className="pi pi-globe"></i></span>
-                                <InputText placeholder="Price" />
-                                <span className="p-inputgroup-addon">$</span>
-                                <span className="p-inputgroup-addon">.00</span>
-                            </div>
-                        </div>
-
-                        <div className="col-12 md:col-6">
-                            <div className="p-inputgroup">
-                                <Button label="Search" />
-                                <InputText placeholder="Keyword" />
-                            </div>
-                        </div>
-
-                        <div className="col-12 md:col-6">
-                            <div className="p-inputgroup">
-                                <span className="p-inputgroup-addon p-inputgroup-addon-checkbox">
-                                    <Checkbox checked={inputGroupValue} onChange={(e) => setInputGroupValue(e.checked)} binary />
-                                </span>
-                                <InputText placeholder="Confirm" />
-                            </div>
-                        </div>
+                        <DataView value={dataviewValue} layout={layout} paginator rows={6} sortOrder={sortOrder} sortField={sortField} itemTemplate={itemTemplate} header={dataviewHeader}></DataView>
                     </div>
                 </div>
             </div>
-        </div >
-    )
-}
-
-const comparisonFn = function (prevProps, nextProps) {
-    return prevProps.location.pathname === nextProps.location.pathname;
+        </div>
+    );
 };
 
-export default React.memo(InputDemo, comparisonFn);
+const comparisonFn = function (prevProps, nextProps) {
+    return prevProps.location.pathname === nextProps.location.pathname && prevProps.colorMode === nextProps.colorMode;
+};
+
+export default React.memo(Dashboard, comparisonFn);
