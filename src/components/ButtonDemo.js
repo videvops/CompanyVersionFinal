@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Button } from 'primereact/button';
-import { SplitButton } from 'primereact/splitbutton';
+import React, { useState } from "react";
+import { Button } from "primereact/button";
+import { SplitButton } from "primereact/splitbutton";
 
 const ButtonDemo = () => {
     const [loading1, setLoading1] = useState(false);
@@ -14,7 +14,7 @@ const ButtonDemo = () => {
         setTimeout(() => {
             setLoading1(false);
         }, 2000);
-    }
+    };
 
     const onLoadingClick2 = () => {
         setLoading2(true);
@@ -22,7 +22,7 @@ const ButtonDemo = () => {
         setTimeout(() => {
             setLoading2(false);
         }, 2000);
-    }
+    };
 
     const onLoadingClick3 = () => {
         setLoading3(true);
@@ -30,7 +30,7 @@ const ButtonDemo = () => {
         setTimeout(() => {
             setLoading3(false);
         }, 2000);
-    }
+    };
 
     const onLoadingClick4 = () => {
         setLoading4(true);
@@ -38,21 +38,21 @@ const ButtonDemo = () => {
         setTimeout(() => {
             setLoading4(false);
         }, 2000);
-    }
+    };
 
     const items = [
         {
-            label: 'Update',
-            icon: 'pi pi-refresh'
+            label: "Update",
+            icon: "pi pi-refresh",
         },
         {
-            label: 'Delete',
-            icon: 'pi pi-times'
+            label: "Delete",
+            icon: "pi pi-times",
         },
         {
-            label: 'Home',
-            icon: 'pi pi-home'
-        }
+            label: "Home",
+            icon: "pi pi-home",
+        },
     ];
 
     return (
@@ -127,10 +127,10 @@ const ButtonDemo = () => {
 
                 <div className="card">
                     <h5>Raised</h5>
-                    <Button label="Primary" className="p-button-raised mr-2 mb-2" />
+                    <Button label="Grafica" className="p-button-raised mr-2 mb-2" />
                     <Button label="Secondary" className="p-button-raised p-button-secondary mr-2 mb-2" />
                     <Button label="Success" className="p-button-raised p-button-success mr-2 mb-2" />
-                    <Button label="Info" className="p-button-raised p-button-info mr-2 mb-2" />
+                    <Button label="Filtar" className="p-button-raised p-button-info mr-2 mb-2" />
                     <Button label="Warning" className="p-button-raised p-button-warning mr-2 mb-2" />
                     <Button label="Danger" className="p-button-raised p-button-danger mr-2 mb-2" />
                 </div>
@@ -187,8 +187,8 @@ const ButtonDemo = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;

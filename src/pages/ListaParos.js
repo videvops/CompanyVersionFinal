@@ -299,7 +299,12 @@ const ListaParos = () => {
     return (
         <div className="grid crud-demo">
             <div className="col-12">
-                <div className="card">
+                <div className="card mb-4" style={{ textAlign: "center", background: "#6366f2" }}>
+                    <span className=" font-bold" style={{ fontSize: "25px", color: "white" }}>
+                        Lista de Paros
+                    </span>
+                </div>
+                <div className="card mb-4">
                     <Toast ref={toast} />
                     <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
@@ -312,7 +317,7 @@ const ListaParos = () => {
                         paginator
                         rows={10}
                         rowsPerPageOptions={[5, 10, 25]}
-                        className="datatable-responsive"
+                        className="datatable-responsive mb-4"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                         globalFilter={globalFilter}

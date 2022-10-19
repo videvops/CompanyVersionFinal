@@ -14,7 +14,7 @@ import ChartDemo from "./components/ChartDemo";
 import Documentation from "./components/Documentation";
 import FileDemo from "./components/FileDemo";
 import FormLayoutDemo from "./components/FormLayoutDemo";
-import InputDemo from "./components/InputDemo";
+import StatusLineas from "./components/StatusLineas";
 import ListDemo from "./components/ListDemo";
 import MenuDemo from "./components/MenuDemo";
 import MessagesDemo from "./components/MessagesDemo";
@@ -23,7 +23,7 @@ import OverlayDemo from "./components/OverlayDemo";
 import MediaDemo from "./components/MediaDemo";
 import PanelDemo from "./components/PanelDemo";
 import TreeDemo from "./components/TreeDemo";
-import InvalidStateDemo from "./components/InvalidStateDemo";
+import Desperdecio from "./components/Desperdecio";
 import BlocksDemo from "./components/BlocksDemo";
 import IconsDemo from "./components/IconsDemo";
 
@@ -164,16 +164,27 @@ const App = () => {
             ],
         },
         {
-            label: "Secciones del sistema",
+            label: "Tiempo Real",
             icon: "pi pi-fw pi-sitemap",
             items: [
                 { label: "Indicadores de Turno", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/formlayout" },
-                { label: "Status Lineas", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/input" },
-                { label: "Lista de Paros", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/listaParos" },
-                { label: "Reportes", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "invalidstate" },
+                { label: "Status Lineas", icon: "pi pi-fw pi-chart-line text-blue-500 ", to: "/statusLineas" },
+                { label: "Últimos Paros", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "/desperdicio" },
+            ],
+        },
+        {
+            label: "Reportes",
+            icon: "pi pi-fw pi-sitemap",
+            items: [{ label: "Lista de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listaParos" }],
+        },
+        {
+            label: "Graficas",
+            icon: "pi pi-fw pi-sitemap",
+            items: [
+                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listaParos" },
                 { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Catalogo Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
-                { label: "Configuración", icon: "pi pi-fw pi-table text-blue-500", to: "/table" },
+                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
+                { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
         {
@@ -182,12 +193,9 @@ const App = () => {
             items: [
                 {
                     label: "Catalogo",
-                    icon: "pi pi-fw pi-bookmark text-blue-500",
+                    icon: "pi pi-fw pi-database text-blue-500",
                     items: [
-                        {
-                            label: "Planta",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
-                        },
+                        { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         {
                             label: "Area",
                             icon: "pi pi-fw pi-bookmark text-blue-500",
@@ -207,6 +215,11 @@ const App = () => {
                     ],
                 },
             ],
+        },
+        {
+            label: "Configuración",
+            icon: "pi pi-fw pi-sitemap",
+            items: [{ label: "Configuración", icon: "pi pi-fw pi-cog text-blue-500", to: "/table" }],
         },
     ];
 
@@ -245,9 +258,9 @@ const App = () => {
                 <div className="layout-main">
                     <Route path="/" exact render={() => <Dashboard colorMode={layoutColorMode} location={location} />} />
                     <Route path="/formlayout" component={FormLayoutDemo} />
-                    <Route path="/input" component={InputDemo} />
+                    <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listaParos" component={ListaParos} />
-                    <Route path="/invalidstate" component={InvalidStateDemo} />
+                    <Route path="/desperdicio" component={Desperdecio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/list" component={ListDemo} />
