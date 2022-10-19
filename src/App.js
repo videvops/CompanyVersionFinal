@@ -13,7 +13,7 @@ import ButtonDemo from "./components/ButtonDemo";
 import ChartDemo from "./components/ChartDemo";
 import Documentation from "./components/Documentation";
 import FileDemo from "./components/FileDemo";
-import FormLayoutDemo from "./components/FormLayoutDemo";
+import IndicadoresTurno from "./components/IndicadoresTurno";
 import StatusLineas from "./components/StatusLineas";
 import ListDemo from "./components/ListDemo";
 import MenuDemo from "./components/MenuDemo";
@@ -167,7 +167,7 @@ const App = () => {
             label: "Tiempo Real",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Indicadores de Turno", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/formlayout" },
+                { label: "Indicadores de Turno", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/indicadoresTurno" },
                 { label: "Status Lineas", icon: "pi pi-fw pi-chart-line text-blue-500 ", to: "/statusLineas" },
                 { label: "Últimos Paros", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "/desperdicio" },
             ],
@@ -257,7 +257,7 @@ const App = () => {
             <div className="layout-main-container">
                 <div className="layout-main">
                     <Route path="/" exact render={() => <Dashboard colorMode={layoutColorMode} location={location} />} />
-                    <Route path="/formlayout" component={FormLayoutDemo} />
+                    <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listaParos" component={ListaParos} />
                     <Route path="/desperdicio" component={Desperdecio} />

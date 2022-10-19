@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 import { CustomerService } from "../service/CustomerService";
 import { ProductService } from "../service/ProductService";
 
-const FormLayoutDemo = () => {
+const IndicadoresTurno = () => {
     const [customers3, setCustomers3] = useState([]);
     const [filters1, setFilters1] = useState(null);
     const [loading1, setLoading1] = useState(true);
@@ -123,4 +123,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(FormLayoutDemo, comparisonFn);
+export default React.memo(IndicadoresTurno, comparisonFn);

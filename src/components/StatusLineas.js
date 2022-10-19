@@ -41,7 +41,7 @@ const StatusLineas = (props) => {
         return (
             <div className="col-12">
                 <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
-                    <img src={maquina1} alt={data.name} className="my-4 md:my-0 w-5 md:w-10rem shadow-2 mr-5" />
+                    <img src={maquina1} alt={maquinas.maquina} className="my-4 md:my-0 w-5 md:w-10rem shadow-2 mr-5" />
                     <div className="flex-1 text-center md:text-left">
                         <div className="font-bold text-2xl">Maquina 1</div>
                     </div>
