@@ -33,11 +33,19 @@ const StatusLineas = (props) => {
         productService.getProducts().then((data) => setDataviewValue(data));
     }, []);*/
 
+    const porcentaje = 80;
+
     const maquinas = [
         { maquina: "M1", porcentaje: "85" },
         { maquina: "M2", porcentaje: "65" },
         { maquina: "M3", porcentaje: "59" },
     ];
+
+    /*let porcentajesColor = (porcentaje) => {
+        if (porcentaje > 85) {
+            return color: "#4cd07d";
+        }
+    };*/
 
     const dataviewHeader = (
         <div className="grid grid-nogutter">
@@ -61,7 +69,7 @@ const StatusLineas = (props) => {
                     <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
                             <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                {maquinas.porcentaje}
+                                85%
                             </span>
                         </div>
                     </div>
@@ -78,12 +86,16 @@ const StatusLineas = (props) => {
                     <div className="text-center">
                         <img src={maquina1} alt="Maquinas" className="w-6 shadow-2 my-3 mx-0" />
                         <div>
-                            <h3 className="font-bold" style={{ fontSize: "25px" }}></h3>
+                            <h3 className="font-bold" style={{ fontSize: "25px" }}>
+                                Mauqina 1
+                            </h3>
                         </div>
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }} value={porcentaje} text={`${porcentaje}%`}></span>
+                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
+                                85%
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -102,8 +114,6 @@ const StatusLineas = (props) => {
             return dataviewGridItem(data);
         }
     };
-
-    const porcentaje = 80;
 
     return (
         <div className="grid">
