@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { CustomerService } from "../service/CustomerService";
-import { ProductService } from "../service/ProductService";
+// import { CustomerService } from "../service/CustomerService";
+// import { ProductService } from "../service/ProductService";
 
 const IndicadoresTurno = () => {
-    const [customers3, setCustomers3] = useState([]);
-    const [filters1, setFilters1] = useState(null);
-    const [loading1, setLoading1] = useState(true);
-    const [loading2, setLoading2] = useState(true);
-    const [idFrozen, setIdFrozen] = useState(false);
-    const [products, setProducts] = useState([]);
-    const [expandedRows, setExpandedRows] = useState(null);
+    // const [customers3, setCustomers3] = useState([]);
+    // const [filters1, setFilters1] = useState(null);
+    // const [loading1, setLoading1] = useState(true);
+    // const [loading2, setLoading2] = useState(true);
+    // const [idFrozen, setIdFrozen] = useState(false);
+    // const [products, setProducts] = useState([]);
+    // const [expandedRows, setExpandedRows] = useState(null);
 
     const porcentajes = [
         {
@@ -43,10 +43,10 @@ const IndicadoresTurno = () => {
         },
     ];
 
-    const customerService = new CustomerService();
-    const productService = new ProductService();
+    // const customerService = new CustomerService();
+    // const productService = new ProductService();
 
-    useEffect(() => {
+    /*useEffect(() => {
         setLoading2(true);
         customerService.getCustomersMedium().then((data) => setCustomers3(data));
         productService.getProductsWithOrdersSmall().then((data) => setProducts(data));
@@ -87,7 +87,7 @@ const IndicadoresTurno = () => {
         }
 
         return total;
-    };
+    };*/
 
     return (
         <div className="grid">

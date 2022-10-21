@@ -1,29 +1,42 @@
-import React, { useState, useEffect, useRef } from "react";
-import { ProductService } from "../service/ProductService";
+import React, { useState, useRef } from "react";
+//import { ProductService } from "../service/ProductService";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 import { Button } from "primereact/button";
 import maquina1 from "../img/maquina-status-linea.png";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const StatusLineas = (props) => {
-    const [products, setProducts] = useState(null);
+    /*constructor(props) {
+        super(props);
+        this.state = {
+            products: null,
+            layout: 'grid',
+            sortKey: null,
+            sortOrder: null,
+            sortField: null
+        };*/
+    // const [products, setProducts] = useState(null);
     const menu1 = useRef(null);
-    const [lineOptions, setLineOptions] = useState(null);
-    const [dataviewValue, setDataviewValue] = useState(null);
+    // const [lineOptions, setLineOptions] = useState(null);
+    // const [dataviewValue, setDataviewValue] = useState(null);
     const [layout, setLayout] = useState("grid");
-    const [sortKey, setSortKey] = useState(null);
-    const [sortOrder, setSortOrder] = useState(null);
-    const [sortField, setSortField] = useState(null);
+    // const [sortKey, setSortKey] = useState(null);
+    // const [sortOrder, setSortOrder] = useState(null);
+    // const [sortField, setSortField] = useState(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const productService = new ProductService();
         productService.getProductsSmall().then((data) => setProducts(data));
         productService.getProducts().then((data) => setDataviewValue(data));
-    }, []);
+    }, []);*/
 
     const maquinas = [
-        { maquina: "M1", porcentaje: 85 },
-        { maquina: "M2", porcentaje: 65 },
-        { maquina: "M3", porcentaje: 59 },
+        { maquina: "M1", porcentaje: "85" },
+        { maquina: "M2", porcentaje: "65" },
+        { maquina: "M3", porcentaje: "59" },
     ];
 
     const dataviewHeader = (
@@ -39,16 +52,16 @@ const StatusLineas = (props) => {
 
     const dataviewListItem = (maquina) => {
         return (
-            <div className="col-12">
+            <div className="col-12 ">
                 <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
-                    <img src={maquina1} alt={maquinas.maquina} className="my-4 md:my-0 w-5 md:w-10rem shadow-2 mr-5" />
+                    <img src={maquina1} alt="maquinas" className="my-4 md:my-0 w-5 md:w-10rem shadow-2 mr-5" />
                     <div className="flex-1 text-center md:text-left">
-                        <div className="font-bold text-2xl">Maquina 1</div>
+                        <div className="font-bold text-2xl" field="maquina" header="Status"></div>
                     </div>
                     <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
                             <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                85%
+                                {maquinas.porcentaje}
                             </span>
                         </div>
                     </div>
@@ -57,7 +70,7 @@ const StatusLineas = (props) => {
         );
     };
 
-    const dataviewGridItem = (data) => {
+    const dataviewGridItem = () => {
         return (
             <div className="col-12 md:col-4">
                 <div className="card m-3 border-1 surface-border">
@@ -65,16 +78,12 @@ const StatusLineas = (props) => {
                     <div className="text-center">
                         <img src={maquina1} alt="Maquinas" className="w-6 shadow-2 my-3 mx-0" />
                         <div>
-                            <h3 className="font-bold" style={{ fontSize: "25px" }}>
-                                Maquina 1
-                            </h3>
+                            <h3 className="font-bold" style={{ fontSize: "25px" }}></h3>
                         </div>
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                85%
-                            </span>
+                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }} value={porcentaje} text={`${porcentaje}%`}></span>
                         </div>
                     </div>
                 </div>
@@ -94,6 +103,8 @@ const StatusLineas = (props) => {
         }
     };
 
+    const porcentaje = 80;
+
     return (
         <div className="grid">
             <div className="col-12 ">
@@ -108,10 +119,10 @@ const StatusLineas = (props) => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Eficiencia Turno
+                                Turno Actual
                             </span>
-                            <div className="font-bold" style={{ fontSize: "35px" }}>
-                                80%
+                            <div label="Default" style={{ width: "130px" }}>
+                                <CircularProgressbar value={porcentaje} text={`${porcentaje}%`} />
                             </div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-blue-200 border-round" style={{ width: "3.5rem", height: "3.5rem" }}>
@@ -127,29 +138,11 @@ const StatusLineas = (props) => {
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-4">
-                {/*<div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Turno Pasado
-                            </span>
-                        </div>
-                        <div className="flex align-items-center justify-content-center border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <Badge style={{ minWidth: "4rem", height: "4rem", lineHeight: "4rem" }} value="56%" size="xlarge" severity="danger"></Badge>
-                        </div>
-                    </div>
-                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
-                        20, 000{" "}
-                    </span>
-                    <span className="text-500" style={{ fontSize: "25px" }}>
-                        PT [KG]
-                    </span>
-                </div>*/}
                 <div className="card mb-5">
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Eficiencia Turno
+                                Turno Pasado
                             </span>
                             <div className="font-bold" style={{ fontSize: "35px" }}>
                                 80%
@@ -172,7 +165,7 @@ const StatusLineas = (props) => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Eficiencia Turno
+                                Última Hora
                             </span>
                             <div className="font-bold" style={{ fontSize: "35px" }}>
                                 80%
@@ -218,7 +211,7 @@ const StatusLineas = (props) => {
                             </h5>
                             <Button label="Filtrar" className="p-button-raised p-button-success mr-2 mb-2" />
                         </div>
-                        <DataView value={maquinas} layout={layout} paginator rows={3} sortOrder={sortOrder} sortField={sortField} itemTemplate={itemTemplate} header={dataviewHeader}></DataView>
+                        <DataView value={maquinas} layout={layout} paginator rows={3} itemTemplate={itemTemplate} header={dataviewHeader}></DataView>
                     </div>
                 </div>
             </div>
