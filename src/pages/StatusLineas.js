@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState /*, useRef*/ } from "react";
 //import { ProductService } from "../service/ProductService";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+// import { DataTable } from "primereact/datatable";
+// import { Column } from "primereact/column";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 import { Button } from "primereact/button";
 import maquina1 from "../img/maquina-status-linea.png";
@@ -19,7 +19,7 @@ const StatusLineas = (props) => {
             sortField: null
         };*/
     // const [products, setProducts] = useState(null);
-    const menu1 = useRef(null);
+    // const menu1 = useRef(null);
     // const [lineOptions, setLineOptions] = useState(null);
     // const [dataviewValue, setDataviewValue] = useState(null);
     const [layout, setLayout] = useState("grid");
