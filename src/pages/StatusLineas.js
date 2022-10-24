@@ -1,14 +1,19 @@
-import React, { useState, useRef } from "react";
-import { DatosFicticios } from "./StatusLinea/ValoresMaquina";
+import React, { useState /*, useRef*/ } from "react";
+// import { DatosFicticios } from "./StatusLinea/ValoresMaquina";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 import { Button } from "primereact/button";
 import maquina1 from "../img/maquina-status-linea.png";
-import { CircularProgressbar } from "react-circular-progressbar";
+// import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { ColorStatus } from "./StatusLinea/ColorStatus";
+// import { ColorStatus } from "./StatusLinea/ColorStatus";
+import Cabezal from "./StatusLinea/Cabezal/Cabezal";
+import CardsTurno from "./StatusLinea/Cabezal/TurnoActual";
+import TurnoActual from "./StatusLinea/Cabezal/TurnoActual";
+import TurnoPasado from "./StatusLinea/Cabezal/TurnoPasado";
+import UltimaHora from "./StatusLinea/Cabezal/UltimaHora";
 
 const StatusLineas = (props) => {
-    const menu1 = useRef(null);
+    // const menu1 = useRef(null);
     const [layout, setLayout] = useState("grid");
 
     const porcentaje = 60;
@@ -22,7 +27,7 @@ const StatusLineas = (props) => {
         { maquina: "6", porcentaje: "99" },
     ];
 
-    const porcentajes = DatosFicticios;
+    // const porcentajes = DatosFicticios;
 
     /*let porcentajesColor = (porcentaje) => {
         if (porcentaje > 85) {
@@ -53,7 +58,7 @@ const StatusLineas = (props) => {
                     </div>
                     <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "black" }}>
                                 {data.porcentaje}%
                             </div>
                         </div>
@@ -78,7 +83,7 @@ const StatusLineas = (props) => {
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
                         <div className="flex align-items-center justify-content-center background-green border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }} >
                                 {data.porcentaje}%
                             </div>
                         </div>
@@ -87,7 +92,7 @@ const StatusLineas = (props) => {
             </div>
         );
     };
-
+// Forma de ver las  maquinas
     const itemTemplate = (data, layout) => {
         if (!data) {
             return;
@@ -100,103 +105,14 @@ const StatusLineas = (props) => {
         }
     };
 
+// Crear Componente
     return (
         <div className="grid">
-            <div className="col-12 ">
-                <div className="card mb-0" style={{ textAlign: "center", background: "#6366f2" }}>
-                    <span className=" font-bold" style={{ fontSize: "25px", color: "white" }}>
-                        Status Lineas
-                    </span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-4">
-                <div className="card mb-5">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Turno Actual
-                            </span>
-                            <div label="Default" style={{ width: "130px" }}>
-                                <CircularProgressbar value={porcentaje} text={`${porcentaje}%`} />
-                            </div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-blue-200 border-round" style={{ width: "3.5rem", height: "3.5rem" }}>
-                            <i className="pi pi-window-maximize text-blue-600 " style={{ fontSize: "35px" }} />
-                        </div>
-                    </div>
-                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
-                        7, 000{" "}
-                    </span>
-                    <span className="text-500" style={{ fontSize: "25px" }}>
-                        PT [KG]
-                    </span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-4">
-                <div className="card mb-5">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Turno Pasado
-                            </span>
-                            <div className="font-bold" style={{ fontSize: "35px" }}>
-                                80%
-                            </div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-orange-200 border-round" style={{ width: "3.5rem", height: "3.5rem" }}>
-                            <i className="pi pi-window-maximize text-orange-600 " style={{ fontSize: "35px" }} />
-                        </div>
-                    </div>
-                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
-                        7, 000{" "}
-                    </span>
-                    <span className="text-500" style={{ fontSize: "25px" }}>
-                        PT [KG]
-                    </span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-4">
-                <div className="card mb-5">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Última Hora
-                            </span>
-                            <div className="font-bold" style={{ fontSize: "35px" }}>
-                                80%
-                            </div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-200 border-round" style={{ width: "3.5rem", height: "3.5rem" }}>
-                            <i className="pi pi-window-maximize text-purple-600 " style={{ fontSize: "35px" }} />
-                        </div>
-                    </div>
-                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
-                        7, 000{" "}
-                    </span>
-                    <span className="text-500" style={{ fontSize: "25px" }}>
-                        PT [KG]
-                    </span>
-                </div>
-                {/*<div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-800 font-bold mb-3" style={{ fontSize: "25px" }}>
-                                Ultima Hora
-                            </span>
-                        </div>
-                        <div className="flex align-items-center justify-content-center border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <Badge style={{ minWidth: "4rem", height: "4rem", lineHeight: "4rem" }} value="96%" size="xlarge" severity="success"></Badge>
-                        </div>
-                    </div>
-                    <span className="text-blue-500 font-bold" style={{ fontSize: "25px" }}>
-                        3,300{" "}
-                    </span>
-                    <span className="text-500" style={{ fontSize: "25px" }}>
-                        PT [KG]
-                    </span>
-                </div>*/}
-            </div>
-
+            <Cabezal/>
+            <TurnoActual porcentaje={porcentaje}/>
+            <TurnoPasado/>
+            <UltimaHora/>
+            {/* <etiqueta maquinas={maquinas}/> */}
             <div className="grid list-demo">
                 <div className="col-12 ">
                     <div className="card">
