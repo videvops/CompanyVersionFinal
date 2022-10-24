@@ -1,45 +1,28 @@
-import React, { useState /*, useRef*/ } from "react";
-//import { ProductService } from "../service/ProductService";
-// import { DataTable } from "primereact/datatable";
-// import { Column } from "primereact/column";
+import React, { useState, useRef } from "react";
+import { DatosFicticios } from "./StatusLinea/ValoresMaquina";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 import { Button } from "primereact/button";
 import maquina1 from "../img/maquina-status-linea.png";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { ColorStatus } from "./StatusLinea/ColorStatus";
 
 const StatusLineas = (props) => {
-    /*constructor(props) {
-        super(props);
-        this.state = {
-            products: null,
-            layout: 'grid',
-            sortKey: null,
-            sortOrder: null,
-            sortField: null
-        };*/
-    // const [products, setProducts] = useState(null);
-    // const menu1 = useRef(null);
-    // const [lineOptions, setLineOptions] = useState(null);
-    // const [dataviewValue, setDataviewValue] = useState(null);
+    const menu1 = useRef(null);
     const [layout, setLayout] = useState("grid");
-    // const [sortKey, setSortKey] = useState(null);
-    // const [sortOrder, setSortOrder] = useState(null);
-    // const [sortField, setSortField] = useState(null);
 
-    /*useEffect(() => {
-        const productService = new ProductService();
-        productService.getProductsSmall().then((data) => setProducts(data));
-        productService.getProducts().then((data) => setDataviewValue(data));
-    }, []);*/
-
-    const porcentaje = 80;
+    const porcentaje = 60;
 
     const maquinas = [
-        { maquina: "M1", porcentaje: "85" },
-        { maquina: "M2", porcentaje: "65" },
-        { maquina: "M3", porcentaje: "59" },
+        { maquina: "1", porcentaje: "85" },
+        { maquina: "2", porcentaje: "65" },
+        { maquina: "3", porcentaje: "59" },
+        { maquina: "4", porcentaje: "75" },
+        { maquina: "5", porcentaje: "69" },
+        { maquina: "6", porcentaje: "99" },
     ];
+
+    const porcentajes = DatosFicticios;
 
     /*let porcentajesColor = (porcentaje) => {
         if (porcentaje > 85) {
@@ -58,19 +41,21 @@ const StatusLineas = (props) => {
         </div>
     );
 
-    const dataviewListItem = (maquina) => {
+    const dataviewListItem = (data) => {
         return (
             <div className="col-12 ">
                 <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
                     <img src={maquina1} alt="maquinas" className="my-4 md:my-0 w-5 md:w-10rem shadow-2 mr-5" />
                     <div className="flex-1 text-center md:text-left">
-                        <div className="font-bold text-2xl" field="maquina" header="Status"></div>
+                        <div className="font-bold text-2xl" field="maquina" header="Status">
+                            Maquina {data.maquina}
+                        </div>
                     </div>
                     <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                85%
-                            </span>
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
+                                {data.porcentaje}%
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,7 +63,7 @@ const StatusLineas = (props) => {
         );
     };
 
-    const dataviewGridItem = () => {
+    const dataviewGridItem = (data) => {
         return (
             <div className="col-12 md:col-4">
                 <div className="card m-3 border-1 surface-border">
@@ -86,16 +71,16 @@ const StatusLineas = (props) => {
                     <div className="text-center">
                         <img src={maquina1} alt="Maquinas" className="w-6 shadow-2 my-3 mx-0" />
                         <div>
-                            <h3 className="font-bold" style={{ fontSize: "25px" }}>
-                                Mauqina 1
-                            </h3>
+                            <div className="font-bold" style={{ fontSize: "25px" }}>
+                                Maquina {data.maquina}
+                            </div>
                         </div>
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
-                        <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <span className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                85%
-                            </span>
+                        <div className="flex align-items-center justify-content-center background-green border-round" style={{ width: "7rem", height: "7rem" }}>
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
+                                {data.porcentaje}%
+                            </div>
                         </div>
                     </div>
                 </div>
