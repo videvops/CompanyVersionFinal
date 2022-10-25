@@ -7,7 +7,7 @@ import maquina1 from "../img/maquina-status-linea.png";
 import "react-circular-progressbar/dist/styles.css";
 // import { ColorStatus } from "./StatusLinea/ColorStatus";
 import Cabezal from "./StatusLinea/Cabezal/Cabezal";
-import CardsTurno from "./StatusLinea/Cabezal/TurnoActual";
+// import CardsTurno from "./StatusLinea/Cabezal/TurnoActual";
 import TurnoActual from "./StatusLinea/Cabezal/TurnoActual";
 import TurnoPasado from "./StatusLinea/Cabezal/TurnoPasado";
 import UltimaHora from "./StatusLinea/Cabezal/UltimaHora";

@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 
 const Totales=(props)=>{
-    const promedios=[{
+    let promedios=[{
         eficiencia:props.eficiencia,
         disponibilidad:props.disponibilidad,
         velocidad:props.velocidad,
@@ -14,20 +14,16 @@ const Totales=(props)=>{
 
 //--------------------| Valor que regresara |--------------------
     return(
-        <div className="grid">
-            <div className="col-12">
-                <div className="card">
-                    <h4 style={{ textAlign: "center" }}>Promedios</h4>
-                    <DataTable value={promedios} style={{ fontSize: "20px", textAlign: "center" }}>
-                        <Column field="eficiencia" header="Eficiencia" body={PorEficiencia}/>
-                        <Column field="disponibilidad" header="Disponibilidad" body={PorDisponibilidad}/>
-                        <Column field="velocidad" header="Velocidad" body={PorVelocidad}/>
-                        <Column field="calidad" header="Calidad" body={PorCalidad}/>
-                        <Column field="producto" header="Producto Terminado(kg)" body={PorProducto}/>
-                    </DataTable>
-                </div>
-            </div>
-        </div>
+        <React.Fragment>
+            <h4 style={{ textAlign: "center" }}>Promedios</h4>
+            <DataTable value={promedios} style={{ fontSize: "20px", textAlign: "center" }}>
+                <Column field="eficiencia" header="Eficiencia" body={PorEficiencia}/>
+                <Column field="disponibilidad" header="Disponibilidad" body={PorDisponibilidad}/>
+                <Column field="velocidad" header="Velocidad" body={PorVelocidad}/>
+                <Column field="calidad" header="Calidad" body={PorCalidad}/>
+                <Column field="producto" header="Producto Terminado(kg)" body={PorProducto}/>
+            </DataTable>
+        </React.Fragment>
     );
 }
 
