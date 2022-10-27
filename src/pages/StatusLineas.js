@@ -11,6 +11,7 @@ import Cabezal from "./StatusLinea/Cabezal/Cabezal";
 import TurnoActual from "./StatusLinea/Cabezal/TurnoActual";
 import TurnoPasado from "./StatusLinea/Cabezal/TurnoPasado";
 import UltimaHora from "./StatusLinea/Cabezal/UltimaHora";
+import classes from "./StatusLinea/background.css";
 
 const StatusLineas = (props) => {
     // const menu1 = useRef(null);
@@ -58,7 +59,7 @@ const StatusLineas = (props) => {
                     </div>
                     <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                         <div className="flex align-items-center justify-content-center bg-green-400 border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "black" }}>
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
                                 {data.porcentaje}%
                             </div>
                         </div>
@@ -82,8 +83,12 @@ const StatusLineas = (props) => {
                         </div>
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
-                        <div className="flex align-items-center justify-content-center background-green border-round" style={{ width: "7rem", height: "7rem" }}>
-                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }} >
+                        <div
+                            className={`${classes.control} ${(data.porcentaje >= 0 && data.porcentaje <= 55) === classes.mal ? classes.invalid : ""}  ${(data.porcentaje >= 56 && data.porcentaje <= 79) === classes.regular ? classes.invalid : ""} ${
+                                (data.porcentaje >= 80 && data.porcentaje <= 100) === classes.bien ? classes.invalid : ""
+                            }  `}
+                        >
+                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
                                 {data.porcentaje}%
                             </div>
                         </div>
@@ -92,7 +97,7 @@ const StatusLineas = (props) => {
             </div>
         );
     };
-// Forma de ver las  maquinas
+    // Forma de ver las  maquinas
     const itemTemplate = (data, layout) => {
         if (!data) {
             return;
@@ -105,13 +110,13 @@ const StatusLineas = (props) => {
         }
     };
 
-// Crear Componente
+    // Crear Componente
     return (
         <div className="grid">
-            <Cabezal/>
-            <TurnoActual porcentaje={porcentaje}/>
-            <TurnoPasado/>
-            <UltimaHora/>
+            <Cabezal />
+            <TurnoActual porcentaje={porcentaje} />
+            <TurnoPasado />
+            <UltimaHora />
             {/* <etiqueta maquinas={maquinas}/> */}
             <div className="grid list-demo">
                 <div className="col-12 ">
