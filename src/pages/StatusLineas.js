@@ -12,6 +12,7 @@ import TurnoActual from "./StatusLinea/Cabezal/TurnoActual";
 import TurnoPasado from "./StatusLinea/Cabezal/TurnoPasado";
 import UltimaHora from "./StatusLinea/Cabezal/UltimaHora";
 import classes from "./StatusLinea/background.css";
+//import { ColorStatus } from "./StatusLinea/ColorStatus";
 
 const StatusLineas = (props) => {
     // const menu1 = useRef(null);
@@ -19,6 +20,7 @@ const StatusLineas = (props) => {
 
     const porcentaje = 60;
 
+    //valores ficticios
     const maquinas = [
         { maquina: "1", porcentaje: "85" },
         { maquina: "2", porcentaje: "65" },
@@ -28,14 +30,7 @@ const StatusLineas = (props) => {
         { maquina: "6", porcentaje: "99" },
     ];
 
-    // const porcentajes = DatosFicticios;
-
-    /*let porcentajesColor = (porcentaje) => {
-        if (porcentaje > 85) {
-            return color: "#4cd07d";
-        }
-    };*/
-
+    //Header de tabla
     const dataviewHeader = (
         <div className="grid grid-nogutter">
             <div className="col-6" style={{ textAlign: "left" }}>
@@ -47,6 +42,7 @@ const StatusLineas = (props) => {
         </div>
     );
 
+    //tabla con layout lista
     const dataviewListItem = (data) => {
         return (
             <div className="col-12 ">
@@ -69,6 +65,7 @@ const StatusLineas = (props) => {
         );
     };
 
+    //tabla con layout grid
     const dataviewGridItem = (data) => {
         return (
             <div className="col-12 md:col-4">
@@ -83,11 +80,7 @@ const StatusLineas = (props) => {
                         </div>
                     </div>
                     <div className="flex align-items-center justify-content-center m-3">
-                        <div
-                            className={`${classes.control} ${(data.porcentaje >= 0 && data.porcentaje <= 55) === classes.mal ? classes.invalid : ""}  ${(data.porcentaje >= 56 && data.porcentaje <= 79) === classes.regular ? classes.invalid : ""} ${
-                                (data.porcentaje >= 80 && data.porcentaje <= 100) === classes.bien ? classes.invalid : ""
-                            }  `}
-                        >
+                        <div className={`${data.porcentaje >= 0 && data.porcentaje <= 55 ? classes.mal : ""} ${data.porcentaje >= 56 && data.porcentaje <= 79 ? classes.regular : ""} ${data.porcentaje >= 80 && data.porcentaje <= 100 ? classes.bien : ""}`}>
                             <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
                                 {data.porcentaje}%
                             </div>
