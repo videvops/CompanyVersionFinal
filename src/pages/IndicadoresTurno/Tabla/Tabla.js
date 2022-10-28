@@ -36,9 +36,6 @@ const Tabla = () => {
     }
 
 //--------------------| Renderizado por tiempo |--------------------
-    // useEffect(()=>{
-    //     Promedios(porcentajes);
-    // });
     useEffect(() => {
         const interval = setInterval(() => {    // Renderizado por intervalos de tiempo
             Promedios(porcentajes);
