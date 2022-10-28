@@ -36,8 +36,15 @@ const Tabla = () => {
     }
 
 //--------------------| Renderizado por tiempo |--------------------
-    useEffect(()=>{
-        Promedios(porcentajes);
+    // useEffect(()=>{
+    //     Promedios(porcentajes);
+    // });
+    useEffect(() => {
+        const interval = setInterval(() => {    // Renderizado por intervalos de tiempo
+            Promedios(porcentajes);
+            console.log('Se actualizo...');
+        }, 1000);                               // Cada segundo se renderizara
+        return () => clearInterval(interval);   // Elimina el efecto secundario anterior
     });
 
 //--------------------| Valor que regresara |--------------------
