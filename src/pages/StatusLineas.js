@@ -11,7 +11,7 @@ import Cabezal from "./StatusLinea/Cabezal/Cabezal";
 import TurnoActual from "./StatusLinea/Cabezal/TurnoActual";
 import TurnoPasado from "./StatusLinea/Cabezal/TurnoPasado";
 import UltimaHora from "./StatusLinea/Cabezal/UltimaHora";
-import classes from "./StatusLinea/background.css";
+import classes from "./StatusLinea/StatusLineas.module.css";
 //import { ColorStatus } from "./StatusLinea/ColorStatus";
 
 const StatusLineas = (props) => {
@@ -24,7 +24,7 @@ const StatusLineas = (props) => {
     const maquinas = [
         { maquina: "1", porcentaje: "85" },
         { maquina: "2", porcentaje: "65" },
-        { maquina: "3", porcentaje: "59" },
+        { maquina: "3", porcentaje: "50" },
         { maquina: "4", porcentaje: "75" },
         { maquina: "5", porcentaje: "69" },
         { maquina: "6", porcentaje: "99" },
@@ -79,11 +79,9 @@ const StatusLineas = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex align-items-center justify-content-center m-3">
+                    <div className="flex align-items-center justify-content-center m-6">
                         <div className={`${data.porcentaje >= 0 && data.porcentaje <= 55 ? classes.mal : ""} ${data.porcentaje >= 56 && data.porcentaje <= 79 ? classes.regular : ""} ${data.porcentaje >= 80 && data.porcentaje <= 100 ? classes.bien : ""}`}>
-                            <div className="font-bold m-3" style={{ fontSize: "35px", color: "white" }}>
-                                {data.porcentaje}%
-                            </div>
+                            <div style={{ margin: "10px" }}>{data.porcentaje}%</div>
                         </div>
                     </div>
                 </div>

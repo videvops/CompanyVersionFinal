@@ -1,0 +1,33 @@
+.bien{
+    background-color: #65bc63;
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.regular{
+    background-color: #FFD372;
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.mal{
+    background-color: #DD5353;
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.value-eficiencia {
+    margin: 10px;
+}
+
+.data-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
