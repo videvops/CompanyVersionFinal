@@ -60,9 +60,7 @@ const Desperdicio = () => {
                             <span className="block font-bold mb-3" style={{ fontSize: "20px", color: "white" }}>
                                 Disponibilidad Turno
                             </span>
-                            <div className="font-bold" style={{ fontSize: "60px" }}>
-                                70%
-                            </div>
+                            <div style={{ fontSize: "60px" }}>70%</div>
                         </div>
                         <div className="flex align-items-center justify-content-center border-round" style={{ width: "3.5rem", height: "3.5rem", background: "#FFD372" }}>
                             <i className="pi pi-window-maximize" style={{ fontSize: "35px", color: "white" }} />

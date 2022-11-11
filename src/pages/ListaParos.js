@@ -8,7 +8,7 @@ import { FileUpload } from "primereact/fileupload";
 import { Toolbar } from "primereact/toolbar";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import { ProductService } from "../service/ProductService";
+//import { ProductService } from "../service/ProductService";
 
 const ListaParos = () => {
     //--------------------| Producto vacio |--------------------
@@ -26,7 +26,7 @@ const ListaParos = () => {
     };
 
     //--------------------| Uso de estados |--------------------
-    const [products, setProducts] = useState(null);
+    //const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -37,10 +37,20 @@ const ListaParos = () => {
     const toast = useRef(null);
     const dt = useRef(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const productService = new ProductService();
         productService.getProducts().then((data) => setProducts(data));
-    }, []);
+    }, []);*/
+
+    //valores ficticios
+    const products = [
+        { id: 1, fecha: "02/08/22", planta: "Monterrey", area: "Galletas", linea: "L1", maquina: "1", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+        { id: 2, fecha: "02/08/22", planta: "Guadalajara", area: "Galletas", linea: "L2", maquina: "2", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+        { id: 3, fecha: "02/08/22", planta: "Monterrey", area: "Galletas", linea: "L3", maquina: "3", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+        { id: 4, fecha: "02/08/22", planta: "Guadalajara", area: "Galletas", linea: "L4", maquina: "4", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+        { id: 5, fecha: "02/08/22", planta: "Monterrey", area: "Galletas", linea: "L5", maquina: "5", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+        { id: 6, fecha: "02/08/22", planta: "Monterrey", area: "Galletas", linea: "L6", maquina: "6", falla: "Falta harina", inicio: "02:00pm", fin: "03:00pm", tiempo: "01:00" },
+    ];
 
     //--------------------| Funciones para mostrar dialogos |--------------------
     const openNew = () => {
@@ -80,7 +90,7 @@ const ListaParos = () => {
                 toast.current.show({ severity: "success", summary: "Successful", detail: "Paro Created", life: 3000 });
             }
 
-            setProducts(_products);
+            //setProducts(_products);
             setProductDialog(false);
             setProduct(emptyParos);
         }
@@ -98,7 +108,7 @@ const ListaParos = () => {
 
     const deleteProduct = () => {
         let _products = products.filter((val) => val.id !== product.id);
-        setProducts(_products);
+        //setProducts(_products);
         setDeleteProductDialog(false);
         setProduct(emptyParos);
         toast.current.show({ severity: "success", summary: "Successful", detail: "Paro Deleted", life: 3000 });
@@ -134,7 +144,7 @@ const ListaParos = () => {
 
     const deleteSelectedProducts = () => {
         let _products = products.filter((val) => !selectedProducts.includes(val));
-        setProducts(_products);
+        //setProducts(_products);
         setDeleteProductsDialog(false);
         setSelectedProducts(null);
         toast.current.show({ severity: "success", summary: "Successful", detail: "Products Deleted", life: 3000 });

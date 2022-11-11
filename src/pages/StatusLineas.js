@@ -30,6 +30,8 @@ const StatusLineas = (props) => {
         { maquina: "6", porcentaje: "99" },
     ];
 
+    const colorStatus = () => {};
+
     //Header de tabla
     const dataviewHeader = (
         <div className="grid grid-nogutter">
