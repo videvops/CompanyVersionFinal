@@ -27,9 +27,10 @@ import Desperdecio from "./components/Desperdecio";
 import BlocksDemo from "./components/BlocksDemo";
 import IconsDemo from "./components/IconsDemo";
 
+//----------------| Catalogos |----------------
 import ListaParos from "./pages/ListaParos";
-import CatalogoPlantas from "./pages/CatalogoPlantas";
-import CatalogoLineas from "./pages/CatalogoLineas";
+import CatalogoPlantas from "./pages/Catalogos/Plantas/CatalogoPlantas";
+import CatalogoLineas from "./pages/Catalogos/Lineas/CatalogoLineas";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 

@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { PlantaService } from '../../../service/PlantaService';
-import { emptyProduct } from './Objetos/ProductoVacio';
-import Exportar from './Botones/Exportar';
-import { leftToolbarTemplate } from './Botones/AgregarEliminar';
-import { ProductContext } from '../Contexts/ProductContext';
-import { renderHeader } from './Buscador/Cabezal';
-import EliminarVarios from './Dialogos/EliminarVarios';
-import EliminarUno from './Dialogos/EliminarUno';
-import CrearModificar from './Dialogos/CrearModificar';
 import Tabla from './Tabla/Tabla';
+import Exportar from './Botones/Exportar';
+import EliminarUno from './Dialogos/EliminarUno';
+import EliminarVarios from './Dialogos/EliminarVarios';
+import CrearModificar from './Dialogos/CrearModificar';
+import { emptyProduct } from './Objetos/ProductoVacio';
+import { renderHeader } from './Buscador/Cabezal';
+import { PlantaService } from '../../../service/PlantaService';
+import { ProductContext } from '../Contexts/ProductContext';
+import { leftToolbarTemplate } from './Botones/AgregarEliminar';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const Crud = ({titulos, notificaciones}) => {
+const CrudPlantas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
     const productService = new PlantaService();
 
@@ -237,4 +237,4 @@ const Crud = ({titulos, notificaciones}) => {
     );
 }
 
-export default Crud;
+export default CrudPlantas;

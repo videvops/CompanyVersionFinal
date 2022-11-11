@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { LineaService } from '../../../service/LineaService';
-import { emptyProduct } from './Objetos/ProductoVacio';
+import Tabla from './Tabla/Tabla';
 import Exportar from './Botones/Exportar';
+import EliminarUno from './Dialogos/EliminarUno';
+import EliminarVarios from './Dialogos/EliminarVarios';
+import CrearModificar from './Dialogos/CrearModificar';
 import { leftToolbarTemplate } from './Botones/AgregarEliminar';
 import { ProductContext } from '../Contexts/ProductContext';
 import { renderHeader } from './Buscador/Cabezal';
-import EliminarVarios from './Dialogos/EliminarVarios';
-import EliminarUno from './Dialogos/EliminarUno';
-import CrearModificar from './Dialogos/CrearModificar';
-import Tabla from './Tabla/Tabla';
+import { LineaService } from '../../../service/LineaService';
+import { emptyProduct } from './Objetos/ProductoVacio';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const Crud = ({titulos, notificaciones}) => {
+const CrudLineas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const productService = new LineaService();
+    const lineaService = new LineaService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -167,7 +167,7 @@ const Crud = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await productService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await lineaService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -202,7 +202,7 @@ const Crud = ({titulos, notificaciones}) => {
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        productService.readAll().then((data) => setProducts(data));
+        lineaService.readAll().then((data) => setProducts(data));
     }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
@@ -237,4 +237,4 @@ const Crud = ({titulos, notificaciones}) => {
     );
 }
 
-export default Crud;
+export default CrudLineas;
