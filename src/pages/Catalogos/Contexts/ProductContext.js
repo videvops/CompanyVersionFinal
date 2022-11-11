@@ -1,12 +1,13 @@
 import React, { createContext, useState } from "react";
-import { PlantaService } from "../../../service/PlantaService";
+import { LineaService } from "../../../service/LineaService";
+// import { PlantaService } from "../../../service/PlantaService";
 // import { ProductService } from "../Services/ProductService";
 
 export const ProductContext=createContext();
 
 const ProductContextProvider=(props)=>{
 //--------------------| Importacion de metodos axios |--------------------
-    const productService = new PlantaService();
+    const productService = new LineaService();
 
 //--------------------| Uso de estados |--------------------
     const [products, setProducts] = useState([]);

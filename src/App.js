@@ -29,6 +29,7 @@ import IconsDemo from "./components/IconsDemo";
 
 import ListaParos from "./pages/ListaParos";
 import CatalogoPlantas from "./pages/CatalogoPlantas";
+import CatalogoLineas from "./pages/CatalogoLineas";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 
@@ -201,8 +202,7 @@ const App = () => {
                             icon: "pi pi-fw pi-bookmark text-blue-500",
                         },
                         {
-                            label: "Linea",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                            label: "Lineas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas"
                         },
                         {
                             label: "Maquina",
@@ -263,6 +263,7 @@ const App = () => {
                     <Route path="/desperdicio" component={Desperdecio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
+                    <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />
