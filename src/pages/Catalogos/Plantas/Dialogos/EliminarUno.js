@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog';
-import { deleteProductDialogFooter } from '../Botones/UnRegistro';
+import { deleteProductDialogFooter } from '../../ComponentsCat/Botones/UnRegistro';
 
 const EliminarUno = ({deleteProductDialog,hideDeleteProductDialog,product,_deleteProduct}) => {
 //--------------------| Boton de eliminar 1 registro |--------------------

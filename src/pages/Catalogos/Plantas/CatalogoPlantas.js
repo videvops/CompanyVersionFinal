@@ -1,6 +1,6 @@
 import React from 'react';
 import CrudPlantas from './CrudPlantas';
-import PlantaContextProvider from '../Contexts/PlantaContext';
+import PlantaContextProvider from '../ComponentsCat/Contexts/PlantaContext';
 import { titulos, notificaciones } from './Objetos/Constantes';
 
 const CatalogoPlantas = () => {

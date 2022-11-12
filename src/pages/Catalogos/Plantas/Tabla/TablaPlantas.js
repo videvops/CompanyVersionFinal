@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 
-const Tabla = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
+const TablaPlantas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="card">
@@ -40,4 +40,4 @@ const Tabla = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,fi
     )
 }
 
-export default Tabla
+export default TablaPlantas

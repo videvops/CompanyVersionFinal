@@ -4,8 +4,8 @@ import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
-import { leftToolbarTemplate } from './Botones/AgregarEliminar';
-import { ProductContext } from '../Contexts/ProductContext';
+import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
+import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { renderHeader } from './Buscador/Cabezal';
 import { LineaService } from '../../../service/LineaService';
 import { emptyProduct } from './Objetos/ProductoVacio';

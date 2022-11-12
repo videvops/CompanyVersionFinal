@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PlantaService } from "../../../service/PlantaService";
+import { PlantaService } from "../../../../service/PlantaService";
 import { ProductContext } from "./ProductContext";
 
 const PlantaContextProvider=(props)=>{

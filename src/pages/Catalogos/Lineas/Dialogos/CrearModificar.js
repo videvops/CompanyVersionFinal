@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { productDialogFooter } from '../Botones/CrearRegistro';
+// import { productDialogFooter } from '../Botones/CrearRegistro';
+import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
 //--------------------| Validar campos  |--------------------

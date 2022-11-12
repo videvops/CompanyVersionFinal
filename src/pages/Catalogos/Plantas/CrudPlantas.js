@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import Tabla from './Tabla/Tabla';
+// import Tabla from './Tabla/TablaPlantas';
+import TablaPlantas from './Tabla/TablaPlantas';
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
@@ -7,8 +8,8 @@ import CrearModificar from './Dialogos/CrearModificar';
 import { emptyProduct } from './Objetos/ProductoVacio';
 import { renderHeader } from './Buscador/Cabezal';
 import { PlantaService } from '../../../service/PlantaService';
-import { ProductContext } from '../Contexts/ProductContext';
-import { leftToolbarTemplate } from './Botones/AgregarEliminar';
+import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
+import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
@@ -180,7 +181,7 @@ const CrudPlantas = ({titulos, notificaciones}) => {
 
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
-        content=<Tabla 
+        content=<TablaPlantas 
         BotonesCabezal={BotonesCabezal} 
         ExportarRegistros={ExportarRegistros} 
         dt={dt} 
