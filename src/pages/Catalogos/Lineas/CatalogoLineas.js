@@ -1,6 +1,5 @@
 import React from 'react';
 import CrudLineas from './CrudLineas';
-// import LineaContextProvider from '../Contexts/LineaContext';
 import LineaContextProvider from '../ComponentsCat/Contexts/LineaContext';
 import { titulos, notificaciones} from './Objetos/Constantes';
 

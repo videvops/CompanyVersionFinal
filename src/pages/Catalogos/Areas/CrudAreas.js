@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import TablaLineas from './Tabla/TablaLineas';
+import TablaAreas from './Tabla/TablaAreas';
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
@@ -7,16 +7,16 @@ import CrearModificar from './Dialogos/CrearModificar';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
-import { LineaService } from '../../../service/LineaService';
-import { emptyProduct } from './Objetos/ProductoVacio';
+import { AreaService } from '../../../service/AreaService';
+import { emptyProduct } from './Objetos/AreaVacio';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const CrudLineas = ({titulos, notificaciones}) => {
+const CrudAreas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const lineaService = new LineaService();
+    const areaService = new AreaService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -39,7 +39,7 @@ const CrudLineas = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreLinea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombreArea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -167,7 +167,7 @@ const CrudLineas = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await lineaService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await areaService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -180,7 +180,7 @@ const CrudLineas = ({titulos, notificaciones}) => {
 
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
-        content=<TablaLineas 
+        content=<TablaAreas 
         BotonesCabezal={BotonesCabezal} 
         ExportarRegistros={ExportarRegistros} 
         dt={dt} 
@@ -202,7 +202,7 @@ const CrudLineas = ({titulos, notificaciones}) => {
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        lineaService.readAll().then((data) => setProducts(data));
+        areaService.readAll().then((data) => setProducts(data));
     }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
@@ -237,4 +237,4 @@ const CrudLineas = ({titulos, notificaciones}) => {
     );
 }
 
-export default CrudLineas;
+export default CrudAreas;
