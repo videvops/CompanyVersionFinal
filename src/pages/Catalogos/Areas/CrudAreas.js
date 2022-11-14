@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { PlantaService } from '../../../service/PlantaService';
-import { emptyProduct } from './Objetos/ProductoVacio';
+import TablaAreas from './Tabla/TablaAreas';
 import Exportar from './Botones/Exportar';
-import { leftToolbarTemplate } from './Botones/AgregarEliminar';
-import { ProductContext } from '../Contexts/ProductContext';
-import { renderHeader } from './Buscador/Cabezal';
-import EliminarVarios from './Dialogos/EliminarVarios';
 import EliminarUno from './Dialogos/EliminarUno';
+import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
-import Tabla from './Tabla/Tabla';
+import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
+import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
+import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
+import { AreaService } from '../../../service/AreaService';
+import { emptyProduct } from './Objetos/AreaVacio';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const Crud = ({titulos, notificaciones}) => {
+const CrudAreas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const productService = new PlantaService();
+    const areaService = new AreaService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -167,7 +167,7 @@ const Crud = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await productService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await areaService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -180,7 +180,7 @@ const Crud = ({titulos, notificaciones}) => {
 
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
-        content=<Tabla 
+        content=<TablaAreas 
         BotonesCabezal={BotonesCabezal} 
         ExportarRegistros={ExportarRegistros} 
         dt={dt} 
@@ -202,7 +202,7 @@ const Crud = ({titulos, notificaciones}) => {
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        productService.readAll().then((data) => setProducts(data));
+        areaService.readAll().then((data) => setProducts(data));
     }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
@@ -237,4 +237,4 @@ const Crud = ({titulos, notificaciones}) => {
     );
 }
 
-export default Crud;
+export default CrudAreas;

@@ -1,12 +1,10 @@
-import React, { createContext, useState } from "react";
-import { PlantaService } from "../../../service/PlantaService";
-// import { ProductService } from "../Services/ProductService";
+import React, { useState } from "react";
+import { PlantaService } from "../../../../service/PlantaService";
+import { ProductContext } from "./ProductContext";
 
-export const ProductContext=createContext();
-
-const ProductContextProvider=(props)=>{
+const PlantaContextProvider=(props)=>{
 //--------------------| Importacion de metodos axios |--------------------
-    const productService = new PlantaService();
+    const plantaService = new PlantaService();
 
 //--------------------| Uso de estados |--------------------
     const [products, setProducts] = useState([]);
@@ -14,13 +12,13 @@ const ProductContextProvider=(props)=>{
 //--------------------| Funciones de Crud |--------------------
     //------> Crear nuevo producto
     const createProduct = (product) => {
-        productService
+        plantaService
         .create(product)
         .then((data) => setProducts([...products, data]));
     };
     //------> Actualizar producto
     const updateProduct = (product) => {
-        productService
+        plantaService
         .update(product)
         .then((data) =>
             setProducts(
@@ -30,7 +28,7 @@ const ProductContextProvider=(props)=>{
     };
     //------> Eliminar producto
     const deleteProduct = (id) => {
-        productService
+        plantaService
         .delete(id)
         .then(() => setProducts(products.filter((p) => p.id !== id)));
     };
@@ -52,4 +50,4 @@ const ProductContextProvider=(props)=>{
     );
 }
 
-export default ProductContextProvider;
+export default PlantaContextProvider;

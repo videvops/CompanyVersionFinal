@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 
-const Tabla = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
+const TablaLineas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="card">
@@ -23,7 +23,7 @@ const Tabla = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,fi
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
             // CAMBIAR...
-            globalFilterFields={['id', 'nombrePlanta']}
+            globalFilterFields={['id', 'nombreLinea']}
             emptyMessage="No se encontraron resultados."
             header={header} 
             responsiveLayout="scroll"
@@ -31,13 +31,13 @@ const Tabla = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,fi
                 {/* // CAMBIAR.............. */}
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}/>
                 <Column field="id" header="ID" sortable style={{ width: '7rem',textAlign:'center' }}/>
-                <Column field="nombrePlanta" header="Planta" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
-                <Column field="descripcion" header="Descripcion" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
-                <Column field="fechaCreacion" header="Fecha de Creacion" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
+                <Column field="nombreLinea" header="Linea" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
+                <Column field="descripcion" header="Descripción" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
+                <Column field="fechaCreacion" header="Fecha de Creación" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
                 <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: '3rem' }}/>
             </DataTable>
         </div>
     )
 }
 
-export default Tabla
+export default TablaLineas

@@ -36,12 +36,16 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         onHide={hideDialog}
         >
             <div className="field">
-                <label htmlFor="nombrePlanta">Planta</label>
+                <label 
+                htmlFor="nombreArea"                                   // CAMBIAR...
+                >
+                    Area
+                </label>
                 <InputText 
-                id="nombrePlanta" 
-                value={product.nombrePlanta} 
+                id="nombreArea"                                        // CAMBIAR...
+                value={product.nombreArea}                             // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombrePlanta");
+                    updateField(e.target.value.trim(), "nombreArea");  // CAMBIAR...
                     Verificar(e.target.value)
                 }} 
                 required 

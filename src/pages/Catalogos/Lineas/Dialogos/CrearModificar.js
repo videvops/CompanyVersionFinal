@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
+// import { productDialogFooter } from '../Botones/CrearRegistro';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
@@ -36,12 +37,17 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         onHide={hideDialog}
         >
             <div className="field">
-                <label htmlFor="nombrePlanta">Planta</label>
+                {/* CAMBIAR.... */}
+                <label 
+                htmlFor="nombreLinea"                                   // CAMBIAR...
+                >
+                    Linea
+                </label>
                 <InputText 
-                id="nombrePlanta" 
-                value={product.nombrePlanta} 
+                id="nombreLinea"                                        // CAMBIAR...
+                value={product.nombreLinea}                             // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombrePlanta");
+                    updateField(e.target.value.trim(), "nombreLinea");  // CAMBIAR...
                     Verificar(e.target.value)
                 }} 
                 required 
