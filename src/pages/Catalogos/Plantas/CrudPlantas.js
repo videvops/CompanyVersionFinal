@@ -16,7 +16,7 @@ import { FilterMatchMode } from 'primereact/api';
 
 const CrudPlantas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const productService = new PlantaService();
+    const plantaService = new PlantaService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -108,7 +108,7 @@ const CrudPlantas = ({titulos, notificaciones}) => {
     }
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
-        console.log("Producto eliminado: "+product.id);
+        console.log("Se elimino el ID: "+product.id);
         deleteProduct(product.id);
         setProduct(emptyProduct);
         toast.current.show({ severity: 'error', summary: 'Atencion!', detail: `${notificaciones.eliminacion}`, life: 3000 });
@@ -116,13 +116,10 @@ const CrudPlantas = ({titulos, notificaciones}) => {
     }
     //------> Eliminar varios productos
     const deleteSelectedProducts = () => {
-        let _products = products.filter(val => selectedProducts.includes(val)); // Producto a eliminar
-        console.log("[+]Registros eliminados: "+_products.length);              // N# de productos a eliminar
-        for(let i=0 ; i<_products.length ; i++){
-            deleteProduct(_products[i].id);
-            console.log("Registro eliminado: "+_products[i].id);
-        }
-        
+        selectedProducts.map( producto => {
+            console.log("Se elimino el ID: " + producto.id)
+            return deleteProduct(producto.id)
+        })
         setDeleteProductsDialog(false);                                         // Ocultara dialogo
         setSelectedProducts(null);                                              // Elemetos seleccionados = 0
         toast.current.show({ severity: 'error', summary: 'Atencion!', detail: `${notificaciones.eliminaciones}`, life: 3000 });
@@ -167,7 +164,7 @@ const CrudPlantas = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await productService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await plantaService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -180,30 +177,37 @@ const CrudPlantas = ({titulos, notificaciones}) => {
 
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
-        content=<TablaPlantas 
-        BotonesCabezal={BotonesCabezal} 
-        ExportarRegistros={ExportarRegistros} 
-        dt={dt} 
-        products={products} 
-        selectedProducts={selectedProducts} 
-        filters={filters} 
-        setSelectedProducts={setSelectedProducts} 
-        header={header}
-        actionBodyTemplate={actionBodyTemplate} 
-        />
+        content=(
+        <TablaPlantas 
+            BotonesCabezal={BotonesCabezal} 
+            ExportarRegistros={ExportarRegistros} 
+            dt={dt} 
+            products={products} 
+            selectedProducts={selectedProducts} 
+            filters={filters} 
+            setSelectedProducts={setSelectedProducts} 
+            header={header}
+            actionBodyTemplate={actionBodyTemplate} 
+        />)
     }
 
     if(error)content=<p>{error}</p>
     if(isLoading)content=<p>Cargando...</p>
+    
+    //---> Obtener Registros
+    useEffect(()=>{
+        plantaService.readAll().then((data) => setProducts(data));
+    },[])   // eslint-disable-line react-hooks/exhaustive-deps
 
-
+    //---> Cuando cambien los registros
+    useEffect(()=>{
+        plantaService.readAll().then((data) => setProducts(data));
+    },[products])   // eslint-disable-line react-hooks/exhaustive-deps
+    
+    //---> Funcion de manejo de respuesta axios
     useEffect(()=>{
         CargarDatos();
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    useEffect(() => {
-        productService.readAll().then((data) => setProducts(data));
-    }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
     return (
