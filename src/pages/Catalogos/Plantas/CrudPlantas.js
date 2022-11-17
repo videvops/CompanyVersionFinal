@@ -194,20 +194,16 @@ const CrudPlantas = ({titulos, notificaciones}) => {
     if(error)content=<p>{error}</p>
     if(isLoading)content=<p>Cargando...</p>
     
-    //---> Obtener Registros
+    //---> Funcion de manejo de respuesta axios
     useEffect(()=>{
-        plantaService.readAll().then((data) => setProducts(data));
-    },[])   // eslint-disable-line react-hooks/exhaustive-deps
-
+        CargarDatos();
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+    
     //---> Cuando cambien los registros
     useEffect(()=>{
         plantaService.readAll().then((data) => setProducts(data));
     },[products])   // eslint-disable-line react-hooks/exhaustive-deps
     
-    //---> Funcion de manejo de respuesta axios
-    useEffect(()=>{
-        CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
     return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 //CAMBIAR...
-import TablaTipoParo from './Tabla/TablaTipoParo';
+import TablaUsuarios from './Tabla/TablaUsuarios';
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
@@ -8,7 +8,7 @@ import CrearModificar from './Dialogos/CrearModificar';
 import { emptyProduct } from './Objetos/ProductoVacio';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
 // CAMBIAR...
-import { TiposParoService } from '../../../service/TiposParoService';
+import { UsuarioService } from '../../../service/UsuarioService';
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar';
 
@@ -16,9 +16,9 @@ import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const CrudTipoParo = ({titulos, notificaciones}) => {
+const CrudUsuarios = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const tipoParoService = new TiposParoService();
+    const usuarioService = new UsuarioService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -41,7 +41,12 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreTipoParo': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'usuario': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombre': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'apellidoPaterno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'apellidoMaterno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'rol': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'empleado': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -61,8 +66,8 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
 //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
     const openNew = () => {
-        setProduct(emptyProduct);
-        setProductDialog(true);
+        setProduct(emptyProduct)
+        setProductDialog(true)
     }
     //------> 
     const hideDialog = () => {
@@ -166,7 +171,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await tipoParoService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await usuarioService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -178,9 +183,9 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     }
 
     let content=<p>Sin registros</p>
-    if(!isLoading && !error){
+    if(/*!isLoading && !error*/true){
         content=(
-        <TablaTipoParo 
+        <TablaUsuarios 
             BotonesCabezal={BotonesCabezal} 
             ExportarRegistros={ExportarRegistros} 
             dt={dt} 
@@ -193,15 +198,15 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
         />)
     }
 
-    if(error)content=<p>{error}</p>
-    if(isLoading)content=<p>Cargando...</p>
+    // if(error)content=<p>{error}</p>
+    // if(isLoading)content=<p>Cargando...</p>
     
     useEffect(()=>{
         CargarDatos();
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
     
     useEffect(() => {
-        tipoParoService.readAll().then((data) => setProducts(data));
+        usuarioService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
@@ -217,6 +222,8 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
             hideDialog={hideDialog}
             product={product}
             updateField={updateField}
+            // rol={rol}
+            // setRol={setRol}
             />
 
             <EliminarUno
@@ -236,4 +243,4 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     );
 }
 
-export default CrudTipoParo;
+export default CrudUsuarios;

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 //CAMBIAR...
-import TablaTipoParo from './Tabla/TablaTipoParo';
+import TablaRoles from './Tabla/TablaRoles';
+
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
 import { emptyProduct } from './Objetos/ProductoVacio';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
-// CAMBIAR...
-import { TiposParoService } from '../../../service/TiposParoService';
+//CAMBIAR...
+import { RolService } from '../../../service/RolService';
+
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar';
 
@@ -16,9 +18,9 @@ import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const CrudTipoParo = ({titulos, notificaciones}) => {
+const CrudRoles = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const tipoParoService = new TiposParoService();
+    const rolService = new RolService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -41,7 +43,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreTipoParo': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombreArea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -166,7 +168,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await tipoParoService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await rolService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -180,7 +182,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
         content=(
-        <TablaTipoParo 
+        <TablaRoles 
             BotonesCabezal={BotonesCabezal} 
             ExportarRegistros={ExportarRegistros} 
             dt={dt} 
@@ -196,13 +198,16 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     if(error)content=<p>{error}</p>
     if(isLoading)content=<p>Cargando...</p>
     
+    //---> Funcion de manejo de respuesta axios
     useEffect(()=>{
         CargarDatos();
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
     
-    useEffect(() => {
-        tipoParoService.readAll().then((data) => setProducts(data));
-    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
+    //---> Cuando cambien los registros
+    useEffect(()=>{
+        rolService.readAll().then((data) => setProducts(data));
+    },[products])   // eslint-disable-line react-hooks/exhaustive-deps
+    
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -236,4 +241,4 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     );
 }
 
-export default CrudTipoParo;
+export default CrudRoles;

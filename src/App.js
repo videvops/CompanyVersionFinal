@@ -33,6 +33,8 @@ import CatalogoPlantas from "./pages/Catalogos/Plantas/CatalogoPlantas";
 import CatalogoLineas from "./pages/Catalogos/Lineas/CatalogoLineas";
 import CatalogoAreas from "./pages/Catalogos/Areas/CatalogoAreas";
 import CatalogoTipoParo from "./pages/Catalogos/TiposParo/CatalogoTipoParo";
+import CatalogoRoles from "./pages/Catalogos/Roles/CatalogoRoles";
+import CatalogoUsuarios from "./pages/Catalogos/Usuarios/CatalogoUsuarios";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 
@@ -198,11 +200,14 @@ const App = () => {
                 {
                     label: "Catalogo",
                     icon: "pi pi-fw pi-database text-blue-500",
+                    // CAMBIAR....
                     items: [
                         { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas"},
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas"},
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
+                        { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles"},
                         { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo"},
+                        { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios"},
                         {
                             label: "Maquina",
                             icon: "pi pi-fw pi-bookmark text-blue-500",
@@ -264,7 +269,9 @@ const App = () => {
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
+                    <Route path="/catalogoRoles" component={CatalogoRoles} />
                     <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
+                    <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />
