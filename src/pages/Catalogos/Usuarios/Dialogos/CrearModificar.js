@@ -4,7 +4,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 
-const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,rol,setRol}) => {
+const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
     const roles=[
         {rol:"Administrador",value:"administrador"},
         {rol:"Usuario",value:"usuario"},
@@ -18,8 +18,10 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
     const Verificar=(texto)=>{
         if (!expresion.test(texto)){
-            setValidarNombre("p-invalid");
-            setBoton(true);
+            setTimeout(() => {                                          // Validacion despues de 3 seg
+                setValidarNombre("p-invalid");
+                setBoton(true);
+            }, 3000);
         }else{
             setValidarNombre("");
             setBoton(false);
@@ -45,12 +47,12 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 <label>Rol</label>
                 <Dropdown
                     value={product.rol} 
-                    options={roles} 
+                    options={roles}                     // Constantes de select 
                     onChange={ e => {
                         updateField(e.value, "rol");
                         console.log(product.usuario)
                     }} 
-                    optionLabel="rol" 
+                    optionLabel="rol"                   // Elemento del objeto 
                     placeholder="Selecciona un rol" 
                 />
             </div>

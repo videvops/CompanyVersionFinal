@@ -15,8 +15,8 @@ const Exportar = (products) => {
                         { header: 'Apellido Paterno', dataKey: 'apellidoPaterno' },
                         { header: 'Apellido Materno', dataKey: 'apellidoMaterno' },
                         { header: 'Direccion', dataKey: 'direccion' },
-                        { header: 'Empresa', dataKey: 'empresa' },
                         { header: 'Rol', dataKey: 'rol' },
+                        { header: 'Empleado', dataKey: 'empleado' },
                     ],
                     body:products,                                  // Registros de BD
                     margin:{top:35},

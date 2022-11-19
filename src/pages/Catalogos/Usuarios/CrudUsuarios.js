@@ -183,7 +183,7 @@ const CrudUsuarios = ({titulos, notificaciones}) => {
     }
 
     let content=<p>Sin registros</p>
-    if(/*!isLoading && !error*/true){
+    if(!isLoading && !error){
         content=(
         <TablaUsuarios 
             BotonesCabezal={BotonesCabezal} 
@@ -198,8 +198,8 @@ const CrudUsuarios = ({titulos, notificaciones}) => {
         />)
     }
 
-    // if(error)content=<p>{error}</p>
-    // if(isLoading)content=<p>Cargando...</p>
+    if(error)content=<p>{error}</p>
+    if(isLoading)content=<p>Cargando...</p>
     
     useEffect(()=>{
         CargarDatos();
@@ -222,8 +222,6 @@ const CrudUsuarios = ({titulos, notificaciones}) => {
             hideDialog={hideDialog}
             product={product}
             updateField={updateField}
-            // rol={rol}
-            // setRol={setRol}
             />
 
             <EliminarUno

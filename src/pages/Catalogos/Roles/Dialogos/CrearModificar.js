@@ -12,8 +12,10 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
     const Verificar=(texto)=>{
         if (!expresion.test(texto)){
-            setValidarNombre("p-invalid");
-            setBoton(true);
+            setTimeout(() => {                                          // Validacion despues de 3 seg
+                setValidarNombre("p-invalid");
+                setBoton(true);
+            }, 3000);
         }else{
             setValidarNombre("");
             setBoton(false);

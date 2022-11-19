@@ -12,6 +12,8 @@ const Exportar = (products) => {
                     columns:[                                       // Columnas
                         { header: 'ID', dataKey: 'id' },
                         { header: 'TipoParo', dataKey: 'nombreTipoParo' },
+                        { header: 'Descripcion', dataKey: 'descripcion' },
+                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion'},
                     ],
                     body:products,                                  // Registros de BD
                     margin:{top:35},

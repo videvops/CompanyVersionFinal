@@ -4,10 +4,10 @@ import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 
 const TablaUsuarios = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
-    const valoresFicticios=[
-        {id:1,usuario:"persona1",nombre:"nombre1",apellidoPaterno:"perez",apellidoMaterno:"materno1", rol:"administrador",empleado:"empleado1"},
-        {id:2,usuario:"persona2",nombre:"Juan",apellidoPaterno:"paterno2",apellidoMaterno:"materno2", rol:"usuario",empleado:"empleado2"},
-    ]
+    // const valoresFicticios=[
+    //     {id:1,usuario:"persona1",nombre:"nombre1",apellidoPaterno:"perez",apellidoMaterno:"materno1", rol:"administrador",empleado:"empleado1"},
+    //     {id:2,usuario:"persona2",nombre:"Juan",apellidoPaterno:"paterno2",apellidoMaterno:"materno2", rol:"usuario",empleado:"empleado2"},
+    // ]
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -16,8 +16,8 @@ const TablaUsuarios = ({BotonesCabezal,ExportarRegistros,dt,products,selectedPro
 
             <DataTable 
             ref={dt} 
-            // value={products}
-            value={valoresFicticios}
+            value={products}
+            // value={valoresFicticios}
             selection={selectedProducts} 
             filters={filters}
             onSelectionChange={(e) => setSelectedProducts(e.value)} 
