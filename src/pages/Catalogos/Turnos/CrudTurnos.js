@@ -187,8 +187,8 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     }
 
     let content=<p>Sin registros</p>
-    if(true){
-    // if(!isLoading && !error){
+    // if(true){
+    if(!isLoading && !error){
         content=(
         <TablaTurnos
             BotonesCabezal={BotonesCabezal} 
@@ -203,8 +203,8 @@ const CrudTurnos = ({titulos, notificaciones}) => {
         />)
     }
 
-    // if(error)content=<p>{error}</p>
-    // if(isLoading)content=<p>Cargando...</p>
+    if(error)content=<p>{error}</p>
+    if(isLoading)content=<p>Cargando...</p>
     
     useEffect(()=>{
         CargarDatos();

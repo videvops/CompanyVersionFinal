@@ -54,15 +54,15 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         >
             <div className="field">
                 <label 
-                htmlFor="nombreTurno"                                   // CAMBIAR...
+                htmlFor="nombre"                                   // CAMBIAR...
                 >
-                    Turno
+                    Nombre del Turno
                 </label>
                 <InputText 
-                id="nombreTurno"                                        // CAMBIAR...
-                value={product.nombreTurno}                             // CAMBIAR...
+                id="nombre"                                        // CAMBIAR...
+                value={product.nombre}                             // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombreTurno");  // CAMBIAR...
+                    updateField(e.target.value.trim(), "nombre");  // CAMBIAR...
                     Verificar(e.target.value)
                 }} 
                 required 
@@ -79,15 +79,14 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     Hora de inicio
                 </label>
                 <InputText
-                type="number" 
-                min={0}
                 id="horaInicio"                                        // CAMBIAR...
                 value={product.horaInicio}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "horaInicio");  // CAMBIAR...
                 }} 
                 required 
-                autoFocus 
+                autoFocus
+                placeholder='Ejemplo => 07:20:00'
                 />
             </div>
             <div className="field">
@@ -97,8 +96,6 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     Hora de Fin
                 </label>
                 <InputText 
-                type="number"
-                min={0}
                 id="horaFin"                                            // CAMBIAR...
                 value={product.horaFin}                             // CAMBIAR...
                 onChange={(e) => {
@@ -106,28 +103,45 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 }} 
                 required 
                 autoFocus
+                placeholder='Ejemplo => 07:30:00'
                 />
             </div>
             <div className="field">
+                <label 
+                htmlFor="idCreadoPor"                                   // CAMBIAR...
+                >
+                    Creado por
+                </label>
+                <InputText 
+                id="idCreadoPor"                                            // CAMBIAR...
+                value={product.idCreadoPor}                             // CAMBIAR...
+                onChange={(e) => {
+                    updateField(e.target.value.trim(), "idCreadoPor");  // CAMBIAR...
+                }} 
+                required 
+                autoFocus
+                />
+            </div>
+            {!tieneId && (<div className="field">
                 <label>Status</label>
                 <Dropdown
-                    value={product.status} 
+                    value={product.idStatus} 
                     options={statusDisponibles} 
                     onChange={ e => {
-                        updateField(e.value, "status");
+                        updateField(e.value, "idStatus");
                     }} 
                     optionLabel="status" 
                     placeholder="--Selecciona un status--"
-                    disabled={tieneId} 
+                    // disabled={tieneId} 
                 />
-            </div>
+            </div>)}
             <div className="field">
                 <label>Linea</label>
                 <Dropdown
-                    value={product.linea} 
+                    value={product.idLinea} 
                     options={lineasDisponibles} 
                     onChange={ e => {
-                        updateField(e.value, "linea");
+                        updateField(e.value, "idLinea");
                     }} 
                     optionLabel="linea" 
                     placeholder="--Selecciona una linea--" 
