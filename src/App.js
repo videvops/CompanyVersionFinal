@@ -35,6 +35,8 @@ import CatalogoAreas from "./pages/Catalogos/Areas/CatalogoAreas";
 import CatalogoTipoParo from "./pages/Catalogos/TiposParo/CatalogoTipoParo";
 import CatalogoRoles from "./pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoUsuarios from "./pages/Catalogos/Usuarios/CatalogoUsuarios";
+import CatalogoTurnos from "./pages/Catalogos/Turnos/CatalogoTurnos";
+import CatalogoDirecciones from "./pages/Catalogos/Direcciones/CatalogoDirecciones";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 
@@ -193,7 +195,7 @@ const App = () => {
                 { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
-        {
+        {   //CAMBIAR...
             label: "Catalogos",
             icon: "pi pi-fw pi-search ",
             items: [
@@ -203,10 +205,12 @@ const App = () => {
                     // CAMBIAR....
                     items: [
                         { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas"},
+                        { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones"},
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas"},
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles"},
                         { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo"},
+                        { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos"},
                         { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios"},
                         {
                             label: "Maquina",
@@ -267,10 +271,12 @@ const App = () => {
                     <Route path="/desperdicio" component={Desperdecio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
+                    <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/catalogoRoles" component={CatalogoRoles} />
                     <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
+                    <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />

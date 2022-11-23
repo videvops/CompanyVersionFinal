@@ -3,13 +3,14 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 
-const TablaAreas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
+const TablaTurnos = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
     const areasFicticias=[
-        {id:1,planta:"plantaA",nombreArea:"AreaA"},
-        {id:2,planta:"plantaB",nombreArea:"AreaB"},
-        {id:3,planta:"plantaC",nombreArea:"AreaC"},
-        {id:4,planta:"plantaD",nombreArea:"AreaD"}
+        {id:1,nombreTurno:"Turno1",horaInicio:"9",horaFin:"10",linea:'linea1',fechaCracion:'10-12-2004',status:'activo'},
+        {id:2,nombreTurno:"Turno2",horaInicio:"1",horaFin:"3",linea:'linea2',fechaCracion:'12-03-2006',status:'inactivo'},
+        {id:3,nombreTurno:"Turno3",horaInicio:"4",horaFin:"8",linea:'linea3',fechaCracion:'11-09-2007',status:'pendiente'},
+        {id:4,nombreTurno:"Turno4",horaInicio:"5",horaFin:"7",linea:'linea4',fechaCracion:'23-11-2008',status:'activo'},
     ]
+
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="card">
@@ -17,8 +18,8 @@ const TablaAreas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProduc
 
             <DataTable 
             ref={dt} 
-            value={products} 
-            // value={areasFicticias}
+            // value={products} 
+            value={areasFicticias}
             selection={selectedProducts} 
             filters={filters}
             onSelectionChange={(e) => setSelectedProducts(e.value)} 
@@ -30,7 +31,7 @@ const TablaAreas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProduc
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
             // CAMBIAR...
-            globalFilterFields={['id', 'nombreArea','planta']}
+            globalFilterFields={['id', 'nombreTurno','horaInicio','horaFin','linea','fechaCreacion','status']}
             emptyMessage="No se encontraron resultados."
             header={header} 
             responsiveLayout="scroll"
@@ -38,15 +39,16 @@ const TablaAreas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProduc
                 {/* // CAMBIAR.............. */}
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}/>
                 <Column field="id" header="ID" sortable style={{ width: '7rem',textAlign:'center' }}/>
-                <Column field="planta" header="Planta" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
-                <Column field="nombreArea" header="Area" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
-                <Column field="descripcion" header="Descripción" sortable style={{ minWidth: '7rem',textAlign:'center' }}/>
+                <Column field="nombreTurno" header="Turno" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
+                <Column field="horaInicio" header="Hora de Inicio" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
+                <Column field="horaFin" header="Hora de Fin" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
+                <Column field="linea" header="Linea" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
+                <Column field="fechaCreacion" header="Fecha de creacion" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
                 <Column field="status" header="Status" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
-                <Column field="fechaCreacion" header="Fecha de Creación" sortable style={{ minWidth: '3rem',textAlign:'center' }}/>
                 <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: '3rem' }}/>
             </DataTable>
         </div>
     )
 }
 
-export default TablaAreas
+export default TablaTurnos

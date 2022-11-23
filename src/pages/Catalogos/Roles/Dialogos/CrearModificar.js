@@ -15,7 +15,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
             setTimeout(() => {                                          // Validacion despues de 3 seg
                 setValidarNombre("p-invalid");
                 setBoton(true);
-            }, 3000);
+            }, 2000);
         }else{
             setValidarNombre("");
             setBoton(false);
