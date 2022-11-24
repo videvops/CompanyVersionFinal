@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { AreaService } from "../../../../service/AreaService";
+import { ModoFallaService } from "../../../../service/ModoFallaService";
 import { ProductContext } from "./ProductContext";
 
-const AreaContextProvider = (props) => {
+const ModoFallaProvider = (props) => {
     //--------------------| Importacion de metodos axios |--------------------
-    const areaService = new AreaService();
+    const modofallaService = new ModoFallaService();
 
     //--------------------| Uso de estados |--------------------
     const [products, setProducts] = useState([]);
@@ -12,15 +12,15 @@ const AreaContextProvider = (props) => {
     //--------------------| Funciones de Crud |--------------------
     //------> Crear nuevo producto
     const createProduct = (product) => {
-        areaService.create(product).then((data) => setProducts([...products, data]));
+        modofallaService.create(product).then((data) => setProducts([...products, data]));
     };
     //------> Actualizar producto
     const updateProduct = (product) => {
-        areaService.update(product).then((data) => setProducts(products.map((p) => (p.id === product.id ? data : product))));
+        modofallaService.update(product).then((data) => setProducts(products.map((p) => (p.id === product.id ? data : product))));
     };
     //------> Eliminar producto
     const deleteProduct = (id) => {
-        areaService.delete(id).then(() => setProducts(products.filter((p) => p.id !== id)));
+        modofallaService.delete(id).then(() => setProducts(products.filter((p) => p.id !== id)));
     };
 
     //--------------------| Funciones de Crud |--------------------
@@ -40,4 +40,4 @@ const AreaContextProvider = (props) => {
     );
 };
 
-export default AreaContextProvider;
+export default ModoFallaProvider;

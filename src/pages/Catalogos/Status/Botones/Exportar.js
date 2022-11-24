@@ -12,7 +12,7 @@ const Exportar = (products) => {
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Catalogo status", dataKey: "nombreStatus" },
+                        { header: "Modo Falla", dataKey: "nombreStatus" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },
@@ -22,7 +22,7 @@ const Exportar = (products) => {
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
-                doc.save(`Status_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+                doc.save(`Lineas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
             });
         });
     };

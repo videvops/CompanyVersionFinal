@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import TablaAreas from './Tabla/TablaAreas';
+//CAMBIAR...
+import TablaTipoParo from './Tabla/TablaTipoParo';
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
-import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
-import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
+import { emptyProduct } from './Objetos/ProductoVacio';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
-import { AreaService } from '../../../service/AreaService';
-import { emptyProduct } from './Objetos/AreaVacio';
+// CAMBIAR...
+import { TiposParoService } from '../../../service/TiposParoService';
+import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
+import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const CrudAreas = ({titulos, notificaciones}) => {
+const CrudTipoParo = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const areaService = new AreaService();
+    const tipoParoService = new TiposParoService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -39,7 +41,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreArea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombreTipoParo': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -164,7 +166,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await areaService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await tipoParoService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -178,7 +180,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
         content=(
-        <TablaAreas 
+        <TablaTipoParo 
             BotonesCabezal={BotonesCabezal} 
             ExportarRegistros={ExportarRegistros} 
             dt={dt} 
@@ -196,18 +198,18 @@ const CrudAreas = ({titulos, notificaciones}) => {
     
     //---> Obtener Registros
     useEffect(()=>{
-        areaService.readAll().then((data) => setProducts(data));
-    },[])   // eslint-disable-line react-hooks/exhaustive-deps
+        tipoParoService.readAll().then((data) => setProducts(data));
+    },[])  // eslint-disable-line react-hooks/exhaustive-deps
 
     //---> Cuando cambien los registros
     useEffect(()=>{
-        areaService.readAll().then((data) => setProducts(data));
-    },[products])   // eslint-disable-line react-hooks/exhaustive-deps
+        tipoParoService.readAll().then((data) => setProducts(data));
+    },[products]) // eslint-disable-line react-hooks/exhaustive-deps
     
     //---> Funcion de manejo de respuesta axios
     useEffect(()=>{
         CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -241,4 +243,4 @@ const CrudAreas = ({titulos, notificaciones}) => {
     );
 }
 
-export default CrudAreas;
+export default CrudTipoParo;

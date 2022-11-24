@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { AreaService } from "../../../../service/AreaService";
+import { MaquinasService } from "../../../../service/MaquinasService";
 import { ProductContext } from "./ProductContext";
 
-const AreaContextProvider = (props) => {
+const MaquinaProvider = (props) => {
     //--------------------| Importacion de metodos axios |--------------------
-    const areaService = new AreaService();
+    const maquinaService = new MaquinasService();
 
     //--------------------| Uso de estados |--------------------
     const [products, setProducts] = useState([]);
@@ -12,15 +12,15 @@ const AreaContextProvider = (props) => {
     //--------------------| Funciones de Crud |--------------------
     //------> Crear nuevo producto
     const createProduct = (product) => {
-        areaService.create(product).then((data) => setProducts([...products, data]));
+        maquinaService.create(product).then((data) => setProducts([...products, data]));
     };
     //------> Actualizar producto
     const updateProduct = (product) => {
-        areaService.update(product).then((data) => setProducts(products.map((p) => (p.id === product.id ? data : product))));
+        maquinaService.update(product).then((data) => setProducts(products.map((p) => (p.id === product.id ? data : product))));
     };
     //------> Eliminar producto
     const deleteProduct = (id) => {
-        areaService.delete(id).then(() => setProducts(products.filter((p) => p.id !== id)));
+        maquinaService.delete(id).then(() => setProducts(products.filter((p) => p.id !== id)));
     };
 
     //--------------------| Funciones de Crud |--------------------
@@ -40,4 +40,4 @@ const AreaContextProvider = (props) => {
     );
 };
 
-export default AreaContextProvider;
+export default MaquinaProvider;

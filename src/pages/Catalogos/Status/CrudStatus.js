@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { ModoFallaService } from "../../../service/ModoFallaService";
+import { StatusService } from "../../../service/StatusService";
 import { emptyProduct } from "./Objetos/ProductoVacio";
 import Exportar from "./Botones/Exportar";
 import { leftToolbarTemplate } from "../ComponentsCat/Botones/AgregarEliminar";
@@ -8,7 +8,7 @@ import { renderHeader } from "../ComponentsCat/Buscador/Cabezal";
 import EliminarVarios from "./Dialogos/EliminarVarios";
 import EliminarUno from "./Dialogos/EliminarUno";
 import CrearModificar from "./Dialogos/CrearModificar";
-import TablaModoFalla from "./Tabla/TablaModoFalla";
+import TablaStatus from "./Tabla/TablaStatus";
 
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
@@ -16,7 +16,7 @@ import { FilterMatchMode } from "primereact/api";
 
 const Crud = (props) => {
     //--------------------| Importacion de metodos axios |--------------------
-    const modoFallaService = new ModoFallaService();
+    const statusService = new StatusService();
 
     //--------------------| Uso de Contextos |--------------------
     const {
@@ -101,7 +101,7 @@ const Crud = (props) => {
             toast.current.show({
                 severity: "success",
                 summary: "Atencion!",
-                detail: "Modos de falla creado",
+                detail: "Status creado",
                 life: 3000,
             });
         } else {
@@ -109,7 +109,7 @@ const Crud = (props) => {
             toast.current.show({
                 severity: "success",
                 summary: "Atencion!",
-                detail: "Modos de falla modificado",
+                detail: "Status modificado",
                 life: 3000,
             });
         }
@@ -124,7 +124,7 @@ const Crud = (props) => {
         toast.current.show({
             severity: "error",
             summary: "Atencion!",
-            detail: "Modos de falla eliminado",
+            detail: "Status eliminado",
             life: 3000,
         });
         setDeleteProductDialog(false);
@@ -143,10 +143,10 @@ const Crud = (props) => {
         toast.current.show({
             severity: "error",
             summary: "Atencion!",
-            detail: "Plantas eliminadas",
+            detail: "Status eliminados",
             life: 3000,
         });
-        modoFallaService.readAll().then((data) => setProducts(data));
+        statusService.readAll().then((data) => setProducts(data));
     };
     //------> Editar producto
     const _editProduct = (product) => {
@@ -193,7 +193,7 @@ const Crud = (props) => {
 
     let content = <p>Sin registros</p>;
     if (!isLoading && !error) {
-        content = <TablaModoFalla BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
+        content = <TablaStatus BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
     }
 
     if (error) content = <p>{error}</p>;
@@ -204,7 +204,7 @@ const Crud = (props) => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        modoFallaService.readAll().then((data) => setProducts(data));
+        statusService.readAll().then((data) => setProducts(data));
     }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
     //--------------------| Valor que regresara |--------------------
