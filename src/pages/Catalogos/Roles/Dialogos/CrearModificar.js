@@ -1,18 +1,9 @@
 import React, {useState} from 'react'
 import { Dialog } from 'primereact/dialog';
-import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
-//--------------------| Plantas disponibles  |--------------------
-    const plantasAreas=[
-        {planta:"PlantaA",value:"plantaA"},
-        {planta:"PlantaB",value:"plantaB"},
-        {planta:"PlantaC",value:"plantaC"},
-        {planta:"PlantaD",value:"plantaD"},
-    ]
-
 //--------------------| Validar campos  |--------------------
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de planta
     const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
@@ -21,7 +12,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
     const Verificar=(texto)=>{
         if (!expresion.test(texto)){
-            setTimeout(() => {                                          // Validacion despues de 2 seg
+            setTimeout(() => {                                          // Validacion despues de 3 seg
                 setValidarNombre("p-invalid");
                 setBoton(true);
             }, 2000);
@@ -47,28 +38,12 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         onHide={hideDialog}
         >
             <div className="field">
-                <label>Planta</label>
-                <Dropdown
-                    value={product.planta} 
-                    options={plantasAreas} 
-                    onChange={ e => {
-                        updateField(e.value, "planta");
-                    }} 
-                    optionLabel="planta" 
-                    placeholder="--Selecciona una planta--" 
-                />
-            </div>
-            <div className="field">
-                <label 
-                htmlFor="nombreArea"                                   // CAMBIAR...
-                >
-                    Area
-                </label>
+                <label htmlFor="empresa">Empresa</label>
                 <InputText 
-                id="nombreArea"                                        // CAMBIAR...
-                value={product.nombreArea}                             // CAMBIAR...
+                id="empresa" 
+                value={product.empresa} 
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombreArea");  // CAMBIAR...
+                    updateField(e.target.value.trim(), "empresa");
                     Verificar(e.target.value)
                 }} 
                 required 

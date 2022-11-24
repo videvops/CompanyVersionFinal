@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+
 //CAMBIAR...
-import TablaTipoParo from './Tabla/TablaTipoParo';
+import TablaTurnos from './Tabla/Tablaturnos';
 import Exportar from './Botones/Exportar';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
-import { emptyProduct } from './Objetos/ProductoVacio';
-import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
-// CAMBIAR...
-import { TiposParoService } from '../../../service/TiposParoService';
+import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
-import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar';
+import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
+//CAMBIAR...
+import { TurnoService } from '../../../service/TurnoService';
+
+import { emptyProduct } from './Objetos/TurnoVacio';
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
 
-const CrudTipoParo = ({titulos, notificaciones}) => {
+const CrudTurnos = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const tipoParoService = new TiposParoService();
+    const turnoService = new TurnoService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -37,11 +39,18 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
+    const [tieneId, setTieneId] = useState(false)
+
     // CAMBIAR...
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreTipoParo': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombreTurno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'fechaInicio': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'fechaFin': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'fechaCreacion': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'status': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -166,7 +175,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const data=await tipoParoService.readAll()   // Hasta que no se termine de ejecutar la linea
+            const data=await turnoService.readAll()   // Hasta que no se termine de ejecutar la linea
             if(data.ok){
                 throw new Error("Algo salio mal")
             }
@@ -178,9 +187,10 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     }
 
     let content=<p>Sin registros</p>
+    // if(true){
     if(!isLoading && !error){
         content=(
-        <TablaTipoParo 
+        <TablaTurnos
             BotonesCabezal={BotonesCabezal} 
             ExportarRegistros={ExportarRegistros} 
             dt={dt} 
@@ -201,8 +211,16 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
     
     useEffect(() => {
-        tipoParoService.readAll().then((data) => setProducts(data));
+        turnoService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
+//--------------------| Abilitar o inhabilitar boton |--------------------
+    useEffect(()=>{
+        if(product.id){                        // Tiene existe el ID
+            setTieneId(false)
+        }else{                                  // Sino tiene ID
+            setTieneId(true)
+        }
+    },[product])
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -217,6 +235,7 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
             hideDialog={hideDialog}
             product={product}
             updateField={updateField}
+            tieneId={tieneId}
             />
 
             <EliminarUno
@@ -236,4 +255,4 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
     );
 }
 
-export default CrudTipoParo;
+export default CrudTurnos

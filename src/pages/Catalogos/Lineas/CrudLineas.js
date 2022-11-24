@@ -194,20 +194,13 @@ const CrudLineas = ({titulos, notificaciones}) => {
     if(error)content=<p>{error}</p>
     if(isLoading)content=<p>Cargando...</p>
     
-    //---> Obtener Registros
-    useEffect(()=>{
-        lineaService.readAll().then((data) => setProducts(data));
-    },[])   // eslint-disable-line react-hooks/exhaustive-deps
-
-    //---> Cuando cambien los registros
-    useEffect(()=>{
-        lineaService.readAll().then((data) => setProducts(data));
-    },[products])   // eslint-disable-line react-hooks/exhaustive-deps
-    
-    //---> Funcion de manejo de respuesta axios
     useEffect(()=>{
         CargarDatos();
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
+    
+    useEffect(() => {
+        lineaService.readAll().then((data) => setProducts(data));
+    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Valor que regresara |--------------------
     return (

@@ -9,10 +9,20 @@ const Exportar = (products) => {
                 const doc = new jsPDF.default(0, 0);
 
                 doc.autoTable({
+<<<<<<< HEAD
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
                         { header: "Catalogo status", dataKey: "nombreStatus" },
+=======
+                    columns:[                                       // CAMBIAR...
+                        { header: 'ID', dataKey: 'id' },
+                        { header: 'Planta', dataKey: 'planta' },
+                        { header: 'Area', dataKey: 'nombreArea' },
+                        { header: 'Descripcion', dataKey: 'descripcion' },
+                        { header: 'Status', dataKey: 'status' },
+                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion' },
+>>>>>>> 83e633f0f84f3af4df2a115f63f0b2b9b5a9ffcf
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },

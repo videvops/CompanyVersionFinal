@@ -11,18 +11,21 @@ const Exportar = (products) => {
                 doc.autoTable({
                     columns:[                                       // Columnas
                         { header: 'ID', dataKey: 'id' },
-                        { header: 'TipoParo', dataKey: 'nombreTipoParo' },
-                        { header: 'Descripcion', dataKey: 'descripcion' },
-                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion'},
+                        { header: 'Nombre', dataKey: 'nombre' },
+                        { header: 'Apellido Paterno', dataKey: 'apellidoPaterno' },
+                        { header: 'Apellido Materno', dataKey: 'apellidoMaterno' },
+                        { header: 'Direccion', dataKey: 'direccion' },
+                        { header: 'Rol', dataKey: 'rol' },
+                        { header: 'Empleado', dataKey: 'empleado' },
                     ],
                     body:products,                                  // Registros de BD
                     margin:{top:35},
                     didDrawPage:function(data){
-                    doc.text("Catalogo Tipos paro", 20, 30);           // Encabezado   /   CAMBIAR...
+                    doc.text("Catalogo Usuarios", 20, 30);           // Encabezado
                 }})
 
                 const fecha=new Date().getTime()                    // Fecha en tiempo real
-                doc.save(`TiposParo_export_${fecha}.pdf`);            // template string
+                doc.save(`Usuarios_export_${fecha}.pdf`);            // template string
             })
         })
     }
@@ -34,7 +37,7 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-            saveAsExcelFile(excelBuffer, 'TiposParo');                  // CAMBIAR...
+            saveAsExcelFile(excelBuffer, 'Usuarios');
         });
     }
 

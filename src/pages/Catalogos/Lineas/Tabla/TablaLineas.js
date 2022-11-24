@@ -4,6 +4,11 @@ import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 
 const TablaLineas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProducts,filters,setSelectedProducts,header,actionBodyTemplate}) => {
+    const lineasFicticias=[
+        {id:1,planta:"plantaA",area:"areaA",nombreLinea:"LineaA",descripcion:"Des1",fechaCreacion:"10-09-2003"},
+        {id:2,planta:"plantaB",area:"areaB",nombreLinea:"LineaB",descripcion:"Des2",fechaCreacion:"23-12-2001"},
+        {id:3,planta:"plantaC",area:"areaC",nombreLinea:"LineaC",descripcion:"Des3",fechaCreacion:"09-02-2004"},
+    ]
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="card">
@@ -11,7 +16,8 @@ const TablaLineas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProdu
 
             <DataTable 
             ref={dt} 
-            value={products} 
+            // value={products} 
+            value={lineasFicticias}
             selection={selectedProducts} 
             filters={filters}
             onSelectionChange={(e) => setSelectedProducts(e.value)} 
@@ -23,7 +29,7 @@ const TablaLineas = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProdu
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
             // CAMBIAR...
-            globalFilterFields={['id', 'nombreLinea']}
+            globalFilterFields={['id', 'nombreLinea','descripcion','fechaCreacion']}
             emptyMessage="No se encontraron resultados."
             header={header} 
             responsiveLayout="scroll"

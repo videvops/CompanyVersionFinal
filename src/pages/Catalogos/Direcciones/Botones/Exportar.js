@@ -9,20 +9,23 @@ const Exportar = (products) => {
                 const doc = new jsPDF.default(0, 0);
 
                 doc.autoTable({
-                    columns:[                                       // Columnas
+                    columns:[                                       // CAMBIAR...
                         { header: 'ID', dataKey: 'id' },
-                        { header: 'TipoParo', dataKey: 'nombreTipoParo' },
-                        { header: 'Descripcion', dataKey: 'descripcion' },
-                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion'},
+                        { header: 'Turno', dataKey: 'nombreTurno' },
+                        { header: 'Hora de inicio', dataKey: 'horaInicio' },
+                        { header: 'Hora de fin', dataKey: 'horaFin' },
+                        { header: 'Linea', dataKey: 'linea' },
+                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion' },
+                        { header: 'Status', dataKey: 'status' },
                     ],
                     body:products,                                  // Registros de BD
                     margin:{top:35},
                     didDrawPage:function(data){
-                    doc.text("Catalogo Tipos paro", 20, 30);           // Encabezado   /   CAMBIAR...
+                    doc.text("Catalogo Turnos", 20, 30);            // CAMBIAR...
                 }})
 
                 const fecha=new Date().getTime()                    // Fecha en tiempo real
-                doc.save(`TiposParo_export_${fecha}.pdf`);            // template string
+                doc.save(`Turnos_export_${fecha}.pdf`);             // template string  /   CAMBIAR...
             })
         })
     }
@@ -34,7 +37,7 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-            saveAsExcelFile(excelBuffer, 'TiposParo');                  // CAMBIAR...
+            saveAsExcelFile(excelBuffer, 'Turnos');                 // CAMBIAR...
         });
     }
 
