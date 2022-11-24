@@ -37,6 +37,7 @@ import CatalogoRoles from "./pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoUsuarios from "./pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "./pages/Catalogos/Turnos/CatalogoTurnos";
 import CatalogoDirecciones from "./pages/Catalogos/Direcciones/CatalogoDirecciones";
+import CatalogoMaquinas from "./pages/Catalogos/Maquinas/CatalogoMaquinas";
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
 
@@ -216,6 +217,7 @@ const App = () => {
                         {
                             label: "Maquina",
                             icon: "pi pi-fw pi-bookmark text-blue-500",
+                            to: "/catalogoMaquinas",
                         },
                         {
                             label: "Modo de Falla",
@@ -279,6 +281,7 @@ const App = () => {
                     <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
+                    <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />

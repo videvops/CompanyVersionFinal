@@ -33,7 +33,7 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                 <label
                     htmlFor="nombreMaquinas" // CAMBIAR...
                 >
-                    Linea
+                    Maquina
                 </label>
                 <InputText
                     id="nombreMaquinas" // CAMBIAR...

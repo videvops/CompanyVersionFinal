@@ -1,14 +1,14 @@
 import React from "react";
-import CrudLineas from "./CrudMaquinas";
-import LineaContextProvider from "../ComponentsCat/Contexts/MaquinasContext";
+import CrudMaquinas from "./CrudMaquinas";
+import MaquinaContextProvider from "../ComponentsCat/Contexts/MaquinasContext";
 import { titulos, notificaciones } from "./Objetos/Constantes";
 
 const CatalogoMaquinas = () => {
     return (
         <React.Fragment>
-            <LineaContextProvider>
-                <CrudLineas titulos={titulos} notificaciones={notificaciones} />
-            </LineaContextProvider>
+            <MaquinaContextProvider>
+                <CrudMaquinas titulos={titulos} notificaciones={notificaciones} />
+            </MaquinaContextProvider>
         </React.Fragment>
     );
 };

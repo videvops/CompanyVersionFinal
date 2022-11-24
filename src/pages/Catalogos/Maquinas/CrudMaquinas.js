@@ -35,6 +35,7 @@ const Crud = (props) => {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState("");
+    const [tieneId, setTieneId] = useState(false);
     // CAMBIAR...
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -179,25 +180,26 @@ const Crud = (props) => {
     async function CargarDatos() {
         setIsLoading(true);
         setError(null);
-        /*try {
-      const data = await productService.readAll(); // Hasta que no se termine de ejecutar la linea
-      if (data.ok) {
-        throw new Error("Algo salio mal");
-      }
-      setProducts(data);
-    } catch (error) {
-      setError(error.message);
-    }*/
+        try {
+            const data = await maquinasService.readAll(); // Hasta que no se termine de ejecutar la maquina
+            if (data.ok) {
+                throw new Error("Algo salio mal");
+            }
+            setProducts(data);
+        } catch (error) {
+            setError(error.message);
+        }
         setIsLoading(false);
     }
 
     let content = <p>Sin registros</p>;
-    if (!isLoading && !error) {
+    if (true) {
+        // if(!isLoading && !error){
         content = <TablaMaquinas BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
     }
 
-    if (error) content = <p>{error}</p>;
-    if (isLoading) content = <p>Cargando...</p>;
+    // if(error)content=<p>{error}</p>
+    // if(isLoading)content=<p>Cargando...</p>
 
     useEffect(() => {
         CargarDatos();
@@ -205,7 +207,17 @@ const Crud = (props) => {
 
     useEffect(() => {
         maquinasService.readAll().then((data) => setProducts(data));
-    }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
+    //--------------------| Abilitar o inhabilitar boton |--------------------
+    useEffect(() => {
+        if (product.id) {
+            // Tiene existe el ID
+            setTieneId(false);
+        } else {
+            // Sino tiene ID
+            setTieneId(true);
+        }
+    }, [product]);
 
     //--------------------| Valor que regresara |--------------------
     return (
@@ -213,7 +225,7 @@ const Crud = (props) => {
             <Toast ref={toast} />
             {content}
 
-            <CrearModificar productDialog={productDialog} titulos={props.titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} />
+            <CrearModificar productDialog={productDialog} titulos={props.titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} tieneId={tieneId} />
 
             <EliminarUno deleteProductDialog={deleteProductDialog} _deleteProduct={_deleteProduct} hideDeleteProductDialog={hideDeleteProductDialog} product={product} />
 
