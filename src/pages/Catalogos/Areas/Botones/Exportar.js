@@ -9,30 +9,24 @@ const Exportar = (products) => {
                 const doc = new jsPDF.default(0, 0);
 
                 doc.autoTable({
-<<<<<<< HEAD
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Catalogo status", dataKey: "nombreStatus" },
-=======
-                    columns:[                                       // CAMBIAR...
-                        { header: 'ID', dataKey: 'id' },
-                        { header: 'Planta', dataKey: 'planta' },
-                        { header: 'Area', dataKey: 'nombreArea' },
-                        { header: 'Descripcion', dataKey: 'descripcion' },
-                        { header: 'Status', dataKey: 'status' },
-                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion' },
->>>>>>> 83e633f0f84f3af4df2a115f63f0b2b9b5a9ffcf
+                        { header: "Planta", dataKey: "planta" },
+                        { header: "Area", dataKey: "nombreArea" },
+                        { header: "Descripcion", dataKey: "descripcion" },
+                        { header: "Status", dataKey: "status" },
+                        { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },
                     didDrawPage: function (data) {
-                        doc.text("Catalogo Status", 20, 30); // CAMBIAR...
+                        doc.text("Catalogo Areas", 20, 30); // CAMBIAR...
                     },
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
-                doc.save(`Status_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+                doc.save(`Areas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
             });
         });
     };
@@ -44,7 +38,7 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
             const excelBuffer = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
-            saveAsExcelFile(excelBuffer, "Status"); // CAMBIAR...
+            saveAsExcelFile(excelBuffer, "Areas"); // CAMBIAR...
         });
     };
 
