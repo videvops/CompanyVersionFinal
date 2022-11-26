@@ -7,16 +7,13 @@ import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,tieneId}) => {
 //--------------------| Dropdown |--------------------
     const statusDisponibles=[
-        {status:"Activo",value:"activo"},
-        {status:"Inactivo",value:"inactivo"},
-        {status:"Pendiente",value:"pendiente"},
+        {status:"Activo",value:1},
+        {status:"Inactivo",value:2},
     ]
 
     const lineasDisponibles=[
-        {linea:"Linea1",value:"linea1"},
-        {linea:"Linea2",value:"linea2"},
-        {linea:"Linea3",value:"linea3"},
-        {linea:"Linea4",value:"linea4"},
+        {linea:"Linea1",value:1},
+        {linea:"Linea2",value:2},
     ]
 
 //--------------------| Validar campos  |--------------------
@@ -86,7 +83,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 }} 
                 required 
                 autoFocus
-                placeholder='Ejemplo => 07:20:00'
+                placeholder='Ejemplo => 07:20'
                 />
             </div>
             <div className="field">
@@ -103,38 +100,40 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 }} 
                 required 
                 autoFocus
-                placeholder='Ejemplo => 07:30:00'
-                />
-            </div>
-            <div className="field">
-                <label 
-                htmlFor="idCreadoPor"                                   // CAMBIAR...
-                >
-                    Creado por
-                </label>
-                <InputText 
-                id="idCreadoPor"                                            // CAMBIAR...
-                value={product.idCreadoPor}                             // CAMBIAR...
-                onChange={(e) => {
-                    updateField(e.target.value.trim(), "idCreadoPor");  // CAMBIAR...
-                }} 
-                required 
-                autoFocus
+                placeholder='Ejemplo => 07:30'
                 />
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
                 <Dropdown
-                    value={product.idStatus} 
+                    value={product.idEstatus}
+                    // value={tieneId?product.idEstatus:1} 
                     options={statusDisponibles} 
                     onChange={ e => {
-                        updateField(e.value, "idStatus");
+                        updateField(e.value, "idEstatus");
                     }} 
                     optionLabel="status" 
                     placeholder="--Selecciona un status--"
-                    // disabled={tieneId} 
                 />
             </div>)}
+            {/* <div className="field">
+                <label 
+                htmlFor="idCreadoPor"                                   // CAMBIAR...
+                >
+                    Creado Por
+                </label>
+                <InputText 
+                id="idCreadoPor"                                        // CAMBIAR...
+                type="number"
+                value={product.idCreadoPor}                             // CAMBIAR...
+                onChange={(e) => {
+                    updateField(e.target.value.trim(), "idCreadoPor");  // CAMBIAR...
+                    Verificar(e.target.value)
+                }} 
+                required 
+                autoFocus 
+                />
+            </div> */}
             <div className="field">
                 <label>Linea</label>
                 <Dropdown

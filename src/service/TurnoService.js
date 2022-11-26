@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class TurnoService {
     //------> Link para hacer peticiones
-    baseUrl = "http://localhost:8080/roles";
+    baseUrl = "http://localhost:8080/turnos";
     //------> Agregar nuevo registro
     create(product){
         return axios.post(this.baseUrl, product).then(res => res.data);

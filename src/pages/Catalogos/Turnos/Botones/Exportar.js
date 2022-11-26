@@ -7,16 +7,15 @@ const Exportar = (products) => {
         import('jspdf').then(jsPDF => {
             import('jspdf-autotable').then(() => {
                 const doc = new jsPDF.default(0, 0);
-
                 doc.autoTable({
                     columns:[                                       // CAMBIAR...
                         { header: 'ID', dataKey: 'id' },
-                        { header: 'Turno', dataKey: 'nombreTurno' },
-                        { header: 'Hora de inicio', dataKey: 'horaInicio' },
-                        { header: 'Hora de fin', dataKey: 'horaFin' },
+                        { header: 'Turno', dataKey: 'nombre' },
+                        { header: 'Hora de Inicio', dataKey: 'horaInicio' },
+                        { header: 'Hora de Fin', dataKey: 'horaFin' },
                         { header: 'Linea', dataKey: 'linea' },
-                        { header: 'Fecha de Creacion', dataKey: 'fechaCreacion' },
-                        { header: 'Status', dataKey: 'status' },
+                        { header: 'Fecha de creacion', dataKey: 'fechaCreacion' },
+                        { header: 'Estatus', dataKey: 'estatus' },
                     ],
                     body:products,                                  // Registros de BD
                     margin:{top:35},
