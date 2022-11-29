@@ -45,12 +45,11 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreTurno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'fechaInicio': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'fechaFin': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'fechaCreacion': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'status': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'nombre': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'horaInicio': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'horaFin': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'estatus': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -187,7 +186,6 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     }
 
     let content=<p>Sin registros</p>
-    // if(true){
     if(!isLoading && !error){
         content=(
         <TablaTurnos
