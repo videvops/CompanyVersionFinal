@@ -8,8 +8,7 @@ import { renderHeader } from "../ComponentsCat/Buscador/Cabezal";
 import EliminarVarios from "./Dialogos/EliminarVarios";
 import EliminarUno from "./Dialogos/EliminarUno";
 import CrearModificar from "./Dialogos/CrearModificar";
-import TablaProductos from "./Tabla/TablaProductos";
-
+import TablaProductos0 from "./Tabla/TablaProductos";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { FilterMatchMode } from "primereact/api";
@@ -195,7 +194,7 @@ const Crud = (props) => {
     let content = <p>Sin registros</p>;
     if (true) {
         // if(!isLoading && !error){
-        content = <TablaProductos BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
+        content = <TablaProductos0 BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
     }
 
     // if(error)content=<p>{error}</p>
