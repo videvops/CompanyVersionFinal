@@ -16,6 +16,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         {linea:"Linea2",value:2},
     ]
 //--------------------| Validacion de campos |--------------------
+    //Mejorar componente
     useEffect(()=>{
         if([product.nombre,product.horaInicio,product.horaFin,product.idLinea].includes(''))setBoton(true)
         else setBoton(false); 
