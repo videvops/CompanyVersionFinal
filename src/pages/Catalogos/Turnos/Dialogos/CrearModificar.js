@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
@@ -15,21 +15,36 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         {linea:"Linea1",value:1},
         {linea:"Linea2",value:2},
     ]
+//--------------------| Validacion de campos |--------------------
+    useEffect(()=>{
+        if([product.nombre,product.horaInicio,product.horaFin,product.idLinea].includes(''))setBoton(true)
+        else setBoton(false); 
+    },[product.nombre,product.horaInicio,product.horaFin,product.idLinea])
 
 //--------------------| Validar campos  |--------------------
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de turno
+    const [validarHora,setValidarHora]=useState('')
     const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
     const Advertencia=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de advertencia
-    const expresion=/^[a-zA-Z0-9._-]{1,40}$/;                            // Nombres,numeros y guiones
-
-    const Verificar=(texto)=>{
-        if (!expresion.test(texto)){
-            setTimeout(() => {                                          // Validacion despues de 2 seg
-                setValidarNombre("p-invalid");
-                setBoton(true);
-            }, 2000);
+    const exprNombre=/^[a-zA-Z0-9._-]{1,40}$/;                            // Nombres,numeros y guiones
+    const exprHora=/^[0-2][0-3]:[0-5][0-9]$/;
+    const VerificarNombre=(texto)=>{
+        if (!exprNombre.test(texto)){
+            setValidarNombre("p-invalid");
+            setBoton(true);
+            
         }else{
             setValidarNombre("");
+            setBoton(false);
+        }
+    }
+    const VerificarHora=(texto)=>{
+        if (!exprHora.test(texto)){
+            setValidarHora("p-invalid");
+            setBoton(true);
+            
+        }else{
+            setValidarHora("");
             setBoton(false);
         }
     }
@@ -60,14 +75,14 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 value={product.nombre}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "nombre");  // CAMBIAR...
-                    Verificar(e.target.value)
+                    VerificarNombre(e.target.value)
                 }} 
                 required 
                 autoFocus 
                 className={validarNombre}
                 maxLength="30" 
                 />
-                {boton && Advertencia}
+                {validarNombre && Advertencia}
             </div>
             <div className="field">
                 <label 
@@ -80,11 +95,14 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 value={product.horaInicio}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "horaInicio");  // CAMBIAR...
+                    VerificarHora(e.target.value)
                 }} 
                 required 
                 autoFocus
+                className={validarHora}
                 placeholder='Ejemplo => 07:20'
                 />
+                {validarHora && Advertencia}
             </div>
             <div className="field">
                 <label 
@@ -97,17 +115,19 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 value={product.horaFin}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "horaFin");  // CAMBIAR...
+                    VerificarHora(e.target.value)
                 }} 
                 required 
                 autoFocus
+                className={validarHora}
                 placeholder='Ejemplo => 07:30'
                 />
+                {validarHora && Advertencia}
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
                 <Dropdown
                     value={product.idEstatus}
-                    // value={tieneId?product.idEstatus:1} 
                     options={statusDisponibles} 
                     onChange={ e => {
                         updateField(e.value, "idEstatus");
@@ -116,25 +136,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     placeholder="--Selecciona un status--"
                 />
             </div>)}
-            {/* <div className="field">
-                <label 
-                htmlFor="idCreadoPor"                                   // CAMBIAR...
-                >
-                    Creado Por
-                </label>
-                <InputText 
-                id="idCreadoPor"                                        // CAMBIAR...
-                type="number"
-                value={product.idCreadoPor}                             // CAMBIAR...
-                onChange={(e) => {
-                    updateField(e.target.value.trim(), "idCreadoPor");  // CAMBIAR...
-                    Verificar(e.target.value)
-                }} 
-                required 
-                autoFocus 
-                />
-            </div> */}
-            <div className="field">
+            {tieneId && (<div className="field">
                 <label>Linea</label>
                 <Dropdown
                     value={product.idLinea} 
@@ -145,7 +147,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     optionLabel="linea" 
                     placeholder="--Selecciona una linea--" 
                 />
-            </div>
+            </div>)}
         </Dialog>
     )
 }
