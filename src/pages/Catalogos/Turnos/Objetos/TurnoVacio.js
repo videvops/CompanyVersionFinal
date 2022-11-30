@@ -5,5 +5,5 @@ export let emptyProduct = {
     horaInicio: '',
     horaFin: '',
     idEstatus: 1,
-    linea: '',
+    idLinea: '',
 };

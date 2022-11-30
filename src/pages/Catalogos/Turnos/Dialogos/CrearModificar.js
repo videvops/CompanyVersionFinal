@@ -15,16 +15,19 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         {linea:"Linea1",value:1},
         {linea:"Linea2",value:2},
     ]
-//--------------------| Validacion de campos |--------------------
-    //Mejorar componente
-    useEffect(()=>{
-        if([product.nombre,product.horaInicio,product.horaFin,product.idLinea].includes(''))setBoton(true)
-        else setBoton(false); 
-    },[product.nombre,product.horaInicio,product.horaFin,product.idLinea])
 
 //--------------------| Validar campos  |--------------------
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de turno
-    const [validarHora,setValidarHora]=useState('')
+    const [validHoraI,setValidHoraI]=useState('')
+    const [validHoraF,setValidHoraF]=useState('')
+    
+    const [horaInicio,setHoraInicio]=useState(null)
+    const [horaFin,setHoraFin]=useState(null)
+    // let horaI=null
+    // let horaF=null
+    // let entero1=0
+    // let entero2=0
+
     const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
     const Advertencia=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de advertencia
     const exprNombre=/^[a-zA-Z0-9._-]{1,40}$/;                            // Nombres,numeros y guiones
@@ -39,14 +42,44 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
             setBoton(false);
         }
     }
-    const VerificarHora=(texto)=>{
+    const VerificarHoraI=(texto)=>{
         if (!exprHora.test(texto)){
-            setValidarHora("p-invalid");
+            setValidHoraI("p-invalid");
             setBoton(true);
             
         }else{
-            setValidarHora("");
+            setValidHoraI("");
             setBoton(false);
+        }
+
+        if(texto.length>4){
+            const arregloHoras=texto.split(':')
+            console.log(arregloHoras)
+            let horaI = new Date()
+            horaI.setHours(arregloHoras[0])
+            horaI.setMinutes(arregloHoras[1])
+            console.log(horaI)
+            setHoraInicio(horaI)
+        }
+    }
+    const VerificarHoraF=(texto)=>{
+        if (!exprHora.test(texto)){
+            setValidHoraF("p-invalid");
+            setBoton(true);
+            
+        }else{
+            setValidHoraF("");
+            setBoton(false);
+        }
+
+        if(texto.length>4){
+            const arregloHoras=texto.split(':')
+            console.log(arregloHoras)
+            let horaF = new Date()
+            horaF.setHours(arregloHoras[0])
+            horaF.setMinutes(arregloHoras[1])
+            console.log(horaF)
+            setHoraFin(horaF)
         }
     }
 
@@ -62,7 +95,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         header={titulos.VentanaCrear} 
         modal 
         className="p-fluid" 
-        footer={crearRegistro} 
+        footer={![product.nombre,product.horaInicio,product.horaFin,product.idLinea].includes('')&&crearRegistro} 
         onHide={hideDialog}
         >
             <div className="field">
@@ -96,14 +129,14 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 value={product.horaInicio}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "horaInicio");  // CAMBIAR...
-                    VerificarHora(e.target.value)
+                    VerificarHoraI(e.target.value)
                 }} 
                 required 
                 autoFocus
-                className={validarHora}
+                className={validHoraI}
                 placeholder='Ejemplo => 07:20'
                 />
-                {validarHora && Advertencia}
+                {validHoraI && Advertencia}
             </div>
             <div className="field">
                 <label 
@@ -116,14 +149,14 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 value={product.horaFin}                             // CAMBIAR...
                 onChange={(e) => {
                     updateField(e.target.value.trim(), "horaFin");  // CAMBIAR...
-                    VerificarHora(e.target.value)
+                    VerificarHoraF(e.target.value)
                 }} 
                 required 
                 autoFocus
-                className={validarHora}
+                className={validHoraF}
                 placeholder='Ejemplo => 07:30'
                 />
-                {validarHora && Advertencia}
+                {validHoraF && Advertencia}
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
@@ -144,6 +177,13 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     options={lineasDisponibles} 
                     onChange={ e => {
                         updateField(e.value, "idLinea");
+                        if(horaInicio<horaFin){
+                            console.log("Es menor hora inicio")
+                        }else{
+                            console.log("Es mayor hora inicio")
+                        }
+                        // console.log(horaInicio)
+                        // console.log(horaFin)
                     }} 
                     optionLabel="linea" 
                     placeholder="--Selecciona una linea--" 
