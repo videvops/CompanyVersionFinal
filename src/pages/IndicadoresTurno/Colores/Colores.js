@@ -1,14 +1,6 @@
 import React from "react";
 import styles from "./Colores.module.css"
 
-export const ColorStatus = (infoColumna) => {
-    let estilo="";
-    if(infoColumna.status>=80) estilo=styles.bien;
-    else if(infoColumna.status<80 && (infoColumna.status>=50)) estilo=styles.regular;
-    else estilo=styles.mal;
-    return <div className={`${estilo}`}>{infoColumna.status}%</div>;
-}
-
 export const ColorEficiencia = (infoColumna) => {
     let estilo="";
     if(infoColumna.eficiencia>=80) estilo=styles.bien;

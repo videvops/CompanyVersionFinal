@@ -3,6 +3,7 @@ import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
+import { Mensaje, MensajeHora } from '../../ComponentsCat/Mensajes/Mensajes';
 
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,tieneId}) => {
 //--------------------| Dropdown |--------------------
@@ -20,18 +21,15 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de turno
     const [validHoraI,setValidHoraI]=useState('')
     const [validHoraF,setValidHoraF]=useState('')
+    const [onMensajeHora,setOnMensajeHora]=useState(false)
     
     const [horaInicio,setHoraInicio]=useState(null)
     const [horaFin,setHoraFin]=useState(null)
-    // let horaI=null
-    // let horaF=null
-    // let entero1=0
-    // let entero2=0
 
     const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
-    const Advertencia=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de advertencia
-    const exprNombre=/^[a-zA-Z0-9._-]{1,40}$/;                            // Nombres,numeros y guiones
+    const exprNombre=/^[a-zA-Z0-9._-]{1,40}$/;                          // Nombres,numeros y guiones
     const exprHora=/^[0-2][0-3]:[0-5][0-9]$/;
+    //---> Nombre
     const VerificarNombre=(texto)=>{
         if (!exprNombre.test(texto)){
             setValidarNombre("p-invalid");
@@ -42,6 +40,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
             setBoton(false);
         }
     }
+    //---> Hora inicio
     const VerificarHoraI=(texto)=>{
         if (!exprHora.test(texto)){
             setValidHoraI("p-invalid");
@@ -54,14 +53,13 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
         if(texto.length>4){
             const arregloHoras=texto.split(':')
-            console.log(arregloHoras)
             let horaI = new Date()
             horaI.setHours(arregloHoras[0])
             horaI.setMinutes(arregloHoras[1])
-            console.log(horaI)
             setHoraInicio(horaI)
         }
     }
+    //---> Hora Fin
     const VerificarHoraF=(texto)=>{
         if (!exprHora.test(texto)){
             setValidHoraF("p-invalid");
@@ -74,14 +72,25 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
         if(texto.length>4){
             const arregloHoras=texto.split(':')
-            console.log(arregloHoras)
             let horaF = new Date()
             horaF.setHours(arregloHoras[0])
             horaF.setMinutes(arregloHoras[1])
-            console.log(horaF)
             setHoraFin(horaF)
         }
     }
+    //---> Comparar horas
+    useEffect(() => {
+        if(![horaInicio,horaFin].includes(null)){
+            if(horaInicio<horaFin){
+                setOnMensajeHora(false)
+                setBoton(false);
+            }
+            else {
+                setOnMensajeHora(true)
+                setBoton(true);
+            }
+        }
+    }, [horaFin,horaInicio])
 
 //--------------------| Botones de confirmacion |--------------------
     //------> Botones para crear registro
@@ -116,7 +125,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 className={validarNombre}
                 maxLength="30" 
                 />
-                {validarNombre && Advertencia}
+                {validarNombre && Mensaje}
             </div>
             <div className="field">
                 <label 
@@ -136,7 +145,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 className={validHoraI}
                 placeholder='Ejemplo => 07:20'
                 />
-                {validHoraI && Advertencia}
+                {validHoraI && Mensaje}
             </div>
             <div className="field">
                 <label 
@@ -156,7 +165,8 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 className={validHoraF}
                 placeholder='Ejemplo => 07:30'
                 />
-                {validHoraF && Advertencia}
+                {validHoraF && Mensaje}
+                {!validHoraF && onMensajeHora && MensajeHora}
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
@@ -182,8 +192,6 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                         }else{
                             console.log("Es mayor hora inicio")
                         }
-                        // console.log(horaInicio)
-                        // console.log(horaFin)
                     }} 
                     optionLabel="linea" 
                     placeholder="--Selecciona una linea--" 

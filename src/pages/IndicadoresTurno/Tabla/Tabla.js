@@ -3,7 +3,7 @@ import TablaDesing from "../UI/DiseñoTabla";
 import Totales from "../Promedio/Totales";
 import { Column } from "primereact/column";
 import { DatosFicticios } from "../Valores/Contantes";
-import { ColorStatus, ColorEficiencia, ColorDisponibilidad, ColorVelocidad, ColorCalidad } from "../Colores/Colores";
+import { ColorEficiencia, ColorDisponibilidad, ColorVelocidad, ColorCalidad } from "../Colores/Colores";
 import { CardGeneral, CardTabla } from "../UI/Cards";
 import { PromedioCalidad, PromedioDisponibilidad, PromedioEfecto, PromedioProducto, PromedioVelocidad } from "../Promedio/Funciones";
 
@@ -49,22 +49,22 @@ const Tabla = () => {
         <CardGeneral>
                     <CardTabla>
                         <TablaDesing datos={porcentajes}>
-                            <Column field="status" header="Status" sortable body={ColorStatus}/>
+                            <Column field="idLinea" header="ID Linea" sortable/>
                             <Column field="linea" header="Linea" style={{ textAlign: "center" }} sortable/>
                             <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia}/>
                             <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad}/>
                             <Column field="velocidad" header="Velocidad" style={{ textAlign: "center" }} sortable body={ColorVelocidad}/>
                             <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad}/>
-                            <Column field="producto" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
+                            <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
                         </TablaDesing>
                     </CardTabla>
             <CardTabla>
                 <Totales
-                eficiencia={promEfic}
-                disponibilidad={promDisp}
-                velocidad={promVel}
-                calidad={promCal}
-                producto={promProduct}
+                eficienciaTotal={promEfic}
+                disponibilidadTotal={promDisp}
+                velocidadTotal={promVel}
+                calidadTotal={promCal}
+                productoTerminadoTotal={promProduct}
                 />
             </CardTabla>
         </CardGeneral>
