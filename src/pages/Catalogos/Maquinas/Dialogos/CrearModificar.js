@@ -47,6 +47,42 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                     className={validarNombre}
                     maxLength="30"
                 />
+
+                <label
+                    htmlFor="linea" // CAMBIAR...
+                >
+                    Linea
+                </label>
+                <InputText
+                    id="linea" // CAMBIAR...
+                    value={product.linea} // CAMBIAR...
+                    onChange={(e) => {
+                        updateField(e.target.value.trim(), "linea"); // CAMBIAR...
+                        Verificar(e.target.value);
+                    }}
+                    required
+                    autoFocus
+                    className={validarNombre}
+                    maxLength="30"
+                />
+
+                <label
+                    htmlFor="linea" // CAMBIAR...
+                >
+                    Estatus
+                </label>
+                <InputText
+                    id="estatus" // CAMBIAR...
+                    value={product.estatus} // CAMBIAR...
+                    onChange={(e) => {
+                        updateField(e.target.value.trim(), "estatus"); // CAMBIAR...
+                        Verificar(e.target.value);
+                    }}
+                    required
+                    autoFocus
+                    className={validarNombre}
+                    maxLength="30"
+                />
                 {boton && Advertencia}
             </div>
         </Dialog>

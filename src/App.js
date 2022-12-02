@@ -38,6 +38,7 @@ import CatalogoUsuarios from "./pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "./pages/Catalogos/Turnos/CatalogoTurnos";
 import CatalogoDirecciones from "./pages/Catalogos/Direcciones/CatalogoDirecciones";
 import CatalogoMaquinas from "./pages/Catalogos/Maquinas/CatalogoMaquinas";
+import CatalogoModoFalla from "./pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import CatalogoProductos from "./pages/Catalogos/Productos/CatalogoProductos";
 
 import EmptyPage from "./pages/EmptyPage";
@@ -224,7 +225,7 @@ const App = () => {
                         {
                             label: "Modo de Falla",
                             icon: "pi pi-fw pi-bookmark text-blue-500",
-                            to: "/catalogoMaquinas",
+                            to: "/catalogoModoFalla",
                         },
                         {
                             label: "Productos",
@@ -290,6 +291,7 @@ const App = () => {
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
+                    <Route path="/catalogoModoFalla" component={CatalogoModoFalla} />
                     <Route path="/catalogoProductos" component={CatalogoProductos} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />

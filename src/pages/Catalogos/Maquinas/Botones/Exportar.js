@@ -12,10 +12,10 @@ const Exportar = (products) => {
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Maquina", dataKey: "nombreMaquina" },
+                        { header: "Maquina", dataKey: "maquina" },
                         { header: "Linea", dataKey: "linea" },
+                        { header: "Status", dataKey: "estatus" },
                         { header: "Planta", dataKey: "planta" },
-                        { header: "Status", dataKey: "status" },
                         { header: "Empresa", dataKey: "empresa" },
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
                         { header: "Fecha de Modificación", dataKey: "fechaModificacion" },
