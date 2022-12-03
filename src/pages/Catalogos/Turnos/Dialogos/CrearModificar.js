@@ -56,6 +56,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
             let horaI = new Date()
             horaI.setHours(arregloHoras[0])
             horaI.setMinutes(arregloHoras[1])
+            horaI.setSeconds(0)
             setHoraInicio(horaI)
         }
     }
@@ -75,17 +76,22 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
             let horaF = new Date()
             horaF.setHours(arregloHoras[0])
             horaF.setMinutes(arregloHoras[1])
+            horaF.setSeconds(0)
             setHoraFin(horaF)
         }
     }
     //---> Comparar horas
     useEffect(() => {
         if(![horaInicio,horaFin].includes(null)){
+            console.log(horaInicio)
+            console.log(horaFin)
             if(horaInicio<horaFin){
+                console.log("Es menor")
                 setOnMensajeHora(false)
                 setBoton(false);
             }
             else {
+                console.log("Es mayor")
                 setOnMensajeHora(true)
                 setBoton(true);
             }
@@ -109,15 +115,15 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         >
             <div className="field">
                 <label 
-                htmlFor="nombre"                                   // CAMBIAR...
+                htmlFor="turno"                                   // CAMBIAR...
                 >
                     Nombre del Turno
                 </label>
                 <InputText 
-                id="nombre"                                        // CAMBIAR...
-                value={product.nombre}                             // CAMBIAR...
+                id="turno"                                        // CAMBIAR...
+                value={product.turno}                             // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombre");  // CAMBIAR...
+                    updateField(e.target.value.trim(), "turno");  // CAMBIAR...
                     VerificarNombre(e.target.value)
                 }} 
                 required 
