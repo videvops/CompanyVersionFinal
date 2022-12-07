@@ -7,21 +7,28 @@ import { Mensaje, MensajeHora } from '../../ComponentsCat/Mensajes/Mensajes';
 import Axios from 'axios';
 
 const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,tieneId}) => {
+    const [selectPlanta,setSelectPlanta]=useState(1)
 //--------------------| Dropdown dinamico|--------------------
     const statusDisponibles=[
         {status:"Activo",value:1},
         {status:"Inactivo",value:2},
     ]
 
-    const lineasDisponibles=[
-        {linea:"Linea1",value:1},
-        {linea:"Linea2",value:2},
-    ]
-    const [listaPlantas,setListaPlantas]=useState([])
-    useEffect(()=>{
-        // Axios.get("http://localhost:8080/plantas/list").then(res=>console.log(res.data))
-        Axios.get("http://localhost:8080/plantas").then(res=>setListaPlantas(res.data))
-    },[])
+    // const lineasDis=[
+    //     {linea:"Linea1",value:1},
+    //     {linea:"Linea2",value:2},
+    // ]
+
+    const [lineasDisponibles,setLineasDisponibles]=useState([])
+    useEffect(() => {
+        Axios.get("http://localhost:8080/lineas/area/3").then(res=>setLineasDisponibles(res.data))
+    }, [])
+
+    // const [listaPlantas,setListaPlantas]=useState([])
+    // useEffect(()=>{
+    //     // Axios.get("http://localhost:8080/plantas/list").then(res=>console.log(res.data))
+    //     Axios.get("http://localhost:8080/plantas/list").then(res=>setListaPlantas(res.data))
+    // },[])
 
 //--------------------| Validar campos  |--------------------
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de turno
@@ -89,15 +96,11 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
     //---> Comparar horas
     useEffect(() => {
         if(![horaInicio,horaFin].includes(null)){
-            console.log(horaInicio)
-            console.log(horaFin)
             if(horaInicio<horaFin){
-                console.log("Es menor")
                 setOnMensajeHora(false)
                 setBoton(false);
             }
             else {
-                console.log("Es mayor")
                 setOnMensajeHora(true)
                 setBoton(true);
             }
@@ -192,19 +195,24 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     placeholder="--Selecciona un status--"
                 />
             </div>)}
-            <div className="field">
+            {/* <div className="field">
                 <label>Planta</label>
                 <Dropdown
-                    value={product.idPlanta} 
+                    // value={product} 
+                    value={selectPlanta} 
                     options={listaPlantas} 
                     onChange={ e => {
-                        updateField(e.value.idPlanta, "idPlanta");
+                        // updateField(e.value.idPlanta, "idPlanta");
+                        // console.log(e)
+                        updateField(selectPlanta, "idPlanta");
+                        setSelectPlanta(e.value)
                     }} 
-                    optionLabel="planta" 
+                    optionLabel="planta"
+                    optionValue='id' 
                     placeholder="--Selecciona una planta--" 
                 />
-            </div>
-            <div className="field">
+            </div> */}
+            {/* <div className="field">
                 <label>Area</label>
                 <Dropdown
                     value={product.idArea} 
@@ -215,17 +223,16 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     optionLabel="area" 
                     placeholder="--Selecciona una area--" 
                 />
-            </div>
+            </div> */}
             <div className="field">
                 <label>Linea</label>
-                <Dropdown
-                    value={product.idLinea} 
-                    options={lineasDisponibles} 
-                    onChange={ e => {
-                        updateField(e.value, "idLinea");
-                    }} 
-                    optionLabel="linea" 
-                    placeholder="--Selecciona una linea--" 
+                <Dropdown 
+                optionLabel="linea" 
+                optionValue="id" 
+                value={product.idLinea} 
+                options={lineasDisponibles} 
+                onChange={(e) => {updateField(e.value, "idLinea")}} 
+                placeholder="--Selecciona una linea--"
                 />
             </div>
         </Dialog>
