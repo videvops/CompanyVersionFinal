@@ -7,20 +7,16 @@ const Exportar = (products) => {
         import("jspdf").then((jsPDF) => {
             import("jspdf-autotable").then(() => {
                 const doc = new jsPDF.default(0, 0);
-
                 doc.autoTable({
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
                         { header: "Maquina", dataKey: "maquina" },
-                        { header: "Linea", dataKey: "linea" },
+                        { header: "ID Status", dataKey: "idEstatus" },
                         { header: "Status", dataKey: "estatus" },
-                        { header: "Planta", dataKey: "planta" },
-                        { header: "Empresa", dataKey: "empresa" },
+                        { header: "ID Linea", dataKey: "idLinea" },
+                        { header: "Linea", dataKey: "linea" },
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
-                        { header: "Fecha de Modificación", dataKey: "fechaModificacion" },
-                        { header: "Creado por", dataKey: "creadoPor" },
-                        { header: "Modificado por", dataKey: "modificadPor" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },
@@ -30,7 +26,7 @@ const Exportar = (products) => {
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
-                doc.save(`Areas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+                doc.save(`Maquinas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
             });
         });
     };
@@ -42,7 +38,7 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
             const excelBuffer = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
-            saveAsExcelFile(excelBuffer, "Maquina"); // CAMBIAR...
+            saveAsExcelFile(excelBuffer, "Maquinas"); // CAMBIAR...
         });
     };
 

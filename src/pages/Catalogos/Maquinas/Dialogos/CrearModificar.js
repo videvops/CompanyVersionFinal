@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-// import { productDialogFooter } from '../Botones/CrearRegistro';
 import { productDialogFooter } from "../../ComponentsCat/Botones/CrearRegistro";
+import { Mensaje } from "../../ComponentsCat/Mensajes/Mensajes";
 
-const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct }) => {
+const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct, tieneId }) => {
+    //--------------------| Dropdown |--------------------
+    const statusDisponibles = [
+        { status: "Activo", value: 1 },
+        { status: "Inactivo", value: 2 },
+    ];
+
+    const lineasDisponibles = [
+        { linea: "Linea1", value: 1 },
+        { linea: "Linea2", value: 2 },
+    ];
+
     //--------------------| Validar campos  |--------------------
     const [validarNombre, setValidarNombre] = useState(""); // Validar nombre de planta
     const [boton, setBoton] = useState(false); // Activar o desactivar boton
-    const Advertencia = <p style={{ color: "red" }}>Campo no valido</p>; // Mensaje de advertencia
-    const expresion = /^[a-zA-Z0-9._-]{1,40}$/; // Solo nombres y numeros
+    const exprNombre = /^[a-zA-Z0-9._-]{1,40}$/; // Nombres,numeros y guiones
 
-    const Verificar = (texto) => {
-        if (!expresion.test(texto)) {
+    //---> Nombre
+    const VerificarNombre = (texto) => {
+        if (!exprNombre.test(texto)) {
             setValidarNombre("p-invalid");
             setBoton(true);
         } else {
@@ -27,64 +39,42 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
 
     //--------------------| Valor que regresara  |--------------------
     return (
-        <Dialog visible={productDialog} style={{ width: "450px" }} header={titulos.VentanaCrear} modal className="p-fluid" footer={crearRegistro} onHide={hideDialog}>
+        <Dialog visible={productDialog} style={{ width: "450px" }} header={titulos.VentanaCrear} modal className="p-fluid" footer={![product.maquina, product.estatus, product.idLinea].includes("") && crearRegistro} onHide={hideDialog}>
             <div className="field">
-                {/* CAMBIAR.... */}
                 <label
-                    htmlFor="nombreMaquinas" // CAMBIAR...
+                    htmlFor="maquina" // CAMBIAR...
                 >
-                    Maquina
+                    Nombre del maquina
                 </label>
                 <InputText
-                    id="nombreMaquinas" // CAMBIAR...
-                    value={product.nombreMaquinas} // CAMBIAR...
+                    id="maquina" // CAMBIAR...
+                    value={product.maquina} // CAMBIAR...
                     onChange={(e) => {
-                        updateField(e.target.value.trim(), "nombreMaquinas"); // CAMBIAR...
-                        Verificar(e.target.value);
+                        updateField(e.target.value.trim(), "maquina"); // CAMBIAR...
+                        VerificarNombre(e.target.value);
                     }}
                     required
                     autoFocus
                     className={validarNombre}
                     maxLength="30"
                 />
-
-                <label
-                    htmlFor="linea" // CAMBIAR...
-                >
-                    Linea
-                </label>
-                <InputText
-                    id="linea" // CAMBIAR...
-                    value={product.linea} // CAMBIAR...
-                    onChange={(e) => {
-                        updateField(e.target.value.trim(), "linea"); // CAMBIAR...
-                        Verificar(e.target.value);
-                    }}
-                    required
-                    autoFocus
-                    className={validarNombre}
-                    maxLength="30"
-                />
-
-                <label
-                    htmlFor="linea" // CAMBIAR...
-                >
-                    Estatus
-                </label>
-                <InputText
-                    id="estatus" // CAMBIAR...
-                    value={product.estatus} // CAMBIAR...
-                    onChange={(e) => {
-                        updateField(e.target.value.trim(), "estatus"); // CAMBIAR...
-                        Verificar(e.target.value);
-                    }}
-                    required
-                    autoFocus
-                    className={validarNombre}
-                    maxLength="30"
-                />
-                {boton && Advertencia}
+                {validarNombre && Mensaje}
             </div>
+
+            {!tieneId && (
+                <div className="field">
+                    <label>Status</label>
+                    <Dropdown
+                        value={product.idEstatus}
+                        options={statusDisponibles}
+                        onChange={(e) => {
+                            updateField(e.value, "idEstatus");
+                        }}
+                        optionLabel="status"
+                        placeholder="--Selecciona un status--"
+                    />
+                </div>
+            )}
         </Dialog>
     );
 };

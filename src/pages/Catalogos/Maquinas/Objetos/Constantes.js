@@ -1,14 +1,14 @@
 const titulos = {
-    VentanaCrear: "Detalles de Maquina",
-    Buscador: "Buscar Maquina...",
-    TituloTabla: "Maquina...",
+    VentanaCrear: "Detalles de maquina",
+    Buscador: "Buscar maquina...",
+    TituloTabla: "maquinas...",
 };
 
 const notificaciones = {
-    creacion: "Maquina Creada",
-    modificacion: "Maquina Modificada",
-    eliminacion: "Maquina Eliminada",
-    eliminaciones: "Maquina Eliminadas",
+    creacion: "maquina Creado",
+    modificacion: "maquina Modificado",
+    eliminacion: "maquina Eliminado",
+    eliminaciones: "maquinas Eliminados",
 };
 
 export { titulos, notificaciones };
