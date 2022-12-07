@@ -1,5 +1,7 @@
 //--------------------| Objeto vacio  |--------------------
 export let emptyProduct = {
     id: null,
-    nombreStatus: "",
+    estatus: "",
+    descripcion: "",
+    fechaCreacion: "",
 };

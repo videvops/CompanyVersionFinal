@@ -40,6 +40,7 @@ import CatalogoDirecciones from "./pages/Catalogos/Direcciones/CatalogoDireccion
 import CatalogoMaquinas from "./pages/Catalogos/Maquinas/CatalogoMaquinas";
 import CatalogoModoFalla from "./pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import CatalogoProductos from "./pages/Catalogos/Productos/CatalogoProductos";
+import CatalogoStatus from "./pages/Catalogos/Status/CatalogoStatus";
 
 import EmptyPage from "./pages/EmptyPage";
 import TimelineDemo from "./pages/TimelineDemo";
@@ -232,6 +233,11 @@ const App = () => {
                             icon: "pi pi-fw pi-bookmark text-blue-500",
                             to: "/catalogoProductos",
                         },
+                        {
+                            label: "Estatus",
+                            icon: "pi pi-fw pi-bookmark text-blue-500",
+                            to: "/catalogoStatus",
+                        },
                     ],
                 },
             ],
@@ -293,6 +299,7 @@ const App = () => {
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
                     <Route path="/catalogoModoFalla" component={CatalogoModoFalla} />
                     <Route path="/catalogoProductos" component={CatalogoProductos} />
+                    <Route path="/catalogoStatus" component={CatalogoStatus} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />
