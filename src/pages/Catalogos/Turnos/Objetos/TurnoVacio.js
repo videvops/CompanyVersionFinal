@@ -5,5 +5,7 @@ export let emptyProduct = {
     horaInicio: '',
     horaFin: '',
     idEstatus: 1,
+    idPlanta:'',
+    idArea:'',
     idLinea: '',
 };
