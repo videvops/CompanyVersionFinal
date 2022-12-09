@@ -7,5 +7,5 @@ export const Mensaje=(
 );
 
 export const MensajeHora=(
-    <p style={{color:"red"}}>Hora no valida</p>
+    <p style={{color:"red"}}>La hora de fin tiene que ser mayor que la hora de inicio</p>
 );
