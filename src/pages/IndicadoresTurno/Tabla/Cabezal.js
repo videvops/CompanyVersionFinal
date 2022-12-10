@@ -1,22 +1,80 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 import { MultiSelect } from 'primereact/multiselect';
 
 const Cabezal=()=>{
-//--------------------| MultiSelect de Areas  |--------------------
+//--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
-    const [areasDisponibles, setAreasDisponibles]=useState([])
+    const [lineasDisponibles, setLineasDisponibles]=useState([])
     useEffect(() => {
-        Axios.get("http://localhost:8080/areas/planta/1").then(res=>setAreasDisponibles(res.data))
+        Axios.get("http://localhost:8080/lineas").then(res=>setLineasDisponibles(res.data))
     }, [])
 
     //---> Lista de areas seleccionadas
-    const [areas,setAreas]=useState([])
+    const [lineas,setLineas]=useState([])
     useEffect(()=>{
-        if(areas.length>0){
-            console.log(areas)
+        if(lineas.length>0){
+            console.log(lineas)
         }
-    },[areas])
+    },[lineas])
+
+//--------------------| MultiSelect de Periodo  |--------------------
+    //---> Obtener registros de back-end
+    const periodosDisponibles=[
+        {"periodo":"periodo1","id":1},
+        {"periodo":"periodo2","id":2},
+    ]
+
+    //---> Lista de periodos seleccionados
+    const [periodos,setPeriodos]=useState([])
+    useEffect(()=>{
+        if(periodos.length>0){
+            console.log(periodos)
+        }
+    },[periodos])
+
+//--------------------| MultiSelect de Periodo  |--------------------
+    //---> Obtener registros de back-end
+    const fabricasDisponibles=[
+        {"fabrica":"fabrica1","id":1},
+        {"fabrica":"fabrica2","id":2},
+    ]
+
+    //---> Lista de periodos seleccionados
+    const [fabricas,setFabricas]=useState([])
+    useEffect(()=>{
+        if(fabricas.length>0){
+            console.log(fabricas)
+        }
+    },[fabricas])
+
+//--------------------| Para filtro  |--------------------
+    const [dialogo,setDialogo]=useState(false)
+    const enviarFiltro=()=>{
+        if(lineas.length<1 || periodos.length<1 || fabricas.length<1 ){
+            console.log("Todos los campos son obligatorios")
+            return;
+        }
+        console.log("Se envio con exito")
+        setDialogo(false)
+    }
+    const cancelarFiltro=()=>{
+        setLineas([])
+        setPeriodos([])
+        setFabricas([])
+        setDialogo(false)
+    }
+
+    const botonesAccion = () => {
+        return (
+            <div>
+                <Button label="Cancelar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
+                <Button label="Consultar" icon="pi pi-check" onClick={enviarFiltro} autoFocus />
+            </div>
+        );
+    }
 
 //--------------------| Valor que regresara  |--------------------
     return(
@@ -29,15 +87,36 @@ const Cabezal=()=>{
         <h5 className=" font-bold" style={{ fontSize: "25px" }}>
             Status en Tiempo Real
         </h5>
-        <MultiSelect 
-        optionLabel="area" 
-        optionValue="id"
-        placeholder="Selecciona una area" 
-        options={areasDisponibles} 
-        value={areas} 
-        onChange={(e) => {setAreas(e.target.value)}} 
-        maxSelectedLabels={1}
-        />
+        <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
+        <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
+            <MultiSelect 
+            optionLabel="linea" 
+            optionValue="id"
+            placeholder="--Lineas--" 
+            options={lineasDisponibles} 
+            value={lineas} 
+            onChange={(e) => {setLineas(e.target.value)}} 
+            maxSelectedLabels={1}
+            />
+            <MultiSelect 
+            optionLabel="periodo" 
+            optionValue="id"
+            placeholder="--Periodos--" 
+            options={periodosDisponibles} 
+            value={periodos} 
+            onChange={(e) => {setPeriodos(e.target.value)}} 
+            maxSelectedLabels={1}
+            />
+            <MultiSelect 
+            optionLabel="fabrica" 
+            optionValue="id"
+            placeholder="--Fabricas--" 
+            options={fabricasDisponibles} 
+            value={fabricas} 
+            onChange={(e) => {setFabricas(e.target.value)}} 
+            maxSelectedLabels={1}
+            />
+        </Dialog>
     </div>
     );
 }
