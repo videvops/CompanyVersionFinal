@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { MultiSelect } from 'primereact/multiselect';
+import { MensajeFiltro } from "../../Catalogos/ComponentsCat/Mensajes/Mensajes";
 
 const Cabezal=()=>{
 //--------------------| MultiSelect de Lineas  |--------------------
@@ -51,19 +52,25 @@ const Cabezal=()=>{
     },[fabricas])
 
 //--------------------| Para filtro  |--------------------
-    const [dialogo,setDialogo]=useState(false)
+    const [dialogo,setDialogo]=useState(false)                              // Para mostrar dialogo
+    const [esValido,setEsValido]=useState(true)
+    //---> Validara antes de mandar el filtro
     const enviarFiltro=()=>{
         if(lineas.length<1 || periodos.length<1 || fabricas.length<1 ){
-            console.log("Todos los campos son obligatorios")
+            setEsValido(false)
             return;
         }
-        console.log("Se envio con exito")
+        const arregloFiltros=[[...lineas],[...periodos],[...fabricas]]      // Arreglo de arreglos
+        console.log(arregloFiltros)
+        setEsValido(true)
         setDialogo(false)
     }
+    //---> Limpiara los filtros
     const cancelarFiltro=()=>{
         setLineas([])
         setPeriodos([])
         setFabricas([])
+        setEsValido(true)
         setDialogo(false)
     }
 
@@ -116,6 +123,7 @@ const Cabezal=()=>{
             onChange={(e) => {setFabricas(e.target.value)}} 
             maxSelectedLabels={1}
             />
+            {!esValido && MensajeFiltro}
         </Dialog>
     </div>
     );
