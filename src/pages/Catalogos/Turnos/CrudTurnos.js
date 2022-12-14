@@ -45,11 +45,8 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombre': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'horaInicio': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'horaFin': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'estatus': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+        'turno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);

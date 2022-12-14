@@ -39,11 +39,11 @@ const CrudAreas = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreArea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'area': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
-
+    
 //--------------------| Barra de Buscar |--------------------
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;

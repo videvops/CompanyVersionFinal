@@ -23,7 +23,7 @@ const TablaTurnos = ({BotonesCabezal,ExportarRegistros,dt,products,selectedProdu
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
             // CAMBIAR...
-            globalFilterFields={['id', 'turno','horaInicio','horaFin','linea','estatus']}
+            globalFilterFields={['id', 'turno','linea']}
             emptyMessage="No se encontraron resultados."
             header={header} 
             responsiveLayout="scroll"

@@ -13,10 +13,18 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         {status:"Inactivo",value:2},
     ]
 
+    //---> Plantas
+    const [plantasDisponibles,setPlantasDisponibles]=useState([])
+    useEffect(() => {
+        // Axios.get("http://localhost:8080/plantas/list").then(res=>console.log(res.data))
+        Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
+    }, [])
+
     const [areasDisponibles, setAreasDisponibles]=useState([])
     useEffect(() => {
-        Axios.get("http://localhost:8080/areas/planta/1").then(res=>setAreasDisponibles(res.data))
-    }, [])
+        // Axios.get("http://localhost:8080/areas/planta/1").then(res=>setAreasDisponibles(res.data))
+        Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+    }, [product.idPlanta])
 
     const [lineasDisponibles,setLineasDisponibles]=useState([])
     useEffect(() => {
@@ -194,23 +202,17 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     placeholder="--Selecciona un status--"
                 />
             </div>)}
-            {/* <div className="field">
+            <div className="field">
                 <label>Planta</label>
-                <Dropdown
-                    // value={product} 
-                    value={selectPlanta} 
-                    options={listaPlantas} 
-                    onChange={ e => {
-                        // updateField(e.value.idPlanta, "idPlanta");
-                        // console.log(e)
-                        updateField(selectPlanta, "idPlanta");
-                        setSelectPlanta(e.value)
-                    }} 
-                    optionLabel="planta"
-                    optionValue='id' 
-                    placeholder="--Selecciona una planta--" 
+                <Dropdown 
+                optionLabel="planta" 
+                optionValue="id" 
+                value={product.idPlanta} 
+                options={plantasDisponibles} 
+                onChange={(e) => {updateField(e.value, "idPlanta")}} 
+                placeholder="--Selecciona una planta--"
                 />
-            </div> */}
+            </div>
             <div className="field">
                 <label>Area</label>
                 <Dropdown 
