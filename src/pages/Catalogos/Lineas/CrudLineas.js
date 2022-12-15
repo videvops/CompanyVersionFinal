@@ -35,11 +35,14 @@ const CrudLineas = ({titulos, notificaciones}) => {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
+    const [tieneId, setTieneId] = useState(false)
+
     // CAMBIAR...
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombreLinea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'area': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -202,6 +205,15 @@ const CrudLineas = ({titulos, notificaciones}) => {
         lineaService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
+//--------------------| Abilitar o inhabilitar boton |--------------------
+    useEffect(()=>{
+        if(product.id){                        // Tiene existe el ID
+            setTieneId(false)
+        }else{                                  // Sino tiene ID
+            setTieneId(true)
+        }
+    },[product])
+
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="datatable-crud-demo">
@@ -215,6 +227,7 @@ const CrudLineas = ({titulos, notificaciones}) => {
             hideDialog={hideDialog}
             product={product}
             updateField={updateField}
+            tieneId={tieneId}
             />
 
             <EliminarUno

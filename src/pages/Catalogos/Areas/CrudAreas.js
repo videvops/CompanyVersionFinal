@@ -35,6 +35,8 @@ const CrudAreas = ({titulos, notificaciones}) => {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
+    const [tieneId, setTieneId] = useState(false)
+
     // CAMBIAR...
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -202,6 +204,15 @@ const CrudAreas = ({titulos, notificaciones}) => {
         areaService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
+//--------------------| Abilitar o inhabilitar boton |--------------------
+    useEffect(()=>{
+        if(product.id){                        // Tiene existe el ID
+            setTieneId(false)
+        }else{                                  // Sino tiene ID
+            setTieneId(true)
+        }
+    },[product])
+
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="datatable-crud-demo">
@@ -215,6 +226,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
             hideDialog={hideDialog}
             product={product}
             updateField={updateField}
+            tieneId={tieneId}
             />
 
             <EliminarUno

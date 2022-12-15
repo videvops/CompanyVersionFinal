@@ -4,20 +4,13 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 import Axios from 'axios';
+import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
 
-
-const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
+const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,tieneId}) => {
 //--------------------| Dropdown  |--------------------
-    //---> Estatus
-    const statusDisponibles=[
-        {status:"Activo",value:1},
-        {status:"Inactivo",value:2},
-    ]
     //---> Plantas
-    // const [areasDisponibles, setAreasDisponibles]=useState([])
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
     useEffect(() => {
-        // Axios.get("http://localhost:8080/plantas/list").then(res=>console.log(res.data))
         Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
     }, [])
 
@@ -83,7 +76,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 />
                 {boton && Advertencia}
             </div>
-            <div className="field">
+            {!tieneId && (<div className="field">
                 <label>Status</label>
                 <Dropdown
                     value={product.idEstatus}
@@ -94,7 +87,7 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     optionLabel="status" 
                     placeholder="--Selecciona un status--"
                 />
-            </div>
+            </div>)}
         </Dialog>
     )
 }
