@@ -1,11 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 import { MensajeFiltro } from "../../Catalogos/ComponentsCat/Mensajes/Mensajes";
 
 const Cabezal=()=>{
+//--------------------| MultiSelect de Plantas  |--------------------
+    //---> Obtener registros de back-end
+    const plantasDisponibles=[
+        {planta:"planta1","id":1},
+        {planta:"planta2","id":2},
+    ]
+
+    //---> Lista de periodos seleccionados
+    const [plantas,setPlantas]=useState([])
+    // useEffect(()=>{
+    //     if(plantas.length>0){
+    //         console.log(plantas)
+    //     }
+    // },[plantas])
+
+//--------------------| MultiSelect de Periodo  |--------------------
+    //---> Obtener registros de back-end
+    const areasDisponibles=[
+        {area:"area1","id":1},
+        {area:"area2","id":2},
+    ]
+
+    //---> Lista de periodos seleccionados
+    const [areas,setAreas]=useState([])
+    // useEffect(()=>{
+    //     if(areas.length>0){
+    //         console.log(areas)
+    //     }
+    // },[areas])
+
 //--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
     const [lineasDisponibles, setLineasDisponibles]=useState([])
@@ -15,61 +46,38 @@ const Cabezal=()=>{
 
     //---> Lista de areas seleccionadas
     const [lineas,setLineas]=useState([])
-    useEffect(()=>{
-        if(lineas.length>0){
-            console.log(lineas)
-        }
-    },[lineas])
+    // useEffect(()=>{
+    //     if(lineas.length>0){
+    //         console.log(lineas)
+    //     }
+    // },[lineas])
 
-//--------------------| MultiSelect de Periodo  |--------------------
-    //---> Obtener registros de back-end
-    const periodosDisponibles=[
-        {"periodo":"periodo1","id":1},
-        {"periodo":"periodo2","id":2},
-    ]
-
-    //---> Lista de periodos seleccionados
-    const [periodos,setPeriodos]=useState([])
-    useEffect(()=>{
-        if(periodos.length>0){
-            console.log(periodos)
-        }
-    },[periodos])
-
-//--------------------| MultiSelect de Periodo  |--------------------
-    //---> Obtener registros de back-end
-    const fabricasDisponibles=[
-        {"fabrica":"fabrica1","id":1},
-        {"fabrica":"fabrica2","id":2},
-    ]
-
-    //---> Lista de periodos seleccionados
-    const [fabricas,setFabricas]=useState([])
-    useEffect(()=>{
-        if(fabricas.length>0){
-            console.log(fabricas)
-        }
-    },[fabricas])
+//--------------------| Campo para fecha con horas  |--------------------
+    const [fechaInicio,setFechaInicio]=useState(null)
+    const [fechaFin,setFechaFin]=useState(null)
 
 //--------------------| Para filtro  |--------------------
-    const [dialogo,setDialogo]=useState(false)                              // Para mostrar dialogo
+    const [dialogo,setDialogo]=useState(false)                          // Para mostrar dialogo
     const [esValido,setEsValido]=useState(true)
     //---> Validara antes de mandar el filtro
     const enviarFiltro=()=>{
-        if(lineas.length<1 || periodos.length<1 || fabricas.length<1 ){
+        if(lineas.length<1 || plantas.length<1 || areas.length<1 ){     // Si hay un campo vacio
             setEsValido(false)
             return;
         }
-        const arregloFiltros=[[...lineas],[...periodos],[...fabricas]]      // Arreglo de arreglos
+        const arregloFiltros=[...lineas]                                // Arreglo de lineas
         console.log(arregloFiltros)
+        console.log(fechaInicio)
         setEsValido(true)
         setDialogo(false)
     }
     //---> Limpiara los filtros
     const cancelarFiltro=()=>{
+        setPlantas([])
+        setAreas([])
         setLineas([])
-        setPeriodos([])
-        setFabricas([])
+        setFechaInicio(null)
+        setFechaFin(null)
         setEsValido(true)
         setDialogo(false)
     }
@@ -83,6 +91,9 @@ const Cabezal=()=>{
         );
     }
 
+    const mensajeHandler=()=>{
+        console.log("Se abandono el campo")
+    }
 //--------------------| Valor que regresara  |--------------------
     return(
     <div className="col-12 ">
@@ -97,6 +108,26 @@ const Cabezal=()=>{
         <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
         <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
             <MultiSelect 
+            optionLabel="planta" 
+            optionValue="id"
+            placeholder="--Plantas--" 
+            options={plantasDisponibles} 
+            value={plantas} 
+            onChange={(e) => {setPlantas(e.target.value)}} 
+            maxSelectedLabels={1}
+            onBlur={mensajeHandler}
+            />
+            <MultiSelect 
+            optionLabel="area" 
+            optionValue="id"
+            placeholder="--Areas--" 
+            options={areasDisponibles} 
+            value={areas} 
+            onChange={(e) => {setAreas(e.target.value)}} 
+            maxSelectedLabels={1}
+            onBlur={mensajeHandler}
+            />
+            <MultiSelect 
             optionLabel="linea" 
             optionValue="id"
             placeholder="--Lineas--" 
@@ -104,24 +135,23 @@ const Cabezal=()=>{
             value={lineas} 
             onChange={(e) => {setLineas(e.target.value)}} 
             maxSelectedLabels={1}
+            onBlur={mensajeHandler}
             />
-            <MultiSelect 
-            optionLabel="periodo" 
-            optionValue="id"
-            placeholder="--Periodos--" 
-            options={periodosDisponibles} 
-            value={periodos} 
-            onChange={(e) => {setPeriodos(e.target.value)}} 
-            maxSelectedLabels={1}
+            <Calendar 
+            id="time24" 
+            dateFormat="yy/mm/dd"
+            value={fechaInicio} 
+            onChange={(e) => setFechaInicio(e.value)} 
+            showTime 
+            placeholder="--Fecha Inicio--" 
             />
-            <MultiSelect 
-            optionLabel="fabrica" 
-            optionValue="id"
-            placeholder="--Fabricas--" 
-            options={fabricasDisponibles} 
-            value={fabricas} 
-            onChange={(e) => {setFabricas(e.target.value)}} 
-            maxSelectedLabels={1}
+            <Calendar 
+            id="time24" 
+            dateFormat="yy/mm/dd"
+            value={fechaFin} 
+            onChange={(e) => setFechaFin(e.value)} 
+            showTime 
+            placeholder="--Fecha Fin--" 
             />
             {!esValido && MensajeFiltro}
         </Dialog>
