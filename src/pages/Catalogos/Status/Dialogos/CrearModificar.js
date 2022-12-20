@@ -71,22 +71,6 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                 />
                 {boton && Advertencia}
             </div>
-            <div className="field">
-                <label
-                    htmlFor="fecha_creacion" // CAMBIAR...
-                >
-                    Fecha de creacion
-                </label>
-                <InputText
-                    id="fecha_creacion" // CAMBIAR...
-                    value={product.fecha_creacion} // CAMBIAR...
-                    onChange={(e) => {
-                        updateField(e.target.value.trim(), "fecha_creacion"); // CAMBIAR...
-                    }}
-                    required
-                    autoFocus
-                />
-            </div>
         </Dialog>
     );
 };

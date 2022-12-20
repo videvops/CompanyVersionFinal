@@ -13,14 +13,12 @@ const Exportar = (products) => {
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
                         { header: "Producto", dataKey: "nombreProducto" },
-                        { header: "Descripcion", dataKey: "descripcion" },
+                        { header: "descripcion", dataKey: "descripcion" },
+                        { header: "linea", dataKey: "linea" },
                         { header: "Planta", dataKey: "planta" },
-                        { header: "Status", dataKey: "status" },
-                        { header: "Empresa", dataKey: "empresa" },
+                        { header: "area", dataKey: "area" },
+                        { header: "Maquina", dataKey: "maquina" },
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
-                        { header: "Fecha de Modificación", dataKey: "fechaModificacion" },
-                        { header: "Creado por", dataKey: "creadoPor" },
-                        { header: "Modificado por", dataKey: "modificadPor" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },

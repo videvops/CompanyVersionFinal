@@ -23,7 +23,7 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
                 // CAMBIAR...
-                globalFilterFields={["id", "maquina", "idLinea", "liena", "idEsatus", "estatus"]}
+                globalFilterFields={["id", "estatus", "description"]}
                 emptyMessage="No se encontraron resultados."
                 header={header}
                 responsiveLayout="scroll"
@@ -31,7 +31,7 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
                 {/* // CAMBIAR.............. */}
                 <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} exportable={false} />
                 <Column field="id" header="ID" sortable style={{ minWidth: "12rem", textAlign: "center" }} />
-                <Column field="estatus" header="Status" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column field="estatus" header="Estatus" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="descripcion" header="Descripcion" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="fechaCreacion" header="Fecha de Creacion" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: "3rem" }} />
