@@ -11,5 +11,7 @@ export const MensajeHora=(
 );
 
 export const MensajeFiltro=(
-    <p style={{color:"red"}}>Todos los filtros son obligatorios</p>
+    <div className="uppercase text-center font-bold text-white" style={{background:"red"}}>
+        Todos los campos son obligatorios
+    </div>
 )

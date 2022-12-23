@@ -9,65 +9,62 @@ import { MensajeFiltro } from "../../Catalogos/ComponentsCat/Mensajes/Mensajes";
 const Cabezal=()=>{
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
-    const plantasDisponibles=[
-        {planta:"planta1","id":1},
-        {planta:"planta2","id":2},
-    ]
-
-    //---> Lista de periodos seleccionados
+    const [plantasDisponibles,setPlantasDisponibles]=useState([])
+    useEffect(() => {
+        const cargarPlantas= async()=>{
+            const respuesta=await Axios.get("http://localhost:8080/plantas/list")
+            setPlantasDisponibles(respuesta.data)
+        }
+        cargarPlantas()
+        // Axios.get("http://localhost:8080/plantas/list").then((res)=>{setPlantasDisponibles(res.data)})
+    }, [])
+    //---> Lista de plantas seleccionadas
     const [plantas,setPlantas]=useState([])
-    // useEffect(()=>{
-    //     if(plantas.length>0){
-    //         console.log(plantas)
-    //     }
-    // },[plantas])
 
-//--------------------| MultiSelect de Periodo  |--------------------
+//--------------------| MultiSelect de Areas  |--------------------
     //---> Obtener registros de back-end
-    const areasDisponibles=[
-        {area:"area1","id":1},
-        {area:"area2","id":2},
-    ]
-
-    //---> Lista de periodos seleccionados
+    const [areasDisponibles, setAreasDisponibles]=useState([])
+    const obtenerAreas=()=>{
+        const cargarAreas=async()=>{
+            const respuesta=await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+            setAreasDisponibles(respuesta.data)
+        }
+        cargarAreas()
+    }
+    //---> Lista de areas seleccionados
     const [areas,setAreas]=useState([])
-    // useEffect(()=>{
-    //     if(areas.length>0){
-    //         console.log(areas)
-    //     }
-    // },[areas])
 
 //--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
     const [lineasDisponibles, setLineasDisponibles]=useState([])
-    useEffect(() => {
-        Axios.get("http://localhost:8080/lineas").then(res=>setLineasDisponibles(res.data))
-    }, [])
-
-    //---> Lista de areas seleccionadas
+    const obtenerLineas=()=>{
+        const cargarLineas=async()=>{
+            const respuesta=await Axios.post(`http://localhost:8080/lineas/areas`,areas)
+            setLineasDisponibles(respuesta.data)
+        }
+        cargarLineas()
+    }
+    //---> Lista de lineas seleccionadas
     const [lineas,setLineas]=useState([])
-    // useEffect(()=>{
-    //     if(lineas.length>0){
-    //         console.log(lineas)
-    //     }
-    // },[lineas])
 
 //--------------------| Campo para fecha con horas  |--------------------
     const [fechaInicio,setFechaInicio]=useState(null)
     const [fechaFin,setFechaFin]=useState(null)
 
-//--------------------| Para filtro  |--------------------
+//--------------------| Funciones para filtro  |--------------------
     const [dialogo,setDialogo]=useState(false)                          // Para mostrar dialogo
     const [esValido,setEsValido]=useState(true)
     //---> Validara antes de mandar el filtro
     const enviarFiltro=()=>{
-        if(lineas.length<1 || plantas.length<1 || areas.length<1 ){     // Si hay un campo vacio
+        if(lineas.length<1 || plantas.length<1 || areas.length<1 || [fechaInicio,fechaFin].includes(null)){
             setEsValido(false)
-            return;
+            setTimeout(() => {
+                setEsValido(true)
+            }, 1800);
+            return;                                                     // No permite avanzar
         }
         const arregloFiltros=[...lineas]                                // Arreglo de lineas
         console.log(arregloFiltros)
-        console.log(fechaInicio)
         setEsValido(true)
         setDialogo(false)
     }
@@ -91,9 +88,6 @@ const Cabezal=()=>{
         );
     }
 
-    const mensajeHandler=()=>{
-        console.log("Se abandono el campo")
-    }
 //--------------------| Valor que regresara  |--------------------
     return(
     <div className="col-12 ">
@@ -107,52 +101,74 @@ const Cabezal=()=>{
         </h5>
         <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
         <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
-            <MultiSelect 
-            optionLabel="planta" 
-            optionValue="id"
-            placeholder="--Plantas--" 
-            options={plantasDisponibles} 
-            value={plantas} 
-            onChange={(e) => {setPlantas(e.target.value)}} 
-            maxSelectedLabels={1}
-            onBlur={mensajeHandler}
-            />
-            <MultiSelect 
-            optionLabel="area" 
-            optionValue="id"
-            placeholder="--Areas--" 
-            options={areasDisponibles} 
-            value={areas} 
-            onChange={(e) => {setAreas(e.target.value)}} 
-            maxSelectedLabels={1}
-            onBlur={mensajeHandler}
-            />
-            <MultiSelect 
-            optionLabel="linea" 
-            optionValue="id"
-            placeholder="--Lineas--" 
-            options={lineasDisponibles} 
-            value={lineas} 
-            onChange={(e) => {setLineas(e.target.value)}} 
-            maxSelectedLabels={1}
-            onBlur={mensajeHandler}
-            />
-            <Calendar 
-            id="time24" 
-            dateFormat="yy/mm/dd"
-            value={fechaInicio} 
-            onChange={(e) => setFechaInicio(e.value)} 
-            showTime 
-            placeholder="--Fecha Inicio--" 
-            />
-            <Calendar 
-            id="time24" 
-            dateFormat="yy/mm/dd"
-            value={fechaFin} 
-            onChange={(e) => setFechaFin(e.value)} 
-            showTime 
-            placeholder="--Fecha Fin--" 
-            />
+            <div className="grid p-fluid">
+                <div className="col-12 md:col-4">
+                    <label htmlFor="plantaMulti">Planta</label>
+                    <MultiSelect
+                    id="plantaMulti"
+                    optionLabel="planta" 
+                    optionValue="id"
+                    placeholder="Escoje una planta" 
+                    options={plantasDisponibles} 
+                    value={plantas} 
+                    onChange={(e) => {setPlantas(e.target.value)}} 
+                    maxSelectedLabels={1}
+                    />
+                </div>
+                <div className="col-12 md:col-4">
+                    <label htmlFor="areaMulti">Area</label>
+                    <MultiSelect
+                    id="areaMulti"
+                    optionLabel="area" 
+                    optionValue="id"
+                    placeholder="Escoje una area" 
+                    options={areasDisponibles} 
+                    value={areas} 
+                    onChange={(e) => {setAreas(e.target.value)}} 
+                    maxSelectedLabels={1}
+                    onFocus={obtenerAreas}
+                    />
+                </div>
+                <div className="col-12 md:col-4">
+                    <label htmlFor="lineaMulti">Linea</label>
+                    <MultiSelect
+                    id="lineaMulti"
+                    optionLabel="linea" 
+                    optionValue="id"
+                    placeholder="Escoje una linea" 
+                    options={lineasDisponibles} 
+                    value={lineas} 
+                    onChange={(e) => {setLineas(e.target.value)}} 
+                    maxSelectedLabels={1}
+                    onFocus={obtenerLineas}
+                    />
+                </div>
+            </div>
+            <br/>
+            <div className="grid p-fluid">
+                <div className="field col-12 md:col-5">
+                    <label>Hora inicio</label>
+                    <Calendar 
+                    id="time24" 
+                    dateFormat="yy/mm/dd"
+                    value={fechaInicio} 
+                    onChange={(e) => setFechaInicio(e.value)} 
+                    showTime 
+                    placeholder="--Fecha Inicio--" 
+                    />
+                </div>
+                <div className="field col-12 md:col-5">
+                    <label>Hora Fin</label>
+                    <Calendar 
+                    id="time24" 
+                    dateFormat="yy/mm/dd"
+                    value={fechaFin} 
+                    onChange={(e) => setFechaFin(e.value)} 
+                    showTime 
+                    placeholder="--Fecha Fin--" 
+                    />
+                </div>
+            </div>
             {!esValido && MensajeFiltro}
         </Dialog>
     </div>

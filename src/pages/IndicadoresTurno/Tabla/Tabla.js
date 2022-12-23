@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import TablaDesing from "../UI/DiseñoTabla";
 import Totales from "../Promedio/Totales";
 import { Column } from "primereact/column";
+// import { ProgressSpinner } from 'primereact/progressspinner'
 import { CardGeneral, CardTabla } from "../UI/Cards";
 import { ColorEficiencia, ColorDisponibilidad, ColorVelocidad, ColorCalidad } from "../Colores/Colores";
 import { PromedioCalidad, PromedioDisponibilidad, PromedioEfecto, PromedioProducto, PromedioVelocidad } from "../Promedio/Funciones";
@@ -10,8 +11,18 @@ import { PromedioCalidad, PromedioDisponibilidad, PromedioEfecto, PromedioProduc
 const Tabla = () => {
 //--------------------| Obtencion de datos del back-end |--------------------
     const [registros,setRegistros]=useState([])
+    // const [cargando,setCargando]=useState(false)
 
     useEffect(()=>{
+        // const cargarDatos=()=>{
+        //     setCargando(true)
+        //     const url="http://localhost:8080/indicadores/linea/1"
+        //     const res= Axios.get(url)
+        //     setRegistros(res.data.registros)
+        //     setCargando(false)
+        // }
+        // cargarDatos()
+        // console.log(registros.length)
         Axios.get("http://localhost:8080/indicadores/linea/1").then(res => setRegistros(res.data.registros))
     },[])
 
@@ -51,17 +62,19 @@ const Tabla = () => {
 //--------------------| Valor que regresara |--------------------
     return (
         <CardGeneral>
-                    <CardTabla>
-                        <TablaDesing datos={registros}>
-                            <Column field="idLinea" header="ID Linea" sortable/>
-                            <Column field="linea" header="Linea" style={{ textAlign: "center" }} sortable/>
-                            <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia}/>
-                            <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad}/>
-                            <Column field="velocidad" header="Velocidad" style={{ textAlign: "center" }} sortable body={ColorVelocidad}/>
-                            <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad}/>
-                            <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
-                        </TablaDesing>
-                    </CardTabla>
+            {/* {cargando && <ProgressSpinner />} */}
+            <>
+                <CardTabla>
+                    <TablaDesing datos={registros}>
+                        <Column field="idLinea" header="ID Linea" sortable/>
+                        <Column field="linea" header="Linea" style={{ textAlign: "center" }} sortable/>
+                        <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia}/>
+                        <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad}/>
+                        <Column field="velocidad" header="Velocidad" style={{ textAlign: "center" }} sortable body={ColorVelocidad}/>
+                        <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad}/>
+                        <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
+                    </TablaDesing>
+                </CardTabla>
             <CardTabla>
                 <Totales
                 eficienciaTotal={promEfic}
@@ -71,6 +84,7 @@ const Tabla = () => {
                 productoTerminadoTotal={promProduct}
                 />
             </CardTabla>
+            </>
         </CardGeneral>
     );
 };

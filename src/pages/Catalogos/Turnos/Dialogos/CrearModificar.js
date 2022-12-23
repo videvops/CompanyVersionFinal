@@ -17,12 +17,16 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
 
     const [areasDisponibles, setAreasDisponibles]=useState([])
     useEffect(() => {
-        Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+        if(product.idPlanta!==''){
+            Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+        }
     }, [product.idPlanta])
 
     const [lineasDisponibles,setLineasDisponibles]=useState([])
     useEffect(() => {
-        Axios.get(`http://localhost:8080/lineas/area/${product.idArea}`).then(res=>setLineasDisponibles(res.data))
+        if(product.idArea!==''){
+            Axios.get(`http://localhost:8080/lineas/area/${product.idArea}`).then(res=>setLineasDisponibles(res.data))
+        }
     }, [product.idArea])
 
 //--------------------| Validar campos  |--------------------
