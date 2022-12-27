@@ -13,6 +13,7 @@ import { emptyProduct } from './Objetos/ProductoVacio';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
+import Spinner from '../../../components/loader/Spinner';
 
 const CrudLineas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
@@ -162,50 +163,30 @@ const CrudLineas = ({titulos, notificaciones}) => {
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading,setIsLoading]=useState(false)
     const [error,setError]=useState(null)
-
-    async function CargarDatos(){
-        setIsLoading(true)
-        setError(null)
-        try{
-            const data=await lineaService.readAll()   // Hasta que no se termine de ejecutar la linea
-            if(data.ok){
-                throw new Error("Algo salio mal")
-            }
-            setProducts(data)  
-        } catch(error){
-            setError(error.message)
-        }
-        setIsLoading(false)
-    }
-
-    let content=<p>Sin registros</p>
-    if(!isLoading && !error){
-        content=(
-        <TablaLineas 
-            BotonesCabezal={BotonesCabezal} 
-            ExportarRegistros={ExportarRegistros} 
-            dt={dt} 
-            products={products} 
-            selectedProducts={selectedProducts} 
-            filters={filters} 
-            setSelectedProducts={setSelectedProducts} 
-            header={header}
-            actionBodyTemplate={actionBodyTemplate} 
-        />)
-    }
-
-    if(error)content=<p>{error}</p>
-    if(isLoading)content=<p>Cargando...</p>
-    
+    //---> Obtendra los datos del back-end
     useEffect(()=>{
-        CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
-    
+        const cargarDatos=async()=>{
+            setIsLoading(true)
+            setError(null)
+            try{
+                const data=await lineaService.readAll()
+                setProducts(data)  
+            } catch(error){
+                setError(error.message)
+            }
+            setIsLoading(false)
+        }
+        cargarDatos()
+        return () => {                                      // Funcion de limpieza
+            setProducts([])
+        }
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps    
+
     useEffect(() => {
         lineaService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
-//--------------------| Abilitar o inhabilitar boton |--------------------
+    //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(()=>{
         if(product.id){                        // Tiene existe el ID
             setTieneId(false)
@@ -214,11 +195,24 @@ const CrudLineas = ({titulos, notificaciones}) => {
         }
     },[product])
 
-//--------------------| Valor que regresara |--------------------
+    //--------------------| Valor que regresara |--------------------
     return (
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
-            {content}
+            {!isLoading && !error && (
+            <TablaLineas
+                BotonesCabezal={BotonesCabezal} 
+                ExportarRegistros={ExportarRegistros} 
+                dt={dt} 
+                products={products} 
+                selectedProducts={selectedProducts} 
+                filters={filters} 
+                setSelectedProducts={setSelectedProducts} 
+                header={header}
+                actionBodyTemplate={actionBodyTemplate} 
+            />)}
+            {isLoading&&<Spinner/>}
+            {error&&<p>{error}</p>}
 
             <CrearModificar
             productDialog={productDialog}

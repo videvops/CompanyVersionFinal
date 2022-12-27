@@ -13,6 +13,7 @@ import { emptyProduct } from './Objetos/AreaVacio';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
+import Spinner from '../../../components/loader/Spinner';
 
 const CrudAreas = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
@@ -161,45 +162,25 @@ const CrudAreas = ({titulos, notificaciones}) => {
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading,setIsLoading]=useState(false)
     const [error,setError]=useState(null)
-
-    async function CargarDatos(){
-        setIsLoading(true)
-        setError(null)
-        try{
-            const data=await areaService.readAll()   // Hasta que no se termine de ejecutar la linea
-            if(data.ok){
-                throw new Error("Algo salio mal")
-            }
-            setProducts(data)  
-        } catch(error){
-            setError(error.message)
-        }
-        setIsLoading(false)
-    }
-
-    let content=<p>Sin registros</p>
-    if(!isLoading && !error){
-        content=(
-        <TablaAreas 
-            BotonesCabezal={BotonesCabezal} 
-            ExportarRegistros={ExportarRegistros} 
-            dt={dt} 
-            products={products} 
-            selectedProducts={selectedProducts} 
-            filters={filters} 
-            setSelectedProducts={setSelectedProducts} 
-            header={header}
-            actionBodyTemplate={actionBodyTemplate} 
-        />)
-    }
-
-    if(error)content=<p>{error}</p>
-    if(isLoading)content=<p>Cargando...</p>
-    
+    //---> Obtendra los datos del back-end
     useEffect(()=>{
-        CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
-    
+        const cargarDatos=async()=>{
+            setIsLoading(true)
+            setError(null)
+            try{
+                const data=await areaService.readAll()
+                setProducts(data)  
+            } catch(error){
+                setError(error.message)
+            }
+            setIsLoading(false)
+        }
+        cargarDatos()
+        return () => {                                      // Funcion de limpieza
+            setProducts([])
+        }
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps    
+
     useEffect(() => {
         areaService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -217,7 +198,20 @@ const CrudAreas = ({titulos, notificaciones}) => {
     return (
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
-            {content}
+            {!isLoading && !error && (
+            <TablaAreas
+                BotonesCabezal={BotonesCabezal} 
+                ExportarRegistros={ExportarRegistros} 
+                dt={dt} 
+                products={products} 
+                selectedProducts={selectedProducts} 
+                filters={filters} 
+                setSelectedProducts={setSelectedProducts} 
+                header={header}
+                actionBodyTemplate={actionBodyTemplate} 
+            />)}
+            {isLoading&&<Spinner/>}
+            {error&&<p>{error}</p>}
 
             <CrearModificar
             productDialog={productDialog}

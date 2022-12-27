@@ -16,7 +16,9 @@ const CrearModificar = ({productDialog, titulos, hideDialog, product, updateFiel
     //---> Areas
     const [areasDisponibles, setAreasDisponibles]=useState([])
     useEffect(() => {
+        if(product.idPlanta!==''){
         Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+        }
     }, [product.idPlanta])
 
 //--------------------| Validar campos  |--------------------

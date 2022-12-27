@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 
 //CAMBIAR...
-import TablaTurnos from './Tabla/Tablaturnos';
+import Spinner from '../../../components/loader/Spinner';
 import Exportar from './Botones/Exportar';
+import TablaTurnos from './Tabla/Tablaturnos';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
@@ -17,7 +18,7 @@ import { emptyProduct } from './Objetos/TurnoVacio';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
-import Spinner from '../../../components/loader/Spinner';
+
 
 const CrudTurnos = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
@@ -167,16 +168,13 @@ const CrudTurnos = ({titulos, notificaciones}) => {
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading,setIsLoading]=useState(false)
     const [error,setError]=useState(null)
-
+    //---> Obtendra los datos del back-end
     useEffect(()=>{
         const cargarDatos=async()=>{
             setIsLoading(true)
             setError(null)
             try{
                 const data=await turnoService.readAll()
-                if(data.ok){
-                    throw new Error("Algo salio mal")
-                }
                 setProducts(data)  
             } catch(error){
                 setError(error.message)
@@ -184,7 +182,7 @@ const CrudTurnos = ({titulos, notificaciones}) => {
             setIsLoading(false)
         }
         cargarDatos()
-        return () => {
+        return () => {                                      // Funcion de limpieza
             setProducts([])
         }
     },[]); // eslint-disable-line react-hooks/exhaustive-deps    

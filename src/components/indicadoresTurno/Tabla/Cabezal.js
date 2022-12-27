@@ -4,7 +4,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
-import { MensajeFiltro } from "../../Catalogos/ComponentsCat/Mensajes/Mensajes";
+import { MensajeFiltro } from "../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes";
 
 const Cabezal=()=>{
 //--------------------| MultiSelect de Plantas  |--------------------
@@ -60,7 +60,7 @@ const Cabezal=()=>{
             setEsValido(false)
             setTimeout(() => {
                 setEsValido(true)
-            }, 1800);
+            }, 2500);
             return;                                                     // No permite avanzar
         }
         const arregloFiltros=[...lineas]                                // Arreglo de lineas
@@ -103,9 +103,8 @@ const Cabezal=()=>{
         <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
             <div className="grid p-fluid">
                 <div className="col-12 md:col-4">
-                    <label htmlFor="plantaMulti">Planta</label>
+                    <label className="font-bold">Planta</label>
                     <MultiSelect
-                    id="plantaMulti"
                     optionLabel="planta" 
                     optionValue="id"
                     placeholder="Escoje una planta" 
@@ -116,9 +115,8 @@ const Cabezal=()=>{
                     />
                 </div>
                 <div className="col-12 md:col-4">
-                    <label htmlFor="areaMulti">Area</label>
+                    <label className="font-bold">Area</label>
                     <MultiSelect
-                    id="areaMulti"
                     optionLabel="area" 
                     optionValue="id"
                     placeholder="Escoje una area" 
@@ -130,9 +128,8 @@ const Cabezal=()=>{
                     />
                 </div>
                 <div className="col-12 md:col-4">
-                    <label htmlFor="lineaMulti">Linea</label>
+                    <label className="font-bold">Linea</label>
                     <MultiSelect
-                    id="lineaMulti"
                     optionLabel="linea" 
                     optionValue="id"
                     placeholder="Escoje una linea" 
@@ -147,7 +144,7 @@ const Cabezal=()=>{
             <br/>
             <div className="grid p-fluid">
                 <div className="field col-12 md:col-5">
-                    <label>Hora inicio</label>
+                    <label className="font-bold">Hora inicio</label>
                     <Calendar 
                     id="time24" 
                     dateFormat="yy/mm/dd"
@@ -158,7 +155,7 @@ const Cabezal=()=>{
                     />
                 </div>
                 <div className="field col-12 md:col-5">
-                    <label>Hora Fin</label>
+                    <label className="font-bold">Hora Fin</label>
                     <Calendar 
                     id="time24" 
                     dateFormat="yy/mm/dd"
