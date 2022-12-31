@@ -32,7 +32,7 @@ export const AppTopbar = (props) => {
                     </button>
                 </li>
                 <li>
-                    <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>
+                    <button className="p-link layout-topbar-button" onClick={props.cerrarSesion}>
                         <i className="pi pi-user" />
                         <span>Profile</span>
                     </button>
