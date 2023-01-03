@@ -9,7 +9,7 @@ const App = () => {
     useEffect(() => {
     const informacionSesion = localStorage.getItem('logueado'); // Busca el valor creado
         if (informacionSesion === '1') {                        // Comprobar valor de inicio de sesion
-        setLogueado(true);                                      // Inicio de sesion
+            setLogueado(true);                                  // Inicio de sesion
         }
     }, []);                                                     // Se ejecuta al cargar la pagina
 
