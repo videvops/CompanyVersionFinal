@@ -62,29 +62,27 @@ const Tabla = () => {
 //--------------------| Valor que regresara |--------------------
     return (
         <CardGeneral>
-            {/* {cargando && <ProgressSpinner />} */}
-            <>
-                <CardTabla>
-                    <TablaDesing datos={registros}>
-                        <Column field="idLinea" header="ID Linea" sortable/>
-                        <Column field="linea" header="Linea" style={{ textAlign: "center" }} sortable/>
-                        <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia}/>
-                        <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad}/>
-                        <Column field="velocidad" header="Velocidad" style={{ textAlign: "center" }} sortable body={ColorVelocidad}/>
-                        <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad}/>
-                        <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
-                    </TablaDesing>
-                </CardTabla>
             <CardTabla>
-                <Totales
-                eficienciaTotal={promEfic}
-                disponibilidadTotal={promDisp}
-                velocidadTotal={promVel}
-                calidadTotal={promCal}
-                productoTerminadoTotal={promProduct}
-                />
+                <TablaDesing datos={registros}>
+                    <Column field="idLinea" header="ID Linea" sortable/>
+                    <Column field="linea" header="Linea" style={{ textAlign: "center" }} sortable/>
+                    <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia}/>
+                    <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad}/>
+                    <Column field="velocidad" header="Velocidad" style={{ textAlign: "center" }} sortable body={ColorVelocidad}/>
+                    <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad}/>
+                    <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable/>
+                </TablaDesing>
             </CardTabla>
-            </>
+        <CardTabla>
+            <Totales
+            eficienciaTotal={promEfic}
+            disponibilidadTotal={promDisp}
+            velocidadTotal={promVel}
+            calidadTotal={promCal}
+            productoTerminadoTotal={promProduct}
+            />
+        </CardTabla>
+            
         </CardGeneral>
     );
 };

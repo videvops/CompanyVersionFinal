@@ -29,7 +29,7 @@ import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
 
 //----------------| Catalogos |----------------
-import ListaParos from "../pages/ListaParos";
+import ListadoParos from "../pages/ListadoParos";
 import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
 import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
 import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
@@ -193,13 +193,13 @@ const Home = ({ setLogueado }) => {
         {
             label: "Reportes",
             icon: "pi pi-fw pi-sitemap",
-            items: [{ label: "Lista de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listaParos" }],
+            items: [{ label: "Listado de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" }],
         },
         {
             label: "Graficas",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listaParos" },
+                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
                 { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
                 { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
                 { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
@@ -288,7 +288,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/" exact render={() => <Dashboard colorMode={layoutColorMode} location={location} />} />
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
-                    <Route path="/listaParos" component={ListaParos} />
+                    <Route path="/listadoParos" component={ListadoParos} />
                     <Route path="/desperdicio" component={Desperdecio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
