@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CabezalListParos from '../components/listadoParo/Cabezal/CabezalListParos'
 import TablaListParos from '../components/listadoParo/Tabla/TablaListParos'
 
 const ListadoParos = () => {
+    // Nota: declarar una funcion aqui para comprobar si la tabla tiene registros
+    const [registros, setRegistros] = useState([])
     const datosFicticios = [
         {fecha:"12-10-2001",planta:"Planta1",area:"Area1",linea:"Linea1",maquina:"maquina1",modoFalla:"Falla1",inicioParo:"12:33",finParo:"12:31",tiempo:1},
         {fecha:"14-06-2012",planta:"Planta2",area:"Area2",linea:"Linea2",maquina:"maquina2",modoFalla:"Falla2",inicioParo:"10:12",finParo:"10:14",tiempo:2},
@@ -14,8 +16,13 @@ const ListadoParos = () => {
 //--------------------| Valor que regresara  |--------------------
     return (
         <>
-            <CabezalListParos/>
-            <TablaListParos datos={datosFicticios} />
+            <CabezalListParos
+                setRegistros={setRegistros}     // Se actualizan los registros
+            />
+            <TablaListParos
+                datos={datosFicticios}
+                registros={registros}
+            />
         </>
     )
 }

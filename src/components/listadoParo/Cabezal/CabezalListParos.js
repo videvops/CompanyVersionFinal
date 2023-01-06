@@ -1,7 +1,86 @@
-import React from 'react'
-import { Button } from 'primereact/button';
+import React, { useState, useEffect } from 'react'
+import Axios from "axios"
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
+import { MultiSelect } from 'primereact/multiselect'
+import { MensajeFiltro } from '../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
 
-const CabezalListParos = () => {
+const CabezalListParos = ({ setRegistros }) => {
+//--------------------| MultiSelect de Plantas  |--------------------
+    //---> Obtener registros de back-end
+    const [plantasDisponibles, setPlantasDisponibles] = useState([])
+    useEffect(() => {
+        const cargarPlantas = async () => {
+            const respuesta = await Axios.get("http://localhost:8080/plantas/list")
+            setPlantasDisponibles(respuesta.data)
+        }
+        cargarPlantas()
+    }, [])
+    //---> Lista de plantas seleccionadas
+    const [plantas, setPlantas] = useState([])
+
+//--------------------| MultiSelect de Areas  |--------------------
+    //---> Obtener registros de back-end
+    const [areasDisponibles, setAreasDisponibles] = useState([])
+    const obtenerAreas = () => {
+        const cargarAreas = async () => {
+            const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+            setAreasDisponibles(respuesta.data)
+        }
+        cargarAreas()
+    }
+    //---> Lista de areas seleccionados
+    const [areas, setAreas] = useState([])
+
+//--------------------| MultiSelect de Lineas  |--------------------
+    //---> Obtener registros de back-end
+    const [lineasDisponibles, setLineasDisponibles] = useState([])
+    const obtenerLineas = () => {
+        const cargarLineas = async () => {
+            const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areas)
+            setLineasDisponibles(respuesta.data)
+        }
+        cargarLineas()
+    }
+    //---> Lista de lineas seleccionadas
+    const [lineas, setLineas] = useState([])
+
+//--------------------| Funciones para filtro  |--------------------
+    const [dialogo,setDialogo]=useState(false)              // Para mostrar dialogo
+    const [esValido,setEsValido]=useState(true)
+    //---> Validara antes de mandar el filtro
+    const enviarFiltro=()=>{
+        if (lineas.length < 1 || plantas.length < 1 || areas.length < 1) {
+            setEsValido(false)
+            setTimeout(() => {
+                setEsValido(true)
+            }, 2500);
+            return;                                         // No permite avanzar
+        }
+        const arregloFiltros=[...lineas]                    // Copia de arreglo de lineas
+        // console.log(arregloFiltros)
+        setRegistros(arregloFiltros)
+        setEsValido(true)                                   // Oculta mensaje de advertencia
+        setDialogo(false)                                   // Oculta modal de filtro
+    }
+    //---> Limpiara los filtros
+    const cancelarFiltro=()=>{
+        setPlantas([])
+        setAreas([])
+        setLineas([])
+        setEsValido(true)
+        setDialogo(false)
+    }
+
+    const botonesAccion = () => {
+        return (
+            <div>
+                <Button label="Cancelar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
+                <Button label="Consultar" icon="pi pi-check" onClick={enviarFiltro} autoFocus />
+            </div>
+        );
+    }
+
 //--------------------| Valor que regresara  |--------------------
     return (
         <div className="col-12 ">
@@ -11,7 +90,64 @@ const CabezalListParos = () => {
                 </span>
             </div>
             <br/>
-            <Button label="Filtro" icon="pi pi-filter-fill" />
+            <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
+            <Dialog
+                header="Filtro para listado de paros"
+                visible={dialogo}
+                footer={botonesAccion}
+                onHide={() => setDialogo(false)}
+            >
+                <div className="grid p-fluid">
+                    <div className="col-12 md:col-4">
+                        <label className="font-bold">Planta</label>
+                        <MultiSelect
+                            optionLabel="planta" 
+                            optionValue="id"
+                            placeholder="Escoje una planta" 
+                            options={plantasDisponibles} 
+                            value={plantas} 
+                            onChange={(e) => {setPlantas(e.target.value)}} 
+                            maxSelectedLabels={1}
+                        />
+                    </div>
+                    <div className="col-12 md:col-4">
+                        <label className="font-bold">Area</label>
+                        <MultiSelect
+                            optionLabel="area" 
+                            optionValue="id"
+                            placeholder="Escoje una area" 
+                            options={areasDisponibles} 
+                            value={areas} 
+                            onChange={(e) => {setAreas(e.target.value)}} 
+                            maxSelectedLabels={1}
+                            onFocus={obtenerAreas}
+                        />
+                    </div>
+                    <div className="col-12 md:col-4">
+                        <label className="font-bold">Linea</label>
+                        <MultiSelect
+                            optionLabel="linea" 
+                            optionValue="id"
+                            placeholder="Escoje una linea" 
+                            options={lineasDisponibles} 
+                            value={lineas} 
+                            onChange={(e) => {setLineas(e.target.value)}} 
+                            maxSelectedLabels={1}
+                            onFocus={obtenerLineas}
+                        />
+                    </div>
+                </div>
+                <br/>
+                <div className="grid p-fluid">
+                    <div className="field col-12 md:col-5">
+                        <label className="font-bold">Maquina</label>
+                    </div>
+                    <div className="field col-12 md:col-5">
+                        <label className="font-bold">Periodo</label>
+                    </div>
+                </div>
+                {!esValido && MensajeFiltro}
+            </Dialog>
         </div>
     )
 }

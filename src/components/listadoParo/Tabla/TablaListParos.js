@@ -4,7 +4,7 @@ import TablaDesing from '../../indicadoresTurno/UI/DiseñoTabla'
 import { CardTabla } from '../../indicadoresTurno/UI/Cards'
 import { CardGeneral } from '../../indicadoresTurno/UI/Cards'
 
-const TablaListParos = ({ datos }) => {
+const TablaListParos = ({ datos, registros }) => {
 //--------------------| Columnas de forma dinamica  |--------------------
     //---> Datos de cada columna
     const columnas = [
@@ -20,14 +20,16 @@ const TablaListParos = ({ datos }) => {
     ]
     //---> Uso de map para metodo dinamico
     const columnasDinamicas = columnas.map(columna =>
-        <Column key={columna.field} field={columna.field} header={columna.header} />
+        <Column key={columna.field} field={columna.field} header={columna.header} style={{ textAlign: "center" }}/>
     )
+    console.log(registros)
 
 //--------------------| Valor que regresara  |--------------------
     return (
         <CardGeneral>
             <CardTabla>
-                <TablaDesing datos={datos} >
+                {registros.length!==0?
+                    (<TablaDesing datos={datos} >
                     {/* <Column field="fecha" header="Fecha" style={{ textAlign: "center", minWidth: '12rem' }} sortable />
                     <Column field="planta" header="Planta" style={{ textAlign: "center" }} sortable/>
                     <Column field="area" header="Area" style={{ textAlign: "center" }} sortable/>
@@ -38,7 +40,7 @@ const TablaListParos = ({ datos }) => {
                     <Column field="finParo" header="Fin de Paro" style={{ textAlign: "center" }} sortable/>
                     <Column field="tiempo" header="Tiempo" style={{ textAlign: "center",  width: '2rem' }} sortable/> */}
                     {columnasDinamicas}
-                </TablaDesing>
+                </TablaDesing>):(<p>No tiene datos</p>)}
             </CardTabla>
         </CardGeneral>
     )
