@@ -47,6 +47,19 @@ const CabezalListParos = ({ setRegistros }) => {
     //---> Lista de lineas seleccionadas
     const [lineas, setLineas] = useState([])
 
+//--------------------| MultiSelect de Lineas  |--------------------
+    //---> Obtener registros de back-end
+    const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
+    const obtenerMaquinas = () => {
+        const cargarMaquinas = async () => {
+            const respuesta = await Axios.post(`http://localhost:8080/maquinas/list`, lineas)
+            setMaquinasDisponibles(respuesta.data)
+        }
+        cargarMaquinas()
+    }
+    //---> Lista de lineas seleccionadas
+    const [maquinas, setMaquinas] = useState([])
+
 //--------------------| Campo para fecha con horas  |--------------------
     const [fechaInicio, setFechaInicio] = useState(null)
     const [fechaFin, setFechaFin] = useState(null)
@@ -69,12 +82,12 @@ const CabezalListParos = ({ setRegistros }) => {
             page:0,
             total:10,
             todasLineas:false,
-            maquinas: [...lineas],
+            maquinas: [...maquinas],
             fechaInc: nuevaFechaInicio,
             fechaFin: nuevaFechaFin
         }
         const enviarDatos=async()=>{
-            const respuesta=await Axios.post(`http://localhost:8080/paros/filter`,objeto)
+            const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, objeto)
             setRegistros(respuesta.data.registros)
         }
         enviarDatos()
@@ -165,6 +178,17 @@ const CabezalListParos = ({ setRegistros }) => {
                 <div className="grid p-fluid">
                     <div className="field col-12 md:col-4">
                         <label className="font-bold">Maquina</label>
+                        <MultiSelect
+                            optionLabel="maquina" 
+                            optionValue="id"
+                            placeholder="Escoje una maquina" 
+                            options={maquinasDisponibles} 
+                            value={maquinas} 
+                            onChange={(e) => {setMaquinas(e.target.value)}} 
+                            maxSelectedLabels={1}
+                            onFocus={obtenerMaquinas}
+                            filter
+                        />
                     </div>
                     <div className="field col-12 md:col-4">
                         <label className="font-bold">Fecha Inicio</label>
