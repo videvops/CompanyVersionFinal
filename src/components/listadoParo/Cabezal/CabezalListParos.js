@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Axios from "axios"
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import { Calendar } from 'primereact/calendar'
 import { MultiSelect } from 'primereact/multiselect'
+import { formatearFecha } from '../../helpers/funciones'
 import { MensajeFiltro } from '../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
 
 const CabezalListParos = ({ setRegistros }) => {
@@ -45,37 +47,56 @@ const CabezalListParos = ({ setRegistros }) => {
     //---> Lista de lineas seleccionadas
     const [lineas, setLineas] = useState([])
 
+//--------------------| Campo para fecha con horas  |--------------------
+    const [fechaInicio, setFechaInicio] = useState(null)
+    const [fechaFin, setFechaFin] = useState(null)
+
 //--------------------| Funciones para filtro  |--------------------
-    const [dialogo,setDialogo]=useState(false)              // Para mostrar dialogo
-    const [esValido,setEsValido]=useState(true)
+    const [dialogo, setDialogo] = useState(false)              // Para mostrar dialogo
+    const [esValido, setEsValido] = useState(true)
     //---> Validara antes de mandar el filtro
-    const enviarFiltro=()=>{
-        if (lineas.length < 1 || plantas.length < 1 || areas.length < 1) {
+    const enviarFiltro = () => {
+        if (lineas.length < 1 || plantas.length < 1 || areas.length < 1 || [fechaInicio, fechaFin].includes(null)) {
             setEsValido(false)
             setTimeout(() => {
                 setEsValido(true)
             }, 2500);
-            return;                                         // No permite avanzar
+            return;                                                     // No permite avanzar
         }
-        const arregloFiltros=[...lineas]                    // Copia de arreglo de lineas
-        // console.log(arregloFiltros)
-        setRegistros(arregloFiltros)
-        setEsValido(true)                                   // Oculta mensaje de advertencia
-        setDialogo(false)                                   // Oculta modal de filtro
+        const nuevaFechaInicio = formatearFecha(fechaInicio)
+        const nuevaFechaFin = formatearFecha(fechaFin)
+        const objeto = {
+            page:0,
+            total:10,
+            todasLineas:false,
+            maquinas: [...lineas],
+            fechaInc: nuevaFechaInicio,
+            fechaFin: nuevaFechaFin
+        }
+        const enviarDatos=async()=>{
+            const respuesta=await Axios.post(`http://localhost:8080/paros/filter`,objeto)
+            setRegistros(respuesta.data.registros)
+        }
+        enviarDatos()
+        setEsValido(true)
+        setDialogo(false)
     }
     //---> Limpiara los filtros
     const cancelarFiltro=()=>{
         setPlantas([])
         setAreas([])
         setLineas([])
+        setFechaInicio(null)
+        setFechaFin(null)
+        setRegistros([])
         setEsValido(true)
         setDialogo(false)
     }
-
+    //---> Botones para filtro
     const botonesAccion = () => {
         return (
             <div>
-                <Button label="Cancelar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
+                <Button label="Limpiar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
                 <Button label="Consultar" icon="pi pi-check" onClick={enviarFiltro} autoFocus />
             </div>
         );
@@ -108,6 +129,7 @@ const CabezalListParos = ({ setRegistros }) => {
                             value={plantas} 
                             onChange={(e) => {setPlantas(e.target.value)}} 
                             maxSelectedLabels={1}
+                            filter
                         />
                     </div>
                     <div className="col-12 md:col-4">
@@ -121,6 +143,7 @@ const CabezalListParos = ({ setRegistros }) => {
                             onChange={(e) => {setAreas(e.target.value)}} 
                             maxSelectedLabels={1}
                             onFocus={obtenerAreas}
+                            filter
                         />
                     </div>
                     <div className="col-12 md:col-4">
@@ -134,16 +157,37 @@ const CabezalListParos = ({ setRegistros }) => {
                             onChange={(e) => {setLineas(e.target.value)}} 
                             maxSelectedLabels={1}
                             onFocus={obtenerLineas}
+                            filter
                         />
                     </div>
                 </div>
                 <br/>
                 <div className="grid p-fluid">
-                    <div className="field col-12 md:col-5">
+                    <div className="field col-12 md:col-4">
                         <label className="font-bold">Maquina</label>
                     </div>
-                    <div className="field col-12 md:col-5">
-                        <label className="font-bold">Periodo</label>
+                    <div className="field col-12 md:col-4">
+                        <label className="font-bold">Fecha Inicio</label>
+                        <Calendar 
+                            id="time24" 
+                            dateFormat="yy/mm/dd"
+                            value={fechaInicio} 
+                            onChange={(e) => setFechaInicio(e.value)} 
+                            showTime 
+                            placeholder="--Fecha Inicio--" 
+                        />
+                    </div>
+                    <div className="field col-12 md:col-4">
+                        <label className="font-bold">Hora Fin</label>
+                        <Calendar 
+                            id="time24" 
+                            dateFormat="yy/mm/dd"
+                            value={fechaFin} 
+                            onChange={(e) => setFechaFin(e.value)} 
+                            showTime 
+                            placeholder="--Fecha Fin--"
+                            minDate={fechaInicio}
+                        />
                     </div>
                 </div>
                 {!esValido && MensajeFiltro}
