@@ -6,7 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 import { MensajeFiltro } from "../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes";
 
-const Cabezal=()=>{
+const Cabezal = ({ setRegistros }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
@@ -16,7 +16,6 @@ const Cabezal=()=>{
             setPlantasDisponibles(respuesta.data)
         }
         cargarPlantas()
-        // Axios.get("http://localhost:8080/plantas/list").then((res)=>{setPlantasDisponibles(res.data)})
     }, [])
     //---> Lista de plantas seleccionadas
     const [plantas,setPlantas]=useState([])
@@ -24,12 +23,9 @@ const Cabezal=()=>{
 //--------------------| MultiSelect de Areas  |--------------------
     //---> Obtener registros de back-end
     const [areasDisponibles, setAreasDisponibles]=useState([])
-    const obtenerAreas=()=>{
-        const cargarAreas=async()=>{
-            const respuesta=await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
-            setAreasDisponibles(respuesta.data)
-        }
-        cargarAreas()
+    const obtenerAreas = async () => {
+        const respuesta=await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+        setAreasDisponibles(respuesta.data)
     }
     //---> Lista de areas seleccionados
     const [areas,setAreas]=useState([])
@@ -37,12 +33,9 @@ const Cabezal=()=>{
 //--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
     const [lineasDisponibles, setLineasDisponibles]=useState([])
-    const obtenerLineas=()=>{
-        const cargarLineas=async()=>{
-            const respuesta=await Axios.post(`http://localhost:8080/lineas/areas`,areas)
-            setLineasDisponibles(respuesta.data)
-        }
-        cargarLineas()
+    const obtenerLineas = async () => {
+        const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areas)
+        setLineasDisponibles(respuesta.data)
     }
     //---> Lista de lineas seleccionadas
     const [lineas,setLineas]=useState([])
@@ -52,8 +45,14 @@ const Cabezal=()=>{
     const [fechaFin,setFechaFin]=useState(null)
 
 //--------------------| Funciones para filtro  |--------------------
-    const [dialogo,setDialogo]=useState(false)                          // Para mostrar dialogo
-    const [esValido,setEsValido]=useState(true)
+    const [dialogo, setDialogo] = useState(false)                          // Para mostrar dialogo
+    const [esValido, setEsValido] = useState(true)
+    
+    const enviarDatos = async (datos) => {
+        const respuesta = await Axios.post('http://localhost:8080/indicadores', datos)
+        setRegistros(respuesta.data.registros)
+    }
+
     //---> Validara antes de mandar el filtro
     const enviarFiltro=()=>{
         if(lineas.length<1 || plantas.length<1 || areas.length<1 || [fechaInicio,fechaFin].includes(null)){
@@ -63,8 +62,8 @@ const Cabezal=()=>{
             }, 2500);
             return;                                                     // No permite avanzar
         }
-        const arregloFiltros=[...lineas]                                // Arreglo de lineas
-        console.log(arregloFiltros)
+        const objeto={idLineas:lineas}
+        enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
     }
@@ -75,6 +74,7 @@ const Cabezal=()=>{
         setLineas([])
         setFechaInicio(null)
         setFechaFin(null)
+        setRegistros([])
         setEsValido(true)
         setDialogo(false)
     }
@@ -82,7 +82,7 @@ const Cabezal=()=>{
     const botonesAccion = () => {
         return (
             <div>
-                <Button label="Cancelar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
+                <Button label="Limpiar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
                 <Button label="Consultar" icon="pi pi-check" onClick={enviarFiltro} autoFocus />
             </div>
         );
@@ -90,30 +90,31 @@ const Cabezal=()=>{
 
 //--------------------| Valor que regresara  |--------------------
     return(
-    <div className="col-12 ">
-        <div className="card mb-0" style={{ textAlign: "center", background: "#6366f2" }}>
-            <span className=" font-bold" style={{ fontSize: "25px", color: "white" }}>
-                Indicadores de Turno
-            </span>
-        </div>
-        <h5 className=" font-bold" style={{ fontSize: "25px" }}>
-            Status en Tiempo Real
-        </h5>
-        <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
-        <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
-            <div className="grid p-fluid">
-                <div className="col-12 md:col-4">
-                    <label className="font-bold">Planta</label>
-                    <MultiSelect
-                    optionLabel="planta" 
-                    optionValue="id"
-                    placeholder="Escoje una planta" 
-                    options={plantasDisponibles} 
-                    value={plantas} 
-                    onChange={(e) => {setPlantas(e.target.value)}} 
-                    maxSelectedLabels={1}
-                    />
+            <div className="col-12 ">
+                <div className="card mb-0" style={{ textAlign: "center", background: "#6366f2" }}>
+                    <span className=" font-bold" style={{ fontSize: "25px", color: "white" }}>
+                        Indicadores de Turno
+                    </span>
                 </div>
+                <h5 className=" font-bold" style={{ fontSize: "25px" }}>
+                    Status en Tiempo Real
+                </h5>
+                <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
+                <Dialog header="Filtro para indicadores de turno" visible={dialogo} footer={botonesAccion} onHide={() => setDialogo(false)}>            
+                    <div className="grid p-fluid">
+                        <div className="col-12 md:col-4">
+                            <label className="font-bold">Planta</label>
+                            <MultiSelect
+                            optionLabel="planta" 
+                            optionValue="id"
+                            placeholder="Escoje una planta" 
+                            options={plantasDisponibles} 
+                            value={plantas} 
+                            onChange={(e) => {setPlantas(e.target.value)}} 
+                            maxSelectedLabels={1}
+                            filter
+                        />
+                        </div>
                 <div className="col-12 md:col-4">
                     <label className="font-bold">Area</label>
                     <MultiSelect
@@ -125,6 +126,7 @@ const Cabezal=()=>{
                     onChange={(e) => {setAreas(e.target.value)}} 
                     maxSelectedLabels={1}
                     onFocus={obtenerAreas}
+                    filter
                     />
                 </div>
                 <div className="col-12 md:col-4">
@@ -138,6 +140,7 @@ const Cabezal=()=>{
                     onChange={(e) => {setLineas(e.target.value)}} 
                     maxSelectedLabels={1}
                     onFocus={obtenerLineas}
+                    filter
                     />
                 </div>
             </div>

@@ -24,12 +24,9 @@ const CabezalListParos = ({ setRegistros }) => {
 //--------------------| MultiSelect de Areas  |--------------------
     //---> Obtener registros de back-end
     const [areasDisponibles, setAreasDisponibles] = useState([])
-    const obtenerAreas = () => {
-        const cargarAreas = async () => {
-            const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
-            setAreasDisponibles(respuesta.data)
-        }
-        cargarAreas()
+    const obtenerAreas = async () => {
+        const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+        setAreasDisponibles(respuesta.data)
     }
     //---> Lista de areas seleccionados
     const [areas, setAreas] = useState([])
@@ -37,12 +34,9 @@ const CabezalListParos = ({ setRegistros }) => {
 //--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
     const [lineasDisponibles, setLineasDisponibles] = useState([])
-    const obtenerLineas = () => {
-        const cargarLineas = async () => {
-            const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areas)
-            setLineasDisponibles(respuesta.data)
-        }
-        cargarLineas()
+    const obtenerLineas = async () => {
+        const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areas)
+        setLineasDisponibles(respuesta.data)
     }
     //---> Lista de lineas seleccionadas
     const [lineas, setLineas] = useState([])
@@ -50,12 +44,9 @@ const CabezalListParos = ({ setRegistros }) => {
 //--------------------| MultiSelect de Lineas  |--------------------
     //---> Obtener registros de back-end
     const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
-    const obtenerMaquinas = () => {
-        const cargarMaquinas = async () => {
-            const respuesta = await Axios.post(`http://localhost:8080/maquinas/list`, lineas)
-            setMaquinasDisponibles(respuesta.data)
-        }
-        cargarMaquinas()
+    const obtenerMaquinas = async () => {
+        const respuesta = await Axios.post(`http://localhost:8080/maquinas/list`, lineas)
+        setMaquinasDisponibles(respuesta.data)
     }
     //---> Lista de lineas seleccionadas
     const [maquinas, setMaquinas] = useState([])
@@ -67,6 +58,11 @@ const CabezalListParos = ({ setRegistros }) => {
 //--------------------| Funciones para filtro  |--------------------
     const [dialogo, setDialogo] = useState(false)              // Para mostrar dialogo
     const [esValido, setEsValido] = useState(true)
+    //---> Enviar datos de back-end a otro componente
+    const enviarDatos = async (datos) => {
+        const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, datos)
+        setRegistros(respuesta.data.registros)
+    }
     //---> Validara antes de mandar el filtro
     const enviarFiltro = () => {
         if (lineas.length < 1 || plantas.length < 1 || areas.length < 1 || [fechaInicio, fechaFin].includes(null)) {
@@ -78,19 +74,8 @@ const CabezalListParos = ({ setRegistros }) => {
         }
         const nuevaFechaInicio = formatearFecha(fechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
-        const objeto = {
-            page:0,
-            total:10,
-            todasLineas:false,
-            maquinas: [...maquinas],
-            fechaInc: nuevaFechaInicio,
-            fechaFin: nuevaFechaFin
-        }
-        const enviarDatos=async()=>{
-            const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, objeto)
-            setRegistros(respuesta.data.registros)
-        }
-        enviarDatos()
+        const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
+        enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
     }
