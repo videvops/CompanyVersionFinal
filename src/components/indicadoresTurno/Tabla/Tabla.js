@@ -5,8 +5,9 @@ import { Column } from "primereact/column";
 import { CardGeneral, CardTabla } from "../UI/Cards";
 import { ColorEficiencia, ColorDisponibilidad, ColorVelocidad, ColorCalidad } from "../Colores/Colores";
 import { PromedioCalidad, PromedioDisponibilidad, PromedioEfecto, PromedioProducto, PromedioVelocidad } from "../Promedio/Funciones";
+import Spinner from "../../loader/Spinner";
 
-const Tabla = ({ registros }) => {
+const Tabla = ({ registros, cargando }) => {
 //--------------------| Sacar promedios |--------------------
     const [promEfic,setPromEfic]=useState(0);
     const [promDisp,setPromDisp]=useState(0);
@@ -33,16 +34,19 @@ const Tabla = ({ registros }) => {
 
 //--------------------| Obtencion de promedios en tiempo real |--------------------
     useEffect(() => {
-        const interval = setInterval(() => {    // Renderizado por intervalos de tiempo
-            Promedios(registros)                // Actualizara los promedios
-            console.log('Promedios actualizados')
-        }, 5000)                               // Cada 5 seg se renderizara
-        return () => clearInterval(interval)   // Elimina el efecto secundario anterior
+        const interval = setInterval(() => {            // Renderizado por intervalos de tiempo
+            if (registros.length > 0) {
+                Promedios(registros)                    // Actualizara los promedios
+                console.log('Promedios actualizados')
+            }
+        }, 5000)                                        // Cada 5 seg se renderizara
+        return () => clearInterval(interval)            // Elimina el efecto secundario anterior
     });
 
 //--------------------| Valor que regresara |--------------------
     return (
         <CardGeneral>
+            {cargando && <Spinner />}
             {registros.length > 0 ?
                 (<>
                     <CardTabla>

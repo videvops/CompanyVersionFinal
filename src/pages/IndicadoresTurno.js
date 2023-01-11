@@ -4,11 +4,19 @@ import Tabla from "../components/indicadoresTurno/Tabla/Tabla";
 
 const IndicadoresTurno = () => {
     const [registros, setRegistros] = useState([])
+    const [cargando, setCargando] = useState(false)
+
 //--------------------| Valor que regresara |--------------------
     return (
         <>
-            <Cabezal setRegistros={setRegistros} />
-            <Tabla registros={registros} />
+            <Cabezal
+                setRegistros={setRegistros}
+                setCargando={setCargando}
+            />
+            <Tabla
+                registros={registros}
+                cargando={cargando}
+            />
         </>
     );
 };

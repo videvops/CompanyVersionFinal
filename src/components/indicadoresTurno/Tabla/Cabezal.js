@@ -5,8 +5,9 @@ import { Dialog } from 'primereact/dialog';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 import { MensajeFiltro } from "../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes";
+import { formatearFecha } from "../../helpers/funciones";
 
-const Cabezal = ({ setRegistros }) => {
+const Cabezal = ({ setRegistros, setCargando }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
@@ -41,12 +42,12 @@ const Cabezal = ({ setRegistros }) => {
     const [lineas,setLineas]=useState([])
 
 //--------------------| Campo para fecha con horas  |--------------------
-    const [fechaInicio,setFechaInicio]=useState(null)
-    const [fechaFin,setFechaFin]=useState(null)
+    const [fechaInicio, setFechaInicio] = useState(null)
+    const [fechaFin, setFechaFin] = useState(null)
 
 //--------------------| Funciones para filtro  |--------------------
-    const [dialogo, setDialogo] = useState(false)                          // Para mostrar dialogo
-    const [esValido, setEsValido] = useState(true)
+    const [dialogo, setDialogo] = useState(false)                       // Para mostrar dialogo
+    const [esValido, setEsValido] = useState(true)                      // Para mensaje de error
     
     const enviarDatos = async (datos) => {
         const respuesta = await Axios.post('http://localhost:8080/indicadores', datos)
@@ -54,18 +55,22 @@ const Cabezal = ({ setRegistros }) => {
     }
 
     //---> Validara antes de mandar el filtro
-    const enviarFiltro=()=>{
-        if(lineas.length<1 || plantas.length<1 || areas.length<1 || [fechaInicio,fechaFin].includes(null)){
+    const enviarFiltro = () => {
+        //---> Validacion antes de enviar
+        if (lineas.length < 1 || plantas.length < 1 || areas.length < 1 || [fechaInicio, fechaFin].includes(null)) {
             setEsValido(false)
             setTimeout(() => {
                 setEsValido(true)
             }, 2500);
             return;                                                     // No permite avanzar
         }
+        setCargando(true)
+        console.log(formatearFecha(fechaInicio))
         const objeto={idLineas:lineas}
         enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
+        setCargando(false)
     }
     //---> Limpiara los filtros
     const cancelarFiltro=()=>{
