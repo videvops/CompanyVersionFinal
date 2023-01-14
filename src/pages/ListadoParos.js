@@ -3,6 +3,7 @@ import CabezalListParos from '../components/listadoParo/Cabezal/CabezalListParos
 import TablaListParos from '../components/listadoParo/Tabla/TablaListParos'
 
 const ListadoParos = () => {
+    //---> Variable donde se almacena la informacion del back-end
     const [registros, setRegistros] = useState([]) 
 
 //--------------------| Valor que regresara  |--------------------
