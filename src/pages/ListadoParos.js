@@ -18,4 +18,8 @@ const ListadoParos = () => {
     )
 }
 
-export default ListadoParos
+const comparisonFn = function (prevProps, nextProps) {
+    return prevProps.location.pathname === nextProps.location.pathname;
+};
+
+export default React.memo(ListadoParos, comparisonFn);

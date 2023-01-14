@@ -5,14 +5,13 @@ import { CardTabla } from '../../indicadoresTurno/UI/Cards'
 import { CardGeneral } from '../../indicadoresTurno/UI/Cards'
 
 const TablaListParos = ({ registros }) => {
-    console.log(registros)
 //--------------------| Valor que regresara  |--------------------
     return (
         <CardGeneral>
             <CardTabla>
-                {
-                    registros.length !== 0 ?              // Revisa que haya registros
-                        (
+                {/* { */}
+                    {/* registros ?              // Revisa que haya registros */}
+                        {/* ( */}
                             <TablaDesing datos={registros} >
                                 <Column field="fecha" header="Fecha" style={{ textAlign: "center", minWidth: '12rem' }} sortable />
                                 <Column field="planta" header="Planta" style={{ textAlign: "center" }} sortable/>
@@ -24,8 +23,8 @@ const TablaListParos = ({ registros }) => {
                                 <Column field="finParo" header="Fin de Paro" style={{ textAlign: "center" }} sortable/>
                                 <Column field="tiempo" header="Tiempo" style={{ textAlign: "center", width: '2rem' }} sortable />
                             </TablaDesing>
-                        ) :
-                        (<p>No hay registros...</p>)}
+                        {/* ) : */}
+                        {/* (<p>No hay registros...</p>)} */}
             </CardTabla>
         </CardGeneral>
     )

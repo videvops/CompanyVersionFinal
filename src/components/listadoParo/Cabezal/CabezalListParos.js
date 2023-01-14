@@ -61,7 +61,8 @@ const CabezalListParos = ({ setRegistros }) => {
     //---> Enviar datos de back-end a otro componente
     const enviarDatos = async (datos) => {
         const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, datos)
-        setRegistros(respuesta.data.registros)
+        const resultado = await respuesta.data.registros
+        setRegistros(resultado)
     }
     //---> Validara antes de mandar el filtro
     const enviarFiltro = () => {
@@ -75,6 +76,7 @@ const CabezalListParos = ({ setRegistros }) => {
         const nuevaFechaInicio = formatearFecha(fechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
         const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
+        console.log(objeto)
         enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
@@ -84,9 +86,10 @@ const CabezalListParos = ({ setRegistros }) => {
         setPlantas([])
         setAreas([])
         setLineas([])
+        setMaquinas([])
         setFechaInicio(null)
         setFechaFin(null)
-        setRegistros([])
+        // setRegistros([])
         setEsValido(true)
         setDialogo(false)
     }
@@ -94,7 +97,7 @@ const CabezalListParos = ({ setRegistros }) => {
     const botonesAccion = () => {
         return (
             <div>
-                <Button label="Limpiar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
+                <Button label="Cancelar" icon="pi pi-times" onClick={cancelarFiltro} className="p-button-text" />
                 <Button label="Consultar" icon="pi pi-check" onClick={enviarFiltro} autoFocus />
             </div>
         );
