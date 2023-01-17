@@ -39,7 +39,7 @@ const Crud = (props) => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        nombreArea: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        modoFalla: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
