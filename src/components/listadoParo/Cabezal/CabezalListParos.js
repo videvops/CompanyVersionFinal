@@ -74,9 +74,10 @@ const CabezalListParos = ({ setRegistros }) => {
             return;                                                     // No permite avanzar
         }
         const nuevaFechaInicio = formatearFecha(fechaInicio)
+        // console.log(nuevaFechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
         const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
-        console.log(objeto)
+        // console.log(objeto)
         enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
@@ -89,7 +90,6 @@ const CabezalListParos = ({ setRegistros }) => {
         setMaquinas([])
         setFechaInicio(null)
         setFechaFin(null)
-        // setRegistros([])
         setEsValido(true)
         setDialogo(false)
     }

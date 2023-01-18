@@ -1,5 +1,6 @@
 export const formatearFecha = (fecha) => {
-    const fechaNueva = new Date(fecha)
+    fecha.setSeconds(0)                     // Formateo de segundos
+    const fechaNueva = new Date(fecha)      // Variable de fecha a partir de argumento
     return (
         fechaNueva.getFullYear() + "-" +
         (fechaNueva.getMonth() + 1) + "-" +
