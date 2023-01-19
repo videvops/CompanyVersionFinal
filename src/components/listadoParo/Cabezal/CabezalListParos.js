@@ -113,6 +113,9 @@ const CabezalListParos = ({ setRegistros }) => {
             </div>
             <br/>
             <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
+            <Button label="Tabla" icon="pi pi-filter-fill" onClick={() => console.log("Tabla")} />
+            <Button label="Paretos Modo Falla" icon="pi pi-filter-fill" onClick={() => console.log("Paretos")} />
+            <Button label="Tiempo muerto por maquina" icon="pi pi-filter-fill" onClick={() => console.log("tiempo muerto")} />
             <Dialog
                 header="Filtro para listado de paros"
                 visible={dialogo}
