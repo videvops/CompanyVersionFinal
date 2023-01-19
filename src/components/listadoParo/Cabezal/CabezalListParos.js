@@ -56,8 +56,8 @@ const CabezalListParos = ({ setRegistros }) => {
     const [fechaFin, setFechaFin] = useState(null)
 
 //--------------------| Funciones para filtro  |--------------------
-    const [dialogo, setDialogo] = useState(false)              // Para mostrar dialogo
-    const [esValido, setEsValido] = useState(true)
+    const [dialogo, setDialogo] = useState(false)           // Mostrar dialogo
+    const [esValido, setEsValido] = useState(true)          // Mensaje de advertencia 
     //---> Enviar datos de back-end a otro componente
     const enviarDatos = async (datos) => {
         const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, datos)
@@ -74,13 +74,11 @@ const CabezalListParos = ({ setRegistros }) => {
             return;                                                     // No permite avanzar
         }
         const nuevaFechaInicio = formatearFecha(fechaInicio)
-        // console.log(nuevaFechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
         const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
-        // console.log(objeto)
         enviarDatos(objeto)
-        setEsValido(true)
-        setDialogo(false)
+        setEsValido(true)   
+        setDialogo(false)       // Oculta el dialogo
     }
     //---> Limpiara los filtros
     const cancelarFiltro=()=>{
@@ -103,6 +101,7 @@ const CabezalListParos = ({ setRegistros }) => {
         );
     }
 
+
 //--------------------| Valor que regresara  |--------------------
     return (
         <div className="col-12 ">
@@ -111,11 +110,8 @@ const CabezalListParos = ({ setRegistros }) => {
                     Listado de Paros
                 </span>
             </div>
-            <br/>
+            <br />
             <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
-            <Button label="Tabla" icon="pi pi-filter-fill" onClick={() => console.log("Tabla")} />
-            <Button label="Paretos Modo Falla" icon="pi pi-filter-fill" onClick={() => console.log("Paretos")} />
-            <Button label="Tiempo muerto por maquina" icon="pi pi-filter-fill" onClick={() => console.log("tiempo muerto")} />
             <Dialog
                 header="Filtro para listado de paros"
                 visible={dialogo}
