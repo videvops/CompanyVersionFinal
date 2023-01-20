@@ -30,15 +30,16 @@ import IconsDemo from "../components/IconsDemo";
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
-import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
-import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
-import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
-import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
 import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
-import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
+import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
-import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
+import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
+import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
+import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
+import CatalogoProducto from "../pages/Catalogos/Productos/CatalogoProducto";
 import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
+import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
+import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
 import EmptyPage from "../pages/EmptyPage";
 import TimelineDemo from "../pages/TimelineDemo";
 
@@ -219,6 +220,7 @@ const Home = ({ setLogueado }) => {
                         { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones" },
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas" },
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
+                        { label: "Productos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoProductos" },
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
                         { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo" },
                         { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos" },
@@ -295,6 +297,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
+                    <Route path="/catalogoProductos" component={CatalogoProducto} />
                     <Route path="/catalogoRoles" component={CatalogoRoles} />
                     <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />

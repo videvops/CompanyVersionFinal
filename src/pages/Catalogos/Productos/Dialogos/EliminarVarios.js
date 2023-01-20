@@ -2,8 +2,8 @@ import React from 'react'
 import { Dialog } from 'primereact/dialog';
 import { deleteProductsDialogFooter } from '../../ComponentsCat/Botones/VariosRegistros';
 
-const EliminarVarios = ({deleteProductsDialog,hideDeleteProductsDialog,product,deleteSelectedProducts}) => {
-    const eliminarRegisros=deleteProductsDialogFooter(hideDeleteProductsDialog,deleteSelectedProducts);
+const EliminarVarios = ({ deleteProductsDialog, hideDeleteProductsDialog, product, deleteSelectedProducts }) => {
+    const eliminarRegisros = deleteProductsDialogFooter(hideDeleteProductsDialog, deleteSelectedProducts);
 //--------------------| Valor que regresara |--------------------
     return (
         <Dialog 

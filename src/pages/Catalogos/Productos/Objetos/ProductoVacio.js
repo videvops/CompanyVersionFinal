@@ -1,18 +1,11 @@
 //--------------------| Objeto vacio  |--------------------
-export let emptyProduct = {
-    id: null,
-    area: '',
-    idEstatus: 1,
-    idPlanta:''
-};
-
-/* 
+export let productoVacio = {
     id: null,	
-    turno: '',
-    horaInicio: '',
-    horaFin: '',
+    producto: '',
+    descripcion: '',
     idEstatus: 1,
-    // idPlanta:'',
+    fecha:'',
+    idPlanta:'',
     idArea:'',
     idLinea: '',
-*/
+};

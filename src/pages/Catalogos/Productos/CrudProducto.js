@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import TablaAreas from './Tabla/TablaAreas';
+
+//CAMBIAR...
+import Spinner from '../../../components/loader/Spinner';
 import Exportar from './Botones/Exportar';
+import TablaTurnos from './Tabla/TablaProducto';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
-import CrearModificar from './Dialogos/CrearModificar';
+import CrearM1 from './Dialogos/CrearM1';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
-import { AreaService } from '../../../service/AreaService';
-import { emptyProduct } from './Objetos/AreaVacio';
+//CAMBIAR...
+import { TurnoService } from '../../../service/TurnoService';
+import { productoVacio } from './Objetos/ProductoVacio';
+
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
+import CrearM2 from './Dialogos/CrearM2';
 
-const CrudAreas = ({titulos, notificaciones}) => {
+
+const CrudProducto = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
-    const areaService = new AreaService();
+    const turnoService = new TurnoService();
 
 //--------------------| Uso de Contextos |--------------------
     const {
@@ -32,7 +39,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState(emptyProduct);
+    const [product, setProduct] = useState(productoVacio);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
     const [tieneId, setTieneId] = useState(false)
@@ -41,11 +48,12 @@ const CrudAreas = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'area': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'turno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
-    
+
 //--------------------| Barra de Buscar |--------------------
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
@@ -61,7 +69,7 @@ const CrudAreas = ({titulos, notificaciones}) => {
 //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
     const openNew = () => {
-        setProduct(emptyProduct);
+        setProduct(productoVacio);
         setProductDialog(true);
     }
     //------> 
@@ -105,14 +113,14 @@ const CrudAreas = ({titulos, notificaciones}) => {
             updateProduct(product);
             toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.modificacion}`, life: 3000 });
         }
-        setProduct(emptyProduct);
+        setProduct(productoVacio);
         setProductDialog(false);
     }
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
         console.log("Se elimino el ID: "+product.id);
         deleteProduct(product.id);
-        setProduct(emptyProduct);
+        setProduct(productoVacio);
         toast.current.show({ severity: 'error', summary: 'Atencion!', detail: `${notificaciones.eliminacion}`, life: 3000 });
         setDeleteProductDialog(false);
     }
@@ -142,66 +150,45 @@ const CrudAreas = ({titulos, notificaciones}) => {
     //------> Botones parte derecha
     const actionBodyTemplate = (rowData) => {
         return (
-            <React.Fragment>
+            <>
                 <Button 
-                icon="pi pi-pencil" 
-                className="p-button-rounded p-button-success mr-2" 
-                onClick={() => _editProduct(rowData)} 
+                    icon="pi pi-pencil" 
+                    className="p-button-rounded p-button-success mr-2" 
+                    onClick={() => _editProduct(rowData)} 
                 />
-
                 <Button 
-                icon="pi pi-trash" 
-                className="p-button-rounded p-button-warning" 
-                onClick={() => confirmDeleteProduct(rowData)} 
+                    icon="pi pi-trash" 
+                    className="p-button-rounded p-button-warning" 
+                    onClick={() => confirmDeleteProduct(rowData)} 
                 />
-            </React.Fragment>
+            </>
         );
     }
 
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading,setIsLoading]=useState(false)
     const [error,setError]=useState(null)
-
-    async function CargarDatos(){
-        setIsLoading(true)
-        setError(null)
-        try{
-            const data=await areaService.readAll()   // Hasta que no se termine de ejecutar la linea
-            if(data.ok){
-                throw new Error("Algo salio mal")
-            }
-            setProducts(data)  
-        } catch(error){
-            setError(error.message)
-        }
-        setIsLoading(false)
-    }
-
-    let content=<p>Sin registros</p>
-    if(!isLoading && !error){
-        content=(
-        <TablaAreas 
-            BotonesCabezal={BotonesCabezal} 
-            ExportarRegistros={ExportarRegistros} 
-            dt={dt} 
-            products={products} 
-            selectedProducts={selectedProducts} 
-            filters={filters} 
-            setSelectedProducts={setSelectedProducts} 
-            header={header}
-            actionBodyTemplate={actionBodyTemplate} 
-        />)
-    }
-
-    if(error)content=<p>{error}</p>
-    if(isLoading)content=<p>Cargando...</p>
-    
+    //---> Obtendra los datos del back-end
     useEffect(()=>{
-        CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+        const cargarDatos=async()=>{
+            setIsLoading(true)
+            setError(null)
+            try{
+                const data=await turnoService.readAll()
+                setProducts(data)  
+            } catch(error){
+                setError(error.message)
+            }
+            setIsLoading(false)
+        }
+        cargarDatos()
+        return () => {                                      // Funcion de limpieza
+            setProducts([])
+        }
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps    
     
     useEffect(() => {
-        areaService.readAll().then((data) => setProducts(data));
+        turnoService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Abilitar o inhabilitar boton |--------------------
@@ -217,33 +204,47 @@ const CrudAreas = ({titulos, notificaciones}) => {
     return (
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
-            {content}
+            {!isLoading && !error && (
+            <TablaTurnos
+                BotonesCabezal={BotonesCabezal} 
+                ExportarRegistros={ExportarRegistros} 
+                dt={dt} 
+                products={products} 
+                selectedProducts={selectedProducts} 
+                filters={filters} 
+                setSelectedProducts={setSelectedProducts} 
+                header={header}
+                actionBodyTemplate={actionBodyTemplate} 
+            />)}
+            {isLoading&&<Spinner/>}
+            {error&&<p>{error}</p>}
 
-            <CrearModificar
-            productDialog={productDialog}
-            titulos={titulos}
-            saveProduct={saveProduct}
-            hideDialog={hideDialog}
-            product={product}
-            updateField={updateField}
-            tieneId={tieneId}
+            <CrearM1
+                productDialog={productDialog}
+                titulos={titulos}
+                saveProduct={saveProduct}
+                hideDialog={hideDialog}
+                product={product}
+                updateField={updateField}
+                tieneId={tieneId}
             />
+            <CrearM2/>
 
             <EliminarUno
-            deleteProductDialog={deleteProductDialog} 
-            _deleteProduct={_deleteProduct}
-            hideDeleteProductDialog={hideDeleteProductDialog} 
-            product={product}
+                deleteProductDialog={deleteProductDialog} 
+                _deleteProduct={_deleteProduct}
+                hideDeleteProductDialog={hideDeleteProductDialog} 
+                product={product}
             />
 
             <EliminarVarios 
-            deleteProductsDialog={deleteProductsDialog}
-            deleteSelectedProducts={deleteSelectedProducts}
-            hideDeleteProductsDialog={hideDeleteProductsDialog}
-            product={product}
+                deleteProductsDialog={deleteProductsDialog}
+                deleteSelectedProducts={deleteSelectedProducts}
+                hideDeleteProductsDialog={hideDeleteProductsDialog}
+                product={product}
             />
         </div>
     );
 }
 
-export default CrudAreas;
+export default CrudProducto
