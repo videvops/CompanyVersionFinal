@@ -3,9 +3,10 @@ import Axios from "axios"
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
-import { MultiSelect } from 'primereact/multiselect'
 import { formatearFecha } from '../helpers/funciones'
  import { MensajeFiltro } from '../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
+
+ import { Dropdown } from 'primereact/dropdown'
 
 const FiltroMonitorDeParos = ({ setRegistros }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
@@ -25,7 +26,8 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
     //---> Obtener registros de back-end
     const [areasDisponibles, setAreasDisponibles] = useState([])
     const obtenerAreas = async () => {
-        const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+        let plantasArr = [plantas]
+        const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantasArr)
         setAreasDisponibles(respuesta.data)
     }
     //---> Lista de areas seleccionados
@@ -35,21 +37,12 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
     //---> Obtener registros de back-end
     const [lineasDisponibles, setLineasDisponibles] = useState([])
     const obtenerLineas = async () => {
-        const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areas)
+        let areasArr = [areas]
+        const respuesta = await Axios.post(`http://localhost:8080/lineas/areas`, areasArr)
         setLineasDisponibles(respuesta.data)
     }
     //---> Lista de lineas seleccionadas
     const [lineas, setLineas] = useState([])
-
-//--------------------| MultiSelect de Lineas  |--------------------
-    //---> Obtener registros de back-end
-    const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
-    const obtenerMaquinas = async () => {
-        const respuesta = await Axios.post(`http://localhost:8080/maquinas/list`, lineas)
-        setMaquinasDisponibles(respuesta.data)
-    }
-    //---> Lista de lineas seleccionadas
-    const [maquinas, setMaquinas] = useState([])
 
 //--------------------| Campo para fecha con horas  |--------------------
     const [fechaInicio, setFechaInicio] = useState(null)
@@ -58,11 +51,29 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
 //--------------------| Funciones para filtro  |--------------------
     const [dialogo, setDialogo] = useState(false)              // Para mostrar dialogo
     const [esValido, setEsValido] = useState(true)
+
     //---> Enviar datos de back-end a otro componente
     const enviarDatos = async (datos) => {
-        const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, datos)
-        const resultado = await respuesta.data.registros
-        setRegistros(resultado)
+        // Ultimos paros 
+        const urlUltimosParos = "http://localhost:8080/paros/ultimosParos/linea/"+datos.linea
+        Axios.post(urlUltimosParos,datos).then(function (response) {
+            console.log("Respuesta desde axios")
+            console.log(response)
+            setRegistros(response)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        // Top Ten
+        // const urlTopTen = "http://localhost:8080/paros/topTen/linea/"+datos.linea
+        // Axios.post(urlTopTen,datos).then(function (response) {
+        //     console.log(response);
+        //     //setRegistros(response)
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
     }
     //---> Validara antes de mandar el filtro
     const enviarFiltro = () => {
@@ -74,10 +85,8 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
             return;                                                     // No permite avanzar
         }
         const nuevaFechaInicio = formatearFecha(fechaInicio)
-        // console.log(nuevaFechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
-        const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
-        // console.log(objeto)
+        const objeto = { linea:lineas, fechaInicio: nuevaFechaInicio, fechaFin: nuevaFechaFin }
         enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)
@@ -87,7 +96,6 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
         setPlantas([])
         setAreas([])
         setLineas([])
-        setMaquinas([])
         setFechaInicio(null)
         setFechaFin(null)
         setEsValido(true)
@@ -120,51 +128,42 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
                 onHide={() => setDialogo(false)}
         >
                 <div className="grid p-fluid">
-                    
                     <div className="col-12 md:col-4">
                         <label className="font-bold">Planta</label>
-                        <MultiSelect
+                        <Dropdown 
                             optionLabel="planta" 
-                            optionValue="id"
-                            placeholder="Escoje una planta" 
-                            options={plantasDisponibles} 
-                            value={plantas} 
-                            onChange={(e) => {setPlantas(e.target.value)}} 
-                            maxSelectedLabels={1}
-                            filter
+                            optionValue="id" 
+                            placeholder="Selecciona una planta"
+                            options={plantasDisponibles}
+                            value={plantas}  
+                            onChange={(e) => setPlantas(e.target.value)} 
                         />
                     </div>
-
                     <div className="col-12 md:col-4">
                         <label className="font-bold">Area</label>
-                        <MultiSelect
+                        <Dropdown
                             optionLabel="area" 
                             optionValue="id"
                             placeholder="Escoje una area" 
                             options={areasDisponibles} 
                             value={areas} 
-                            onChange={(e) => {setAreas(e.target.value)}} 
-                            maxSelectedLabels={1}
-                            onFocus={obtenerAreas}
-                            filter
+                            onChange={(e) => {setAreas(e.target.value)}}
+                            onFocus={obtenerAreas} 
                         />
                     </div>
 
                     <div className="col-12 md:col-4">
                         <label className="font-bold">Linea</label>
-                        <MultiSelect
+                        <Dropdown
                             optionLabel="linea" 
                             optionValue="id"
                             placeholder="Escoje una linea" 
                             options={lineasDisponibles} 
                             value={lineas} 
                             onChange={(e) => {setLineas(e.target.value)}} 
-                            maxSelectedLabels={1}
                             onFocus={obtenerLineas}
-                            filter
                         />
                     </div>
-
                 </div>
                 <br/>
                 <div className="grid p-fluid">

@@ -25,7 +25,9 @@ const CabezalListParos = ({ setRegistros }) => {
     //---> Obtener registros de back-end
     const [areasDisponibles, setAreasDisponibles] = useState([])
     const obtenerAreas = async () => {
-        const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`, plantas)
+        console.log(plantas)
+        console.log("http://localhost:8080/areas/plantas"+plantas)
+        const respuesta = await Axios.post(`http://localhost:8080/areas/plantas`,plantas)
         setAreasDisponibles(respuesta.data)
     }
     //---> Lista de areas seleccionados

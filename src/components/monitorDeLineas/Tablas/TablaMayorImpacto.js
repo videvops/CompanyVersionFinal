@@ -1,24 +1,23 @@
 import React from 'react'
 import { Column } from "primereact/column";
-import TablaDesing from "../indicadoresTurno/UI/DiseñoTabla"
-import { CardTabla , CardGeneral } from "../indicadoresTurno/UI/Cards"
+import TablaDesing from "../UI/DiseñoTabla"
+import { CardTabla , CardGeneral } from "../UI/Cards"
 
+const TablaMayorImpacto = () => {
+//--------------------| Valor que regresara  |--------------------
 const registros=[
     {maquina:"Maquina1",modoFalla:"Atoron de carton",tiempo:60,frecuencia:30},
     {maquina:"Maquina2",modoFalla:"Falta material",tiempo:5,frecuencia:3},
     {maquina:"Maquina3",modoFalla:"Cuchilla rota",tiempo:1140,frecuencia:1},
 ]
 
-
-const TablaUltimosParos = () => {
-//--------------------| Valor que regresara  |--------------------
     return (
         <CardGeneral>
             <CardTabla>
                 {/* { */}
                     {/* registros ?              // Revisa que haya registros */}
                         {/* ( */}
-                            <TablaDesing datos={registros} >
+                        <TablaDesing datos={registros} >
                                 <Column field="maquina" header="Maquina" style={{ textAlign: "center", minWidth: '12rem' }} sortable />
                                 <Column field="modoFalla" header="Modo de Falla" style={{ textAlign: "center" }} sortable/>
                                 <Column field="tiempo" header="Tiempo" style={{ textAlign: "center", width: '2rem' }} sortable />
@@ -31,4 +30,4 @@ const TablaUltimosParos = () => {
     )
 }
 
-export default TablaUltimosParos
+export default TablaMayorImpacto
