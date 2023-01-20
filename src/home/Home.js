@@ -27,13 +27,16 @@ import TreeDemo from "../components/TreeDemo";
 import Desperdecio from "../components/Desperdecio";
 import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
+// pareto modos de falla
+import { ParetoModoFalla } from "../components/graficas/paretoModosFalla/ParetoModoFalla";
+import { ParetoTiempoMuerto } from "../components/graficas/paretoTiempoMuerto/ParetoTiempoMuerto";
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
 import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
 import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
 import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
-import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
+import CatalogoModoFalla from "../pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
@@ -199,9 +202,9 @@ const Home = ({ setLogueado }) => {
             label: "Graficas",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
+                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/paretoTiempoMuerto" },
                 { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
+                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/paretoModosFalla" },
                 { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
@@ -220,18 +223,10 @@ const Home = ({ setLogueado }) => {
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas" },
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
-                        { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo" },
                         { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos" },
                         { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios" },
-                        {
-                            label: "Maquina",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
-                            to: "/catalogoMaquinas",
-                        },
-                        {
-                            label: "Modo de Falla",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
-                        },
+                        { label: "Maquina", icon: "pi pi-fw pi-bookmark text-blue-500",to: "/catalogoMaquinas",},
+                        { label: "Modo de Falla", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoModoDeFalla"},
                     ],
                 },
             ],
@@ -296,10 +291,10 @@ const Home = ({ setLogueado }) => {
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/catalogoRoles" component={CatalogoRoles} />
-                    <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
+                    <Route path="/catalogoModoDeFalla" component={CatalogoModoFalla}/>
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />
@@ -315,6 +310,9 @@ const Home = ({ setLogueado }) => {
                     <Route path="/timeline" component={TimelineDemo} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
+                    {/*Paretos modos de falla*/ }
+                    <Route path={"/paretoModosFalla"} component={ParetoModoFalla}/>
+                    <Route path={"/paretoTiempoMuerto"} component={ParetoTiempoMuerto} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
@@ -326,7 +324,7 @@ const Home = ({ setLogueado }) => {
                 <div className="layout-mask p-component-overlay"></div>
             </CSSTransition>
         </div>
-    );
+    ); 
 };
 
 export default Home;

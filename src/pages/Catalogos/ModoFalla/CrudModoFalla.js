@@ -179,15 +179,16 @@ const Crud = (props) => {
     async function CargarDatos() {
         setIsLoading(true);
         setError(null);
-        /*try {
-      const data = await productService.readAll(); // Hasta que no se termine de ejecutar la linea
-      if (data.ok) {
-        throw new Error("Algo salio mal");
-      }
-      setProducts(data);
-    } catch (error) {
-      setError(error.message);
-    }*/
+        try {
+            const data = await modoFallaService.readAll(); // Hasta que no se termine de ejecutar la linea
+            console.log(data)
+            if (data.ok) {
+                throw new Error("Algo salio mal");
+            }
+            setProducts(data);
+        }catch (error) {
+            setError(error.message);
+        }
         setIsLoading(false);
     }
 

@@ -23,23 +23,24 @@ const TablaModoFalla = ({ BotonesCabezal, ExportarRegistros, dt, products, selec
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
                 // CAMBIAR...
-                globalFilterFields={["id", "nombreModoFalla"]}
+                globalFilterFields={['modoFalla','idPlanta']}
                 emptyMessage="No se encontraron resultados."
                 header={header}
                 responsiveLayout="scroll"
             >
                 {/* // CAMBIAR.............. */}
                 <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} exportable={false} />
-                <Column field="id" header="ID" sortable style={{ minWidth: "12rem", textAlign: "center" }} />
-                <Column field="nombreArea" header="Modos de falla" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                {/*<Column field="id" header="ID" sortable style={{ minWidth: "12rem", textAlign: "center" }} /> */}
+                <Column field="modoFalla" header="Modo de falla" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="descripcion" header="Descripcion" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="fechaCreacion" header="Fecha de Creacion" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="fechaModificación" header="Fecha de Modificación" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="creadoPor" header="Creado por" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="modificadoPor" header="Modificado por " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="idStatus" header="ID status" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="idPlanta" header="ID Planta " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="idEmpresa" header="ID Empresa " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                {/* <Column field="fechaCreacion" header="Fecha de Creacion" sortable style={{ minWidth: "16rem", textAlign: "center" }} /> */}
+                {/* <Column field="fechaModificación" header="Fecha de Modificación" sortable style={{ minWidth: "16rem", textAlign: "center" }} />*/}
+                {/* <Column field="creadoPor" header="Creado por" sortable style={{ minWidth: "16rem", textAlign: "center" }} />*/}
+                {/*<Column field="modificadoPor" header="Modificado por " sortable style={{ minWidth: "16rem", textAlign: "center" }} />*/}
+                {/*<Column field="idStatus" header="ID status" sortable style={{ minWidth: "16rem", textAlign: "center" }} />*/}
+                <Column field="idPlanta" header="Planta " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column field="idEmpresa" header="Empresa " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: '3rem' }}/>
             </DataTable>
         </div>
     );

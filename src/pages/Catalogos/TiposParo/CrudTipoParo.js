@@ -176,7 +176,6 @@ const CrudTipoParo = ({titulos, notificaciones}) => {
         }
         setIsLoading(false)
     }
-
     let content=<p>Sin registros</p>
     if(!isLoading && !error){
         content=(
