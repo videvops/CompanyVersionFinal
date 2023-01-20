@@ -45,6 +45,8 @@ import TimelineDemo from "../pages/TimelineDemo";
 import PrimeReact from "primereact/api";
 import { Tooltip } from "primereact/tooltip";
 
+import MonitorDeLineas from "../components/monitorDeLineas/MonitorDeLineas";
+
 import "primereact/resources/primereact.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -193,7 +195,11 @@ const Home = ({ setLogueado }) => {
         {
             label: "Reportes",
             icon: "pi pi-fw pi-sitemap",
-            items: [{ label: "Listado de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" }],
+            items: [
+                { label: "Listado de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
+                { label: "Monitor de Lineas", icon: "pi pi-fw pi-list text-blue-500", to: "/monitorDeLineas" }
+        
+            ],
         },
         {
             label: "Graficas",
@@ -315,6 +321,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/timeline" component={TimelineDemo} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
+                    <Route path="/monitorDeLineas" component={MonitorDeLineas}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />

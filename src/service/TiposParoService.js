@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class TiposParoService {
     //------> Link para hacer peticiones
-    baseUrl = "http://localhost:4000/listadoTiposParo";
+    baseUrl = "http://localhost:8080/listadoTiposParo";
     //------> Agregar nuevo registro
     create(product){
         return axios.post(this.baseUrl, product).then(res => res.data);

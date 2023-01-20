@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class UsuarioService {
     //------> Link para hacer peticiones
-    baseUrl = "http://localhost:4000/listadoUsuarios";
+    baseUrl = "http://localhost:8080/listadoUsuarios";
     //------> Agregar nuevo registro
     create(product){
         return axios.post(this.baseUrl, product).then(res => res.data);
