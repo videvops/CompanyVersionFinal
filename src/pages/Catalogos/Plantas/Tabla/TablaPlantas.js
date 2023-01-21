@@ -96,6 +96,7 @@ const TablaPlantas = ({ BotonesCabezal, ExportarRegistros, dt, products, selecte
             return (
                 <span className="mx-3" style={{ color: "var(--text-color)", userSelect: "none" }}>
                     Go to <InputText size="2" className="ml-1" value={currentPage} tooltip={pageInputTooltip} onKeyDown={(e) => onPageInputKeyDown(e, options)} onChange={onPageInputChange} />
+                    {options.totalPages}
                 </span>
             );
         },
@@ -119,9 +120,7 @@ const TablaPlantas = ({ BotonesCabezal, ExportarRegistros, dt, products, selecte
                 first={first1}
                 rowsPerPageOptions={[5, 10, 25]}
                 showGridlines
-                paginator
                 paginatorTemplate={template1}
-                currentPageReportTemplate="Mostrar de {first} a {last} de {totalRecords} productos"
                 // CAMBIAR...
                 globalFilterFields={["id", "planta"]}
                 emptyMessage="No se encontraron resultados."
