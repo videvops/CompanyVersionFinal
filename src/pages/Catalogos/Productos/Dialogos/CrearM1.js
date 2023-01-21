@@ -3,10 +3,12 @@ import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
+import { botonSiguiente } from '../../ComponentsCat/Botones/BotonSiguiente'
 import { Mensaje } from '../../ComponentsCat/Mensajes/Mensajes';
 import Axios from 'axios';
+import CrearM2 from './CrearM2';
 
-const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct, tieneId }) => {
+const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct, siguienteModal, siguiente }) => {
 //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
@@ -48,6 +50,7 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
 //--------------------| Botones de confirmacion |--------------------
     //------> Botones para crear registro
     const crearRegistro=productDialogFooter(hideDialog,saveProduct,boton);
+    const continuarRegistros = botonSiguiente(hideDialog, siguienteModal,boton)
 
 //--------------------| Valor que regresara  |--------------------
     return (
@@ -57,8 +60,7 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
             header={titulos.VentanaCrear} 
             modal 
             className="p-fluid" 
-            // footer={![product.nombre,product.horaInicio,product.horaFin,product.idLinea].includes('')&&crearRegistro} 
-            footer={crearRegistro} 
+            footer={continuarRegistros} 
             onHide={hideDialog}
         >
             <div className="field">
@@ -114,6 +116,9 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
                 />
                 {validarNombre && Mensaje}
             </div>
+            <CrearM2
+                siguiente={siguiente}
+            />
         </Dialog>
     )
 }

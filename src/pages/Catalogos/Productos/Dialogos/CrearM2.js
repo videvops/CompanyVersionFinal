@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Column } from 'primereact/column';
 import { Dialog } from 'primereact/dialog';
+import { Checkbox } from 'primereact/checkbox';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 
-const CrearM2 = () => {
+const CrearM2 = ({ siguiente }) => {
     const datos = [
         {linea:"linea1",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
         {linea:"linea2",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
@@ -17,8 +18,17 @@ const CrearM2 = () => {
             <InputText
                 type="text"                                                 // Tipo de entrada                                
                 value={options.value}                                       // Valor que tendra
-                onChange={(e) => options.editorCallback(e.target.value)}    // Lo que hara en eventos
+                onChange={(e) => options.editorjCallback(e.target.value)}    // Lo que hara en eventos
             />
+        )
+    }
+    const [checked, setChecked] = useState(false);
+    const checkEditor = (options) => {
+        return (
+            <div className="field-checkbox">
+                <Checkbox inputId="binary" checked={checked} onChange={e => setChecked(e.checked)} />
+                <label htmlFor="binary">Remember Me</label>
+            </div>
         )
     }
 
@@ -34,7 +44,7 @@ const CrearM2 = () => {
     return (
         <Dialog
             header="SKU: SKU H"
-            visible={true}
+            visible={siguiente}
             style={{ width: '80vw' }}
             // footer={renderFooter('displayBasic')}
             // onHide={() => onHide('displayBasic')}
@@ -45,7 +55,7 @@ const CrearM2 = () => {
                 <Column field="velocidadEstandar" header="Velocidad Estandar" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                 <Column field="factorConversionI" header="Factor de Conversion Input" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                 <Column field="factorConversionO" header="Factor de Conversion Output" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
-                <Column field="habilitado" header="¿Habilitado?" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
+                <Column field="habilitado" header="¿Habilitado?" editor={(options) => checkEditor(options)} style={{ width: '20%' }}/>
                 <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}/>
             </DataTable>
         </Dialog>

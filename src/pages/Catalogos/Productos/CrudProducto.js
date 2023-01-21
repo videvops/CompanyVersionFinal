@@ -18,7 +18,6 @@ import { productoVacio } from './Objetos/ProductoVacio';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
-import CrearM2 from './Dialogos/CrearM2';
 
 
 const CrudProducto = ({titulos, notificaciones}) => {
@@ -37,12 +36,12 @@ const CrudProducto = ({titulos, notificaciones}) => {
 
 //--------------------| Uso de estados |--------------------
     const [productDialog, setProductDialog] = useState(false);
+    const [siguiente, setSiguiente] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(productoVacio);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
-    const [tieneId, setTieneId] = useState(false)
 
     // CAMBIAR...
     const [filters, setFilters] = useState({
@@ -69,10 +68,11 @@ const CrudProducto = ({titulos, notificaciones}) => {
 //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
     const openNew = () => {
+        setSiguiente(false)
         setProduct(productoVacio);
         setProductDialog(true);
     }
-    //------> 
+    //------> Ocultar dialogo de crear
     const hideDialog = () => {
         setProductDialog(false);
     }
@@ -164,10 +164,14 @@ const CrudProducto = ({titulos, notificaciones}) => {
             </>
         );
     }
+    const siguienteModal = () => {
+        setProductDialog(false)
+        setSiguiente(true)
+    }
 
 //--------------------| Obtener registros de back-end |--------------------
-    const [isLoading,setIsLoading]=useState(false)
-    const [error,setError]=useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState(null)
     //---> Obtendra los datos del back-end
     useEffect(()=>{
         const cargarDatos=async()=>{
@@ -191,14 +195,6 @@ const CrudProducto = ({titulos, notificaciones}) => {
         turnoService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
-//--------------------| Abilitar o inhabilitar boton |--------------------
-    useEffect(()=>{
-        if(product.id){                        // Tiene existe el ID
-            setTieneId(false)
-        }else{                                  // Sino tiene ID
-            setTieneId(true)
-        }
-    },[product])
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -226,9 +222,9 @@ const CrudProducto = ({titulos, notificaciones}) => {
                 hideDialog={hideDialog}
                 product={product}
                 updateField={updateField}
-                tieneId={tieneId}
+                siguienteModal={siguienteModal}
+                siguiente={siguiente}
             />
-            <CrearM2/>
 
             <EliminarUno
                 deleteProductDialog={deleteProductDialog} 
