@@ -1,22 +1,26 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { MaquinasService } from "../../../service/MaquinasService";
-import { emptyProduct } from "./Objetos/ProductoVacio";
+
+//CAMBIAR...
+import TablaMaquinas from "./Tabla/TablaMaquina";
 import Exportar from "./Botones/Exportar";
+import EliminarUno from "./Dialogos/EliminarUno";
+import EliminarVarios from "./Dialogos/EliminarVarios";
+import CrearModificar from "./Dialogos/CrearModificar";
 import { leftToolbarTemplate } from "../ComponentsCat/Botones/AgregarEliminar";
 import { ProductContext } from "../ComponentsCat/Contexts/ProductContext";
 import { renderHeader } from "../ComponentsCat/Buscador/Cabezal";
-import EliminarVarios from "./Dialogos/EliminarVarios";
-import EliminarUno from "./Dialogos/EliminarUno";
-import CrearModificar from "./Dialogos/CrearModificar";
-import TablaMaquinas from "./Tabla/TablaMaquina";
+//CAMBIAR...
+import { MaquinasService } from "../../../service/MaquinasService";
+
+import { emptyProduct } from "./Objetos/ProductoVacio";
 
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { FilterMatchMode } from "primereact/api";
 
-const Crud = (props) => {
+const CrudMaquinas = ({ titulos, notificaciones }) => {
     //--------------------| Importacion de metodos axios |--------------------
-    const maquinasService = new MaquinasService();
+    const maquinaService = new MaquinasService();
 
     //--------------------| Uso de Contextos |--------------------
     const {
@@ -36,11 +40,14 @@ const Crud = (props) => {
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState("");
     const [tieneId, setTieneId] = useState(false);
+
     // CAMBIAR...
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        nombreArea: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        maquina: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        estatus: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        linea: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -55,7 +62,7 @@ const Crud = (props) => {
         setGlobalFilter(value);
     };
     //------> Cabezal de buscador
-    const header = renderHeader(globalFilter, onGlobalFilterChange, props.titulos.Buscador, props.titulos.TituloTabla);
+    const header = renderHeader(globalFilter, onGlobalFilterChange, titulos.Buscador, titulos.TituloTabla);
 
     //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
@@ -100,55 +107,31 @@ const Crud = (props) => {
         console.log("id linea: " + product.idLinea);
         if (!product.id) {
             createProduct(product);
-            toast.current.show({
-                severity: "success",
-                summary: "Atencion!",
-                detail: "Modos de falla creado",
-                life: 3000,
-            });
+            toast.current.show({ severity: "success", summary: "Atencion!", detail: `${notificaciones.creacion}`, life: 3000 });
         } else {
             updateProduct(product);
-            toast.current.show({
-                severity: "success",
-                summary: "Atencion!",
-                detail: "Modos de falla modificado",
-                life: 3000,
-            });
+            toast.current.show({ severity: "success", summary: "Atencion!", detail: `${notificaciones.modificacion}`, life: 3000 });
         }
         setProduct(emptyProduct);
         setProductDialog(false);
     };
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
-        console.log("Producto eliminado: " + product.id);
+        console.log("Se elimino el ID: " + product.id);
         deleteProduct(product.id);
         setProduct(emptyProduct);
-        toast.current.show({
-            severity: "error",
-            summary: "Atencion!",
-            detail: "Modos de falla eliminado",
-            life: 3000,
-        });
+        toast.current.show({ severity: "error", summary: "Atencion!", detail: `${notificaciones.eliminacion}`, life: 3000 });
         setDeleteProductDialog(false);
     };
     //------> Eliminar varios productos
     const deleteSelectedProducts = () => {
-        let _products = products.filter((val) => selectedProducts.includes(val)); // Producto a eliminar
-        console.log("[+]Registros eliminados: " + _products.length); // N# de productos a eliminar
-        for (let i = 0; i < _products.length; i++) {
-            deleteProduct(_products[i].id);
-            console.log("Registro eliminado: " + _products[i].id);
-        }
-
+        selectedProducts.map((producto) => {
+            console.log("Se elimino el ID: " + producto.id);
+            return deleteProduct(producto.id);
+        });
         setDeleteProductsDialog(false); // Ocultara dialogo
         setSelectedProducts(null); // Elemetos seleccionados = 0
-        toast.current.show({
-            severity: "error",
-            summary: "Atencion!",
-            detail: "Plantas eliminadas",
-            life: 3000,
-        });
-        maquinasService.readAll().then((data) => setProducts(data));
+        toast.current.show({ severity: "error", summary: "Atencion!", detail: `${notificaciones.eliminaciones}`, life: 3000 });
     };
     //------> Editar producto
     const _editProduct = (product) => {
@@ -189,8 +172,8 @@ const Crud = (props) => {
         setIsLoading(true);
         setError(null);
         try {
-            const data = await maquinasService.readAll(); // Hasta que no se termine de ejecutar la maquina
 
+            const data = await maquinasService.readAll(); // Hasta que no se termine de ejecutar la maquina
             setProducts(data);
         } catch (error) {
             setError(error.message);
@@ -199,20 +182,19 @@ const Crud = (props) => {
     }
 
     let content = <p>Sin registros</p>;
-    if (true) {
-        // if(!isLoading && !error){
+    if (!isLoading && !error) {
         content = <TablaMaquinas BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
     }
 
-    // if(error)content=<p>{error}</p>
-    // if(isLoading)content=<p>Cargando...</p>
+    if (error) content = <p>{error}</p>;
+    if (isLoading) content = <p>Cargando...</p>;
 
     useEffect(() => {
         CargarDatos();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        maquinasService.readAll().then((data) => setProducts(data));
+        maquinaService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
     //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(() => {
@@ -231,7 +213,7 @@ const Crud = (props) => {
             <Toast ref={toast} />
             {content}
 
-            <CrearModificar productDialog={productDialog} titulos={props.titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} tieneId={tieneId} />
+            <CrearModificar productDialog={productDialog} titulos={titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} tieneId={tieneId} />
 
             <EliminarUno deleteProductDialog={deleteProductDialog} _deleteProduct={_deleteProduct} hideDeleteProductDialog={hideDeleteProductDialog} product={product} />
 
@@ -240,4 +222,4 @@ const Crud = (props) => {
     );
 };
 
-export default Crud;
+export default CrudMaquinas;

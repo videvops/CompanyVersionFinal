@@ -1,16 +1,18 @@
-import React from 'react';
-import CrudAreas from './CrudAreas';                                        // CAMBIAR...
-import AreaContextProvider from '../ComponentsCat/Contexts/AreaContext';    // CAMBIAR...
-import { titulos, notificaciones } from './Objetos/ConstAreas';             // CAMBIAR... 
 
-const CatalogoAreas = () => {
+import React from "react";
+import CrudProductos from "./CrudProductos";
+import ProductosContextProvider from "../ComponentsCat/Contexts/ProdutosContext";
+import { titulos, notificaciones } from "./Objetos/Constantes";
+
+const CatalogoProductos = () => {
     return (
         <React.Fragment>
-            <AreaContextProvider>
-                <CrudAreas titulos={titulos} notificaciones={notificaciones} />
-            </AreaContextProvider>
+            <ProductosContextProvider>
+                <CrudProductos titulos={titulos} notificaciones={notificaciones} />
+            </ProductosContextProvider>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default CatalogoAreas
+export default CatalogoProductos;
+

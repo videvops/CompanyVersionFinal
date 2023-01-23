@@ -12,20 +12,26 @@ const Exportar = (products) => {
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Area", dataKey: "area" },
-                        { header: "Descripcion", dataKey: "descripcion" },
-                        { header: "Estatus", dataKey: "estatus" },
+
+                        { header: "Producto", dataKey: "nombreProducto" },
+                        { header: "descripcion", dataKey: "descripcion" },
+                        { header: "linea", dataKey: "linea" },
+                        { header: "Planta", dataKey: "planta" },
+                        { header: "area", dataKey: "area" },
+                        { header: "Maquina", dataKey: "maquina" },
+
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },
                     didDrawPage: function (data) {
-                        doc.text("Catalogo Areas", 20, 30); // CAMBIAR...
+                        doc.text("Catalogo Productos", 20, 30); // CAMBIAR...
                     },
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
                 doc.save(`Areas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+
             });
         });
     };
@@ -38,6 +44,7 @@ const Exportar = (products) => {
             const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
             const excelBuffer = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
             saveAsExcelFile(excelBuffer, "Areas"); // CAMBIAR...
+
         });
     };
 

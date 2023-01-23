@@ -14,7 +14,7 @@ const EliminarUno = ({ deleteProductDialog, hideDeleteProductDialog, product, _d
                 {/* CAMBIAR... */}
                 {product && (
                     <span>
-                        Estas seguro de eliminar <b>{product.nombreMaquina}</b>?
+                        Estas seguro de eliminar <b>{product.maquina}</b>?
                     </span>
                 )}
             </div>

@@ -1,14 +1,14 @@
 const titulos = {
-    VentanaCrear: "Detalles de Status",
-    Buscador: "Buscar Status...",
-    TituloTabla: "Status...",
+    VentanaCrear: "Detalles de Estatus",
+    Buscador: "Buscar Estatus...",
+    TituloTabla: "Estatus...",
 };
 
 const notificaciones = {
-    creacion: "Status Creada",
-    modificacion: "Status Modificada",
-    eliminacion: "Status Eliminada",
-    eliminaciones: "Status Eliminadas",
+    creacion: "Estatus Creada",
+    modificacion: "Estatus Modificada",
+    eliminacion: "Estatus Eliminada",
+    eliminaciones: "Estatus Eliminadas",
 };
 
 export { titulos, notificaciones };

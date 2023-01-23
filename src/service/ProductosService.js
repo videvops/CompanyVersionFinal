@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export class StatusService {
+export class ProductosService {
     //------> Link para hacer peticiones
-    baseUrl = "http://localhost:8080/estatus";
+    baseUrl = "http://localhost:4000/productos";
     //------> Agregar nuevo registro
     create(product) {
         return axios.post(this.baseUrl, product).then((res) => res.data);
