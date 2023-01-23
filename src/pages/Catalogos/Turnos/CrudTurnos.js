@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 
 //CAMBIAR...
-import TablaTurnos from './Tabla/Tablaturnos';
+import Spinner from '../../../components/loader/Spinner';
 import Exportar from './Botones/Exportar';
+import TablaTurnos from './Tabla/Tablaturnos';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
@@ -17,6 +18,7 @@ import { emptyProduct } from './Objetos/TurnoVacio';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FilterMatchMode } from 'primereact/api';
+
 
 const CrudTurnos = ({titulos, notificaciones}) => {
 //--------------------| Importacion de metodos axios |--------------------
@@ -45,11 +47,8 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
         'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'nombre': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'horaInicio': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'horaFin': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'estatus': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+        'turno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -169,48 +168,29 @@ const CrudTurnos = ({titulos, notificaciones}) => {
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading,setIsLoading]=useState(false)
     const [error,setError]=useState(null)
-
-    async function CargarDatos(){
-        setIsLoading(true)
-        setError(null)
-        try{
-            const data=await turnoService.readAll()   // Hasta que no se termine de ejecutar la linea
-            if(data.ok){
-                throw new Error("Algo salio mal")
-            }
-            setProducts(data)  
-        } catch(error){
-            setError(error.message)
-        }
-        setIsLoading(false)
-    }
-
-    let content=<p>Sin registros</p>
-    if(!isLoading && !error){
-        content=(
-        <TablaTurnos
-            BotonesCabezal={BotonesCabezal} 
-            ExportarRegistros={ExportarRegistros} 
-            dt={dt} 
-            products={products} 
-            selectedProducts={selectedProducts} 
-            filters={filters} 
-            setSelectedProducts={setSelectedProducts} 
-            header={header}
-            actionBodyTemplate={actionBodyTemplate} 
-        />)
-    }
-
-    if(error)content=<p>{error}</p>
-    if(isLoading)content=<p>Cargando...</p>
-    
+    //---> Obtendra los datos del back-end
     useEffect(()=>{
-        CargarDatos();
-    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+        const cargarDatos=async()=>{
+            setIsLoading(true)
+            setError(null)
+            try{
+                const data=await turnoService.readAll()
+                setProducts(data)  
+            } catch(error){
+                setError(error.message)
+            }
+            setIsLoading(false)
+        }
+        cargarDatos()
+        return () => {                                      // Funcion de limpieza
+            setProducts([])
+        }
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps    
     
     useEffect(() => {
         turnoService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
+
 //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(()=>{
         if(product.id){                        // Tiene existe el ID
@@ -224,7 +204,20 @@ const CrudTurnos = ({titulos, notificaciones}) => {
     return (
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
-            {content}
+            {!isLoading && !error && (
+            <TablaTurnos
+                BotonesCabezal={BotonesCabezal} 
+                ExportarRegistros={ExportarRegistros} 
+                dt={dt} 
+                products={products} 
+                selectedProducts={selectedProducts} 
+                filters={filters} 
+                setSelectedProducts={setSelectedProducts} 
+                header={header}
+                actionBodyTemplate={actionBodyTemplate} 
+            />)}
+            {isLoading&&<Spinner/>}
+            {error&&<p>{error}</p>}
 
             <CrearModificar
             productDialog={productDialog}

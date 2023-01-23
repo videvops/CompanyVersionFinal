@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Dialog } from "primereact/dialog";
 import { deleteProductDialogFooter } from "../../ComponentsCat/Botones/UnRegistro";

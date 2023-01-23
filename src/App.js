@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { Route, useLocation } from "react-router-dom";
@@ -57,29 +58,17 @@ import "./assets/demo/Demos.scss";
 import "./assets/layout/layout.scss";
 import "./App.scss";
 
+
 const App = () => {
-    const [layoutMode, setLayoutMode] = useState("static");
-    const [layoutColorMode, setLayoutColorMode] = useState("light");
-    const [inputStyle, setInputStyle] = useState("outlined");
-    const [ripple, setRipple] = useState(true);
-    const [staticMenuInactive, setStaticMenuInactive] = useState(false);
-    const [overlayMenuActive, setOverlayMenuActive] = useState(false);
-    const [mobileMenuActive, setMobileMenuActive] = useState(false);
-    const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
-    const copyTooltipRef = useRef();
-    const location = useLocation();
+    const [logueado, setLogueado] = useState(false)
 
-    PrimeReact.ripple = true;
-
-    let menuClick = false;
-    let mobileTopbarMenuClick = false;
-
+//--------------------| Verificar inicio de sesion |--------------------
     useEffect(() => {
-        if (mobileMenuActive) {
-            addClass(document.body, "body-overflow-hidden");
-        } else {
-            removeClass(document.body, "body-overflow-hidden");
+    const informacionSesion = localStorage.getItem('logueado'); // Busca el valor creado
+        if (informacionSesion === '1') {                        // Comprobar valor de inicio de sesion
+            setLogueado(true);                                  // Inicio de sesion
         }
+
     }, [mobileMenuActive]);
 
     useEffect(() => {
@@ -270,7 +259,10 @@ const App = () => {
         "layout-theme-light": layoutColorMode === "light",
     });
 
+
+//--------------------| Valor que regresara |--------------------
     return (
+
         <div className={wrapperClass} onClick={onWrapperClick}>
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
@@ -330,3 +322,4 @@ const App = () => {
 };
 
 export default App;
+

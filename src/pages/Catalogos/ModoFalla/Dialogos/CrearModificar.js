@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { productDialogFooter } from "../../ComponentsCat/Botones/CrearRegistro";
 
 const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct }) => {
+    console.log("creando componente");
     //--------------------| Validar campos  |--------------------
     const [validarNombre, setValidarNombre] = useState(""); // Validar nombre de planta
     const [boton, setBoton] = useState(false); // Activar o desactivar boton
@@ -31,15 +32,15 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
             <div className="field">
                 {/* CAMBIAR.... */}
                 <label
-                    htmlFor="nombreModoFalla" // CAMBIAR...
+                    htmlFor="modoFalla" // CAMBIAR...
                 >
-                    Linea
+                    Modo de Falla
                 </label>
                 <InputText
-                    id="nombreModoFalla" // CAMBIAR...
-                    value={product.nombreModoFalla} // CAMBIAR...
+                    id="modoFalla" // CAMBIAR...
+                    value={product.modoFalla} // CAMBIAR...
                     onChange={(e) => {
-                        updateField(e.target.value.trim(), "nombreModoFalla"); // CAMBIAR...
+                        updateField(e.target.value.trim(), "modoFalla"); // CAMBIAR...
                         Verificar(e.target.value);
                     }}
                     required

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { ProductosService } from "../../../service/ProductosService";
 import { emptyProduct } from "./Objetos/ProductoVacio";
@@ -18,16 +19,19 @@ const Crud = (props) => {
     const productosService = new ProductosService();
 
     //--------------------| Uso de Contextos |--------------------
+
     const {
         createProduct,
         updateProduct,
         deleteProduct,
 
         products,
+
         setProducts,
     } = useContext(ProductContext);
 
     //--------------------| Uso de estados |--------------------
+
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -160,7 +164,6 @@ const Crud = (props) => {
 
     //------> Boton para exportar
     const ExportarRegistros = Exportar(products);
-
     //------> Botones parte derecha
     const actionBodyTemplate = (rowData) => {
         return (
@@ -223,7 +226,6 @@ const Crud = (props) => {
         <div className="datatable-crud-demo">
             <Toast ref={toast} />
             {content}
-
             <CrearModificar productDialog={productDialog} titulos={props.titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} tieneId={tieneId} />
 
             <EliminarUno deleteProductDialog={deleteProductDialog} _deleteProduct={_deleteProduct} hideDeleteProductDialog={hideDeleteProductDialog} product={product} />

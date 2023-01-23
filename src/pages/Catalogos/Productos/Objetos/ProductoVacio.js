@@ -3,3 +3,4 @@ export let emptyProduct = {
     id: null,
     nombreProducto: "",
 };
+

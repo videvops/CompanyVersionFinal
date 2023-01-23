@@ -1,6 +1,6 @@
-import React /*,{ useState }*/ from "react";
-import Cabezal from "./IndicadoresTurno/Tabla/Cabezal";
-import Tabla from "./IndicadoresTurno/Tabla/Tabla";
+import React from "react";
+import Cabezal from "../components/indicadoresTurno/Tabla/Cabezal";
+import Tabla from "../components/indicadoresTurno/Tabla/Tabla";
 
 const IndicadoresTurno = () => {
 //--------------------| Valor que regresara |--------------------

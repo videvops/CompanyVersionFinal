@@ -7,5 +7,13 @@ export const Mensaje=(
 );
 
 export const MensajeHora=(
-    <p style={{color:"red"}}>Hora no valida</p>
+
+    <p style={{color:"red"}}>La hora de fin tiene que ser mayor que la hora de inicio</p>
 );
+
+export const MensajeFiltro=(
+    <div className="uppercase text-center font-bold text-white" style={{background:"red"}}>
+        Todos los campos son obligatorios
+    </div>
+)
+

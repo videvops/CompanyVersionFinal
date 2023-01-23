@@ -12,12 +12,14 @@ const Exportar = (products) => {
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
+
                         { header: "Producto", dataKey: "nombreProducto" },
                         { header: "descripcion", dataKey: "descripcion" },
                         { header: "linea", dataKey: "linea" },
                         { header: "Planta", dataKey: "planta" },
                         { header: "area", dataKey: "area" },
                         { header: "Maquina", dataKey: "maquina" },
+
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
                     ],
                     body: products, // Registros de BD
@@ -28,7 +30,8 @@ const Exportar = (products) => {
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
-                doc.save(`Productos_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+                doc.save(`Areas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+
             });
         });
     };
@@ -40,7 +43,8 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
             const excelBuffer = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
-            saveAsExcelFile(excelBuffer, "Producto"); // CAMBIAR...
+            saveAsExcelFile(excelBuffer, "Areas"); // CAMBIAR...
+
         });
     };
 

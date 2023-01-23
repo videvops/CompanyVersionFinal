@@ -47,6 +47,7 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
                 <Column field="idPlanta" header="ID Planta " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="idEmpresa" header="ID Empresa " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="idStatus" header="ID Status " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+
                 <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: "3rem" }} />
             </DataTable>
         </div>
@@ -54,3 +55,4 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
 };
 
 export default TablaMaquinas;
+

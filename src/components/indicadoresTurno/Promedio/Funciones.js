@@ -56,7 +56,7 @@ export const PromedioProducto=(porcentajes)=>{
     let suma= 0;
     let contador=0;
     for(let x in data){                 //Recorriendo el objeto
-        suma += data[x].producto;     //Ahora que es un objeto javascript, tiene propiedades
+        suma += data[x].productoTerminado;     //Ahora que es un objeto javascript, tiene propiedades
         contador++;
     }
     let resultado=suma/contador;

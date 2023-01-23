@@ -104,6 +104,7 @@ const CrudMaquinas = ({ titulos, notificaciones }) => {
     //------> Agregar nuevo registro
     const saveProduct = () => {
         console.log("[+]ID: " + product.id);
+        console.log("id linea: " + product.idLinea);
         if (!product.id) {
             createProduct(product);
             toast.current.show({ severity: "success", summary: "Atencion!", detail: `${notificaciones.creacion}`, life: 3000 });
@@ -149,7 +150,14 @@ const CrudMaquinas = ({ titulos, notificaciones }) => {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => _editProduct(rowData)} />
+                <Button
+                    icon="pi pi-pencil"
+                    className="p-button-rounded p-button-success mr-2"
+                    onClick={() => {
+                        console.log(rowData);
+                        _editProduct(rowData);
+                    }}
+                />
 
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
@@ -164,10 +172,8 @@ const CrudMaquinas = ({ titulos, notificaciones }) => {
         setIsLoading(true);
         setError(null);
         try {
-            const data = await maquinaService.readAll(); // Hasta que no se termine de ejecutar la linea
-            if (data.ok) {
-                throw new Error("Algo salio mal");
-            }
+
+            const data = await maquinasService.readAll(); // Hasta que no se termine de ejecutar la maquina
             setProducts(data);
         } catch (error) {
             setError(error.message);

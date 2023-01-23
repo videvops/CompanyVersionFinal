@@ -10,7 +10,7 @@ const Exportar = (products) => {
                 doc.autoTable({
                     columns:[                                       // CAMBIAR...
                         { header: 'ID', dataKey: 'id' },
-                        { header: 'Turno', dataKey: 'nombre' },
+                        { header: 'Turno', dataKey: 'turno' },
                         { header: 'Hora de Inicio', dataKey: 'horaInicio' },
                         { header: 'Hora de Fin', dataKey: 'horaFin' },
                         { header: 'Linea', dataKey: 'linea' },

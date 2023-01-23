@@ -1,22 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
+import Axios from 'axios';
+import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
 
-const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct}) => {
-//--------------------| Valores de select  |--------------------
-    const plantasDisponibles=[
-        {planta:"PlantaA",value:"plantaA"},
-        {planta:"PlantaB",value:"plantaB"},
-        {planta:"PlantaC",value:"plantaC"},
-        {planta:"PlantaD",value:"plantaD"},
-    ]
-    const areasDisponibles=[
-        {area:"AreaA",value:"areaA"},
-        {area:"AreaB",value:"areaB"},
-        {area:"AreaC",value:"areaC"},
-    ]
+const CrearModificar = ({productDialog, titulos, hideDialog, product, updateField, saveProduct, tieneId}) => {
+//--------------------| Dropdown  |--------------------
+    //---> Plantas
+    const [plantasDisponibles,setPlantasDisponibles]=useState([])
+    useEffect(() => {
+        Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
+    }, [])
+    //---> Areas
+    const [areasDisponibles, setAreasDisponibles]=useState([])
+    useEffect(() => {
+        if(product.idPlanta!==''){
+        Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+        }
+    }, [product.idPlanta])
 
 //--------------------| Validar campos  |--------------------
     const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de planta
@@ -51,40 +54,37 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
         >
             <div className="field">
                 <label>Planta</label>
-                <Dropdown
-                    value={product.planta} 
-                    options={plantasDisponibles} 
-                    onChange={ e => {
-                        updateField(e.value, "planta");
-                    }} 
-                    optionLabel="planta" 
-                    placeholder="--Selecciona una planta--" 
+                <Dropdown 
+                optionLabel="planta" 
+                optionValue="id" 
+                value={product.idPlanta} 
+                options={plantasDisponibles} 
+                onChange={(e) => {updateField(e.value, "idPlanta")}} 
+                placeholder="--Selecciona una planta--"
                 />
             </div>
             <div className="field">
                 <label>Area</label>
-                <Dropdown
-                    value={product.area} 
-                    options={areasDisponibles} 
-                    onChange={ e => {
-                        updateField(e.value, "area");
-                    }} 
-                    optionLabel="area" 
-                    placeholder="--Selecciona una area--" 
+                <Dropdown 
+                optionLabel="area" 
+                optionValue="id" 
+                value={product.idArea} 
+                options={areasDisponibles} 
+                onChange={(e) => {updateField(e.value, "idArea")}} 
+                placeholder="--Selecciona una area--"
                 />
             </div>
             <div className="field">
-                {/* CAMBIAR.... */}
                 <label 
-                htmlFor="nombreLinea"                                   // CAMBIAR...
+                htmlFor="linea"                                   // CAMBIAR...
                 >
                     Linea
                 </label>
                 <InputText 
-                id="nombreLinea"                                        // CAMBIAR...
-                value={product.nombreLinea}                             // CAMBIAR...
+                id="linea"                                        // CAMBIAR...
+                value={product.linea}                             // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value.trim(), "nombreLinea");  // CAMBIAR...
+                    updateField(e.target.value.trim(), "linea");  // CAMBIAR...
                     Verificar(e.target.value)
                 }} 
                 required 
@@ -94,6 +94,18 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                 />
                 {boton && Advertencia}
             </div>
+            {!tieneId && (<div className="field">
+                <label>Status</label>
+                <Dropdown
+                    value={product.idEstatus}
+                    options={statusDisponibles} 
+                    onChange={ e => {
+                        updateField(e.value, "idEstatus");
+                    }} 
+                    optionLabel="status" 
+                    placeholder="--Selecciona un status--"
+                />
+            </div>)}
         </Dialog>
     )
 }

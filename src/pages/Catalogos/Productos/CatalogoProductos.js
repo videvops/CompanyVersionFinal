@@ -1,3 +1,4 @@
+
 import React from "react";
 import CrudProductos from "./CrudProductos";
 import ProductosContextProvider from "../ComponentsCat/Contexts/ProdutosContext";
@@ -14,3 +15,4 @@ const CatalogoProductos = () => {
 };
 
 export default CatalogoProductos;
+

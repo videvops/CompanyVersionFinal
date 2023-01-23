@@ -12,6 +12,7 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
             <DataTable
                 ref={dt}
                 value={products}
+                //value={maquinasFicticios}
                 selection={selectedProducts}
                 filters={filters}
                 onSelectionChange={(e) => setSelectedProducts(e.value)}
@@ -33,8 +34,11 @@ const TablaMaquinas = ({ BotonesCabezal, ExportarRegistros, dt, products, select
                 <Column field="id" header="ID" sortable style={{ minWidth: "12rem", textAlign: "center" }} />
                 <Column field="maquina" header="Maquina" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
                 <Column field="linea" header="Linea" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="estatus" header="estatus" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
-                <Column field="fechaCreacion" header="Fecha de creacion" sortable style={{ minWidth: "3rem", textAlign: "center" }} />
+                <Column field="area" header="Área" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column field="planta" header="Planta" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column field="estatus" header="Estatus " sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+                <Column field="fechaCreacion" header="Fecha de Creacion" sortable style={{ minWidth: "16rem", textAlign: "center" }} />
+
                 <Column header="Editar" body={actionBodyTemplate} exportable={false} style={{ minWidth: "3rem" }} />
             </DataTable>
         </div>

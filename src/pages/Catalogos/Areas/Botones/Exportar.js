@@ -12,10 +12,9 @@ const Exportar = (products) => {
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Planta", dataKey: "planta" },
-                        { header: "Area", dataKey: "nombreArea" },
+                        { header: "Area", dataKey: "area" },
                         { header: "Descripcion", dataKey: "descripcion" },
-                        { header: "Status", dataKey: "status" },
+                        { header: "Estatus", dataKey: "estatus" },
                         { header: "Fecha de Creacion", dataKey: "fechaCreacion" },
                     ],
                     body: products, // Registros de BD

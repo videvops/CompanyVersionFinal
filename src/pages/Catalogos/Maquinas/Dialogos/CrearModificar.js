@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+// import { productDialogFooter } from '../Botones/CrearRegistro';
+import Axios from "axios";
 import { productDialogFooter } from "../../ComponentsCat/Botones/CrearRegistro";
 import { Mensaje } from "../../ComponentsCat/Mensajes/Mensajes";
 import Axios from "axios";
@@ -39,9 +41,29 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
     const [boton, setBoton] = useState(false); // Activar o desactivar boton
     const exprNombre = /^[a-zA-Z0-9._-]{1,40}$/; // Nombres,numeros y guiones
 
-    //---> Nombre
-    const VerificarNombre = (texto) => {
-        if (!exprNombre.test(texto)) {
+    //--------------------| Dropdown dinamico|--------------------
+    //---> Plantas
+    const [plantasDisponibles, setPlantasDisponibles] = useState([]);
+    useEffect(() => {
+        Axios.get("http://localhost:8080/plantas/list").then((res) => setPlantasDisponibles(res.data));
+    }, []);
+    //---> Areas
+    const [areasDisponibles, setAreasDisponibles] = useState([]);
+    useEffect(() => {
+        if (product.idPlanta !== undefined) {
+            Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then((res) => setAreasDisponibles(res.data));
+        }
+    }, [product.idPlanta]);
+    //--> Dropdown Lineas Calling rs
+    const [lineasDisponibles, setLineasDisponibles] = useState([]);
+    useEffect(() => {
+        if (product.idArea !== undefined) {
+            Axios.get(`http://localhost:8080/lineas/area/${product.idArea}`).then((res) => setLineasDisponibles(res.data));
+        }
+    }, [product.idArea]);
+
+    const Verificar = (texto) => {
+        if (!expresion.test(texto)) {
             setValidarNombre("p-invalid");
             setBoton(true);
         } else {
@@ -110,6 +132,49 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
             </div>
 
             <div className="field">
+                <label>Planta</label>
+                <Dropdown
+                    optionLabel="planta"
+                    optionValue="id"
+                    value={product.idPlanta}
+                    options={plantasDisponibles}
+                    onChange={(e) => {
+                        updateField(e.value, "idPlanta");
+                    }}
+                    placeholder="--Selecciona una planta--"
+                />
+            </div>
+            {/* Dropdown areas */}
+            <div className="field">
+                <label>Area</label>
+                <Dropdown
+                    optionLabel="area"
+                    optionValue="id"
+                    value={product.idArea}
+                    options={areasDisponibles}
+                    onChange={(e) => {
+                        updateField(e.value, "idArea");
+                    }}
+                    placeholder="--Selecciona una area--"
+                />
+            </div>
+            {/* Dropdown Lineas */}
+            <div className="field">
+                <label>Linea</label>
+                <Dropdown
+                    optionLabel="linea"
+                    optionValue="id"
+                    value={product.idLinea}
+                    options={lineasDisponibles}
+                    onChange={(e) => {
+                        updateField(e.value, "idLinea");
+                    }}
+                    placeholder="--Selecciona una linea--"
+                />
+            </div>
+
+            <div className="field">
+                {/* CAMBIAR.... */}
                 <label
                     htmlFor="maquina" // CAMBIAR...
                 >
@@ -120,7 +185,7 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                     value={product.maquina} // CAMBIAR...
                     onChange={(e) => {
                         updateField(e.target.value.trim(), "maquina"); // CAMBIAR...
-                        VerificarNombre(e.target.value);
+                        Verificar(e.target.value);
                     }}
                     required
                     autoFocus

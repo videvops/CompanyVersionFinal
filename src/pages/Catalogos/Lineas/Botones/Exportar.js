@@ -11,8 +11,9 @@ const Exportar = (products) => {
                 doc.autoTable({
                     columns:[                                       // CAMBIAR...
                         { header: 'ID', dataKey: 'id' },
-                        { header: 'Linea', dataKey: 'nombreLinea' },
-                        { header: 'Descripcion', dataKey: 'descripcion' },
+                        { header: 'Linea', dataKey: 'linea' },
+                        { header: 'Descripcion', dataKey: 'area' },
+                        { header: 'Estatus', dataKey: 'estatus' },
                         { header: 'Fecha de Creacion', dataKey: 'fechaCreacion' },
                     ],
                     body:products,                                  // Registros de BD
