@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { ParetoModoFallaGrafica } from './ParetoModoFallaGrafica';
 
-export const ParetoModoFalla = () => {
+const ParetoModoFalla = () => {
 
     // Elemento 
     return (
@@ -11,3 +11,5 @@ export const ParetoModoFalla = () => {
         </div>        
     )
 }
+
+export default ParetoModoFalla 

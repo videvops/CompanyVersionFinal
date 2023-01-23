@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { ParetoTiempoMuertoGrafica } from './ParetoTiempoMuertoGrafica';
 
-export const ParetoTiempoMuerto = () => {
+const ParetoTiempoMuerto = () => {
 
     // Elemento 
     return (
@@ -16,3 +16,5 @@ export const ParetoTiempoMuerto = () => {
         </div>        
     )
 }
+
+export default ParetoTiempoMuerto 

@@ -28,8 +28,8 @@ import Desperdecio from "../components/Desperdecio";
 import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
 // pareto modos de falla
-import { ParetoModoFalla } from "../components/graficas/paretoModosFalla/ParetoModoFalla";
-import { ParetoTiempoMuerto } from "../components/graficas/paretoTiempoMuerto/ParetoTiempoMuerto";
+import ParetoModoFalla from "../components/graficas/paretoModosFalla/ParetoModoFalla"; 
+import ParetoTiempoMuerto from "../components/graficas/paretoModosFalla/ParetoModoFalla";
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
