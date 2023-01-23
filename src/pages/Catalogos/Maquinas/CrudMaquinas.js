@@ -174,6 +174,7 @@ const Crud = (props) => {
     };
 
     //--------------------| Obtener registros de back-end |--------------------
+    // eslint-disable-next-line
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 

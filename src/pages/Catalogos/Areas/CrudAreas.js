@@ -65,9 +65,13 @@ const CrudAreas = ({titulos, notificaciones}) => {
         setProduct(emptyProduct);
         setProductDialog(true);
     }
-    //------> 
+    //------> Cerrar Dialogo
+    const [validarNombre, setValidarNombre] = useState(""); // Validar campo de texto
+    const [boton, setBoton] = useState(false);              // Activar o desactivar boton
     const hideDialog = () => {
         setProductDialog(false);
+        setBoton(false)
+        setValidarNombre("")
     }
     //------> Ocultar dialogo de eliminar 1 producto
     const hideDeleteProductDialog = () => {
@@ -214,13 +218,17 @@ const CrudAreas = ({titulos, notificaciones}) => {
             {error&&<p>{error}</p>}
 
             <CrearModificar
-            productDialog={productDialog}
-            titulos={titulos}
-            saveProduct={saveProduct}
-            hideDialog={hideDialog}
-            product={product}
-            updateField={updateField}
-            tieneId={tieneId}
+                productDialog={productDialog}
+                titulos={titulos}
+                saveProduct={saveProduct}
+                hideDialog={hideDialog}
+                product={product}
+                updateField={updateField}
+                tieneId={tieneId}
+                boton={boton}
+                setBoton={setBoton}
+                validarNombre={validarNombre}
+                setValidarNombre={setValidarNombre}
             />
 
             <EliminarUno

@@ -29,7 +29,7 @@ const StatusLineas = (props) => {
         { maquina: "5", porcentaje: "69" },
         { maquina: "6", porcentaje: "99" },
     ];
-
+    // eslint-disable-next-line
     const colorStatus = () => {};
 
     //Header de tabla
