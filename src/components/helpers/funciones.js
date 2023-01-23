@@ -1,17 +1,3 @@
-// export const formatearFecha = (fecha) => {
-//     fecha.setSeconds(0)                     // Formateo de segundos
-//     const fechaNueva = new Date(fecha)      // Variable de fecha a partir de argumento
-//     return (
-//         fechaNueva.getFullYear() + "-" +
-//         (fechaNueva.getMonth() + 1) + "-" +
-//         fechaNueva.getDate() + " " +
-//         fechaNueva.getHours() + ":" +
-//         fechaNueva.getMinutes() + ":" +
-//         fechaNueva.getSeconds()
-//     )
-// }
-
-
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
@@ -32,3 +18,19 @@ function padTo2Digits(num) {
     );
   }
   
+  const getDateSplitted = (dateParam)=>{
+    const date_splitted = dateParam.split(" ")
+    const time = date_splitted[1].split(":")
+    const date = date_splitted[0]
+    const hours =time[0]
+    const mins =time[1]
+    const secs =time[2]
+    return {
+      date:date,
+      hours:hours,
+      mins:mins,
+      secs:secs
+    }
+  }
+
+  export {padTo2Digits, getDateSplitted}; 

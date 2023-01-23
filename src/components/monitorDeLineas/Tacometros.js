@@ -1,19 +1,29 @@
 import React from "react";
+import {getDateSplitted} from "../helpers/funciones"
 
-const Tacometros = () =>{
-    const planta =1
-    const area = 1
-    const linea = 1
-    const fecha_inicio = "2022-11-21 15:37:21"
-    const fecha_fin = "2022-11-26 11:47:17"
-    const urlTacometro= "http://localhost:3000/d-solo/DtaYRtpVz/new-dashboard?orgId=1&var-planta="+planta+"&var-area="+area+"&var-linea="+linea+"&var-maquina=1&var-inicio_intervalo=%272022-11-21+15%3A37%3A21%27&var-fin_intervalo=%272022-11-26+11%3A47%3A17%27&from=1497191061793&to=1851085461793&panelId=4"
-    return(
-        <div className="col-12 md:col-12">
-            <div className="card mb-4 p-0" style={{ textAlign: "center", background: "#ffffff" }}>
-                <iframe src={urlTacometro} frameBorder={0} style={{width:'100%', height:'200px'}}></iframe>
+const Tacometros = ({filtros}) =>{
+    if(Object.entries(filtros).length === 0){
+        return (
+            <div className="col-12 md:col-12 grid p-fluid">
+                <h3>No hay informacion disponible</h3>
             </div>
-        </div>
-    )
+        )
+    }
+    else {
+        const fechaInicio = getDateSplitted(filtros.fechaInicio);
+        const fechaFin = getDateSplitted(filtros.fechaFin);
+        let urlTacometro= "http://localhost:3000/d-solo/DtaYRtpVz/new-dashboard?orgId=1&var-planta=1&var-area=1&var-linea=1&var-maquina=1&var-"
+        urlTacometro+= "inicio_intervalo=%27"+fechaInicio.date+"+"+fechaInicio.hours+"%3A"+fechaInicio.mins+"%3A"+fechaInicio.secs+"%27&var-"
+        urlTacometro+= "fin_intervalo=%27"+fechaFin.date+"+"+fechaFin.hours+"%3A"+fechaFin.mins+"%3A"+fechaFin.secs+"%27&from=1674301036020&to=1674322636020&panelId=4"
+        return(
+            <div className="col-12 md:col-12">
+                <div className="card mb-4 p-0" style={{ textAlign: "center", background: "#ffffff" }}>
+                    <iframe src={urlTacometro} frameBorder={0} style={{width:'100%', height:'200px'}}></iframe>
+                </div>
+            </div>
+        )
+    }
+
 }
 
 export default Tacometros  

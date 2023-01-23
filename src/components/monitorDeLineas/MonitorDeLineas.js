@@ -5,20 +5,25 @@ import TablaMayorImpacto from "./Tablas/TablaMayorImpacto"
 import TablaUltimosParos from "./Tablas/TablaUltimosParos"
 
 const MonitorDeLineas = () =>{
-    //const [registros, setRegistros] = useState([]) 
-    //console.log("registros desde container")
-    //console.log(registros)
+    
+    const [registrosUltimosParos, setRegistrosUltimosParos] = useState([]) 
+    const [registrosTopFive, setRegistrosTopFive] = useState([])
+    const [filtroTacometro, setFiltroTacometro] = useState([])
 
     return(
         <div className="col-12">
             <div className="col-12 md:col-12">
                 <FiltroMonitorDeParos  
-                    //setRegistros={setRegistros}
+                    setRegistrosUltimosParos={setRegistrosUltimosParos}
+                    setRegistrosTopFive={setRegistrosTopFive}
+                    setFiltroTacometro ={setFiltroTacometro}
                 />
             </div>
             <br></br>
             <div className="col-12 md:col-12">
-                <Tacometros/>
+                <Tacometros
+                    filtros={filtroTacometro}
+                />
             </div>
             <br></br>
             <div className="col-12 md:col-12 grid p-fluid">
@@ -29,7 +34,7 @@ const MonitorDeLineas = () =>{
                         </span>
                     </div>
                     <TablaUltimosParos
-                        //egistros={registros}  
+                        registros={registrosUltimosParos}  
                     />
                 </div>
                 <div className="col-6 md:col-6 ">
@@ -38,7 +43,9 @@ const MonitorDeLineas = () =>{
                             Top 5/10 Mayor impacto
                         </span>
                     </div>
-                    <TablaMayorImpacto/>
+                    <TablaMayorImpacto
+                        registros={registrosTopFive}
+                    />
                 </div>
             </div>
         </div>

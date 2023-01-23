@@ -8,10 +8,11 @@ import { formatearFecha } from '../helpers/funciones'
 
  import { Dropdown } from 'primereact/dropdown'
 
-const FiltroMonitorDeParos = ({ setRegistros }) => {
+const FiltroMonitorDeParos = ({ setRegistrosTopFive,setRegistrosUltimosParos,setFiltroTacometro }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
     const [plantasDisponibles, setPlantasDisponibles] = useState([])
+
     useEffect(() => {
         const cargarPlantas = async () => {
             const respuesta = await Axios.get("http://localhost:8080/plantas/list")
@@ -54,27 +55,16 @@ const FiltroMonitorDeParos = ({ setRegistros }) => {
 
     //---> Enviar datos de back-end a otro componente
     const enviarDatos = async (datos) => {
-        // Ultimos paros 
-        const urlUltimosParos = "http://localhost:8080/paros/ultimosParos/linea/"+datos.linea
-        Axios.post(urlUltimosParos,datos).then(function (response) {
-            console.log("Respuesta desde axios")
-            console.log(response)
-            setRegistros(response)
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-        // Top Ten
-        // const urlTopTen = "http://localhost:8080/paros/topTen/linea/"+datos.linea
-        // Axios.post(urlTopTen,datos).then(function (response) {
-        //     console.log(response);
-        //     //setRegistros(response)
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
+        const urlUltimosParos ="http://localhost:8080/paros/ultimosParos/linea/"+datos.linea
+        const urlTopFive = "http://localhost:8080/paros/topTen/linea/"+datos.linea
+        const respuestaUltimosParos = await Axios.post(urlUltimosParos, datos)
+        const respuestaTopFive = await Axios.post(urlTopFive,datos)
+        setFiltroTacometro(datos)
+        setRegistrosUltimosParos(respuestaUltimosParos.data)
+        setRegistrosTopFive(respuestaTopFive.data)
     }
+
+    
     //---> Validara antes de mandar el filtro
     const enviarFiltro = () => {
         if (lineas.length < 1 || plantas.length < 1 || areas.length < 1 || [fechaInicio, fechaFin].includes(null)) {
