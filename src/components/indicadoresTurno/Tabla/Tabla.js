@@ -3,7 +3,7 @@ import TablaDesing from "../UI/DiseñoTabla";
 import Totales from "../Promedio/Totales";
 import { Column } from "primereact/column";
 import { CardGeneral, CardTabla } from "../UI/Cards";
-import { ColorEficiencia, ColorDisponibilidad, ColorVelocidad, ColorCalidad } from "../Colores/Colores";
+import { ColorEficiencia, ColorDisponibilidad, ColorRendimiento, ColorCalidad } from "../Colores/Colores";
 import { PromedioCalidad, PromedioDisponibilidad, PromedioEfecto, PromedioProducto, PromedioVelocidad } from "../Promedio/Funciones";
 import Spinner from "../../loader/Spinner";
 
@@ -35,11 +35,10 @@ const Tabla = ({ registros, cargando }) => {
     //--------------------| Obtencion de promedios en tiempo real |--------------------
     useEffect(() => {
         const interval = setInterval(() => {
-            console.log("Indicadores de turno");
-            console.log(registros);
             // Renderizado por intervalos de tiempo
             if (registros.length > 0) {
                 Promedios(registros); // Actualizara los promedios
+                console.log(registros);
                 console.log("Promedios actualizados");
             }
         }, 5000); // Cada 5 seg se renderizara
@@ -57,13 +56,13 @@ const Tabla = ({ registros, cargando }) => {
                             <Column field="idLinea" header="ID Linea" sortable />
                             <Column field="eficiencia" header="Eficiencia" style={{ textAlign: "center" }} sortable body={ColorEficiencia} />
                             <Column field="disponibilidad" header="Disponibilidad" style={{ textAlign: "center" }} sortable body={ColorDisponibilidad} />
-                            <Column field="rendimiento" header="Rendimiento" style={{ textAlign: "center" }} sortable body={ColorVelocidad} />
+                            <Column field="rendimiento" header="Rendimiento" style={{ textAlign: "center" }} sortable body={ColorRendimiento} />
                             <Column field="calidad" header="Calidad" style={{ textAlign: "center" }} sortable body={ColorCalidad} />
                             <Column field="productoTerminado" header="Producto Terminado(kg)" style={{ textAlign: "center" }} sortable />
                         </TablaDesing>
                     </CardTabla>
                     <CardTabla>
-                        <Totales eficienciaTotal={promEfic} disponibilidadTotal={promDisp} velocidadTotal={promVel} calidadTotal={promCal} productoTerminadoTotal={promProduct} />
+                        <Totales eficienciaTotal={promEfic} disponibilidadTotal={promDisp} rendimientoTotal={promVel} calidadTotal={promCal} productoTerminadoTotal={promProduct} />
                     </CardTabla>
                 </>
             ) : (

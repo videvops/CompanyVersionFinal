@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
+// import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 import { botonSiguiente } from '../../ComponentsCat/Botones/BotonSiguiente'
 import { Mensaje } from '../../ComponentsCat/Mensajes/Mensajes';
 import Axios from 'axios';
@@ -49,7 +49,7 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
 
 //--------------------| Botones de confirmacion |--------------------
     //------> Botones para crear registro
-    const crearRegistro=productDialogFooter(hideDialog,saveProduct,boton);
+    // const crearRegistro=productDialogFooter(hideDialog,saveProduct,boton);
     const continuarRegistros = botonSiguiente(hideDialog, siguienteModal,boton)
 
 //--------------------| Valor que regresara  |--------------------

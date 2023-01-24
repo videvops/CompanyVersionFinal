@@ -5,7 +5,7 @@ import { Dialog } from "primereact/dialog";
 import { Calendar } from "primereact/calendar";
 import { MultiSelect } from "primereact/multiselect";
 import { MensajeFiltro } from "../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes";
-import { formatearFecha } from "../../helpers/funciones";
+// import { formatearFecha } from "../../helpers/funciones";
 
 const Cabezal = ({ setRegistros, setCargando }) => {
     //--------------------| MultiSelect de Plantas  |--------------------
@@ -52,7 +52,6 @@ const Cabezal = ({ setRegistros, setCargando }) => {
     const enviarDatos = async (datos) => {
         const respuesta = await Axios.post("http://localhost:8080/indicadores", datos);
         setRegistros(respuesta.data.registros);
-        console.log("enviarDatos");
         console.log(respuesta.data.registros);
     };
 
@@ -67,7 +66,6 @@ const Cabezal = ({ setRegistros, setCargando }) => {
             return; // No permite avanzar
         }
         setCargando(true);
-        console.log(formatearFecha(fechaInicio));
         const objeto = { idLineas: lineas };
         enviarDatos(objeto);
         setEsValido(true);

@@ -33,20 +33,20 @@ export const ColorDisponibilidadPromedio = (infoColumna) => {
     return <div className={`${estilo}`}>{infoColumna.disponibilidadTotal}%</div>;
 }
 
-export const ColorVelocidad = (infoColumna) => {
+export const ColorRendimiento = (infoColumna) => {
     let estilo="";
-    if(infoColumna.velocidad>=80) estilo=styles.bien;
-    else if(infoColumna.velocidad<80 && (infoColumna.velocidad>=50)) estilo=styles.regular;
+    if(infoColumna.rendimiento>=80) estilo=styles.bien;
+    else if(infoColumna.rendimiento<80 && (infoColumna.rendimiento>=50)) estilo=styles.regular;
     else estilo=styles.mal;
-    return <div className={`${estilo}`}>{infoColumna.velocidad}%</div>;
+    return <div className={`${estilo}`}>{infoColumna.rendimiento}%</div>;
 }
 
-export const ColorVelocidadPromedio = (infoColumna) => {
+export const ColorRendimientoPromedio = (infoColumna) => {
     let estilo="";
-    if(infoColumna.velocidadTotal>=80) estilo=styles.bien;
-    else if(infoColumna.velocidadTotal<80 && (infoColumna.velocidadTotal>=50)) estilo=styles.regular;
+    if(infoColumna.rendimientoTotal>=80) estilo=styles.bien;
+    else if(infoColumna.rendimientoTotal<80 && (infoColumna.rendimientoTotal>=50)) estilo=styles.regular;
     else estilo=styles.mal;
-    return <div className={`${estilo}`}>{infoColumna.velocidadTotal}%</div>;
+    return <div className={`${estilo}`}>{infoColumna.rendimientoTotal}%</div>;
 }
 
 export const ColorCalidad = (infoColumna) => {

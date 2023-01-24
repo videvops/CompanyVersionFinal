@@ -1,14 +1,14 @@
 import React from "react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { ColorCalidadPromedio, ColorDisponibilidadPromedio, ColorEficienciaPromedio, ColorVelocidadPromedio } from "../Colores/Colores";
+import { ColorCalidadPromedio, ColorDisponibilidadPromedio, ColorEficienciaPromedio, ColorRendimientoPromedio } from "../Colores/Colores";
 
 const Totales = (props) => {
     let promedios = [
         {
             eficienciaTotal: props.eficienciaTotal,
             disponibilidadTotal: props.disponibilidadTotal,
-            velocidadTotal: props.velocidadTotal,
+            rendimientoTotal: props.rendimientoTotal,
             calidadTotal: props.calidadTotal,
             productoTerminadoTotal: props.productoTerminadoTotal,
         },
@@ -21,7 +21,7 @@ const Totales = (props) => {
             <DataTable value={promedios} style={{ fontSize: "20px", textAlign: "center" }}>
                 <Column field="eficienciaTotal" header="Eficiencia" body={ColorEficienciaPromedio} />
                 <Column field="disponibilidadTotal" header="Disponibilidad" body={ColorDisponibilidadPromedio} />
-                <Column field="velocidadTotal" header="Rendimiento" body={ColorVelocidadPromedio} />
+                <Column field="rendimientoTotal" header="Rendimiento" body={ColorRendimientoPromedio} />
                 <Column field="calidadTotal" header="Calidad" body={ColorCalidadPromedio} />
                 <Column field="productoTerminadoTotal" header="Producto Terminado(kg)" style={{ textAlign: "center" }} />
             </DataTable>

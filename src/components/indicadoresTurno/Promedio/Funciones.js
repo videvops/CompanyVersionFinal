@@ -27,15 +27,12 @@ export const PromedioDisponibilidad = (porcentajes) => {
 };
 
 export const PromedioVelocidad = (porcentajes) => {
-    console.log("PromedioVelocidad");
-    console.log(porcentajes);
     const json = JSON.stringify(porcentajes);
     let data = JSON.parse(json); //Convirtiendo a objeto javascript
     let suma = 0;
     let contador = 0;
     for (let x in data) {
         //Recorriendo el objeto
-        console.log(data[x].rendimiento);
         suma += data[x].rendimiento; //Ahora que es un objeto javascript, tiene propiedades
         contador++;
     }
