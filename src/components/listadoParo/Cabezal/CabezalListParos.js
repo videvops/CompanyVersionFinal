@@ -7,7 +7,7 @@ import { MultiSelect } from 'primereact/multiselect'
 import { formatearFecha } from '../../helpers/funciones'
 import { MensajeFiltro } from '../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
 
-const CabezalListParos = ({ setRegistros }) => {
+const CabezalListParos = ({ setRegistros, setChartFiltros }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
     const [plantasDisponibles, setPlantasDisponibles] = useState([])
@@ -65,6 +65,7 @@ const CabezalListParos = ({ setRegistros }) => {
         const respuesta = await Axios.post(`http://localhost:8080/paros/filter`, datos)
         const resultado = await respuesta.data.registros
         setRegistros(resultado)
+        setChartFiltros(datos)
     }
     //---> Validara antes de mandar el filtro
     const enviarFiltro = () => {
@@ -79,7 +80,6 @@ const CabezalListParos = ({ setRegistros }) => {
         // console.log(nuevaFechaInicio)
         const nuevaFechaFin = formatearFecha(fechaFin)
         const objeto = { page: 0, total: 10, todasLineas: false, maquinas: [...maquinas], fechaInc: nuevaFechaInicio, fechaFin: nuevaFechaFin }
-        // console.log(objeto)
         enviarDatos(objeto)
         setEsValido(true)
         setDialogo(false)

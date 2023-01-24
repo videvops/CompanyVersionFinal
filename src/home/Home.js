@@ -27,9 +27,7 @@ import TreeDemo from "../components/TreeDemo";
 import Desperdecio from "../components/Desperdecio";
 import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
-// pareto modos de falla
-import ParetoModoFalla from "../components/graficas/paretoModosFalla/ParetoModoFalla"; 
-import ParetoTiempoMuerto from "../components/graficas/paretoModosFalla/ParetoModoFalla";
+
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
@@ -208,9 +206,7 @@ const Home = ({ setLogueado }) => {
             label: "Graficas",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/paretoTiempoMuerto" },
                 { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/paretoModosFalla" },
                 { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
@@ -225,7 +221,6 @@ const Home = ({ setLogueado }) => {
                     // CAMBIAR....
                     items: [
                         { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas" },
-                        { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones" },
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas" },
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
@@ -317,9 +312,6 @@ const Home = ({ setLogueado }) => {
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
                     <Route path="/monitorDeLineas" component={MonitorDeLineas}/>
-                    {/*Paretos modos de falla*/ }
-                    <Route path={"/paretoModosFalla"} component={ParetoModoFalla}/>
-                    <Route path={"/paretoTiempoMuerto"} component={ParetoTiempoMuerto} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />

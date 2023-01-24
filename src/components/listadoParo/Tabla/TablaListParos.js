@@ -6,7 +6,7 @@ import { CardTabla,CardGeneral } from '../../indicadoresTurno/UI/Cards'
 const TablaListParos = ({ registros }) => {
 //--------------------| Valor que regresara  |--------------------
     return (
-        <CardGeneral>
+        <CardGeneral> 
             <CardTabla>
                 {/* { */}
                     {/* registros ?              // Revisa que haya registros */}
