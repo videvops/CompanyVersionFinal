@@ -1,18 +1,16 @@
 import React from "react";
-//CAMBIAR...
-import CrudTurnos from "./CrudStatus.js";
-import TurnoContextProvider from "../ComponentsCat/Contexts/StatusContext";
+import CrudLineas from "./CrudStatus";
+import LineaContextProvider from "../ComponentsCat/Contexts/StatusContext";
+import { titulos, notificaciones } from "./Objetos/Constantes";
 
-import { titulos, notificaciones } from "./Objetos/Constantes"; // CAMBIAR...
-
-const CatalogoTurnos = () => {
+const CatalogoStatus = () => {
     return (
         <React.Fragment>
-            <TurnoContextProvider>
-                <CrudTurnos titulos={titulos} notificaciones={notificaciones} />
-            </TurnoContextProvider>
+            <LineaContextProvider>
+                <CrudLineas titulos={titulos} notificaciones={notificaciones} />
+            </LineaContextProvider>
         </React.Fragment>
     );
 };
 
-export default CatalogoTurnos;
+export default CatalogoStatus;
