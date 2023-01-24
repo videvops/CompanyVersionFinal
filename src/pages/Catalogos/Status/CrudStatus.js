@@ -1,24 +1,20 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-
-//CAMBIAR...
-import TablaTurnos from "./Tabla/TablaStatus";
+import { StatusService } from "../../../service/StatusService";
+import { emptyProduct } from "./Objetos/ProductoVacio";
 import Exportar from "./Botones/Exportar";
-import EliminarUno from "./Dialogos/EliminarUno";
-import EliminarVarios from "./Dialogos/EliminarVarios";
-import CrearModificar from "./Dialogos/CrearModificar";
 import { leftToolbarTemplate } from "../ComponentsCat/Botones/AgregarEliminar";
 import { ProductContext } from "../ComponentsCat/Contexts/ProductContext";
 import { renderHeader } from "../ComponentsCat/Buscador/Cabezal";
-//CAMBIAR...
-import { StatusService } from "../../../service/StatusService";
-
-import { emptyProduct } from "./Objetos/ProductoVacio";
+import EliminarVarios from "./Dialogos/EliminarVarios";
+import EliminarUno from "./Dialogos/EliminarUno";
+import CrearModificar from "./Dialogos/CrearModificar";
+import TablaStatus from "./Tabla/TablaStatus";
 
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { FilterMatchMode } from "primereact/api";
 
-const CrudStatus = ({ titulos, notificaciones }) => {
+const Crud = (props) => {
     //--------------------| Importacion de metodos axios |--------------------
     const statusService = new StatusService();
 
@@ -39,17 +35,11 @@ const CrudStatus = ({ titulos, notificaciones }) => {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState("");
-    const [tieneId, setTieneId] = useState(false);
-
     // CAMBIAR...
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        nombre: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        horaInicio: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        horaFin: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        estatus: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        linea: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+        nombreArea: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     });
     const toast = useRef(null);
     const dt = useRef(null);
@@ -64,7 +54,7 @@ const CrudStatus = ({ titulos, notificaciones }) => {
         setGlobalFilter(value);
     };
     //------> Cabezal de buscador
-    const header = renderHeader(globalFilter, onGlobalFilterChange, titulos.Buscador, titulos.TituloTabla);
+    const header = renderHeader(globalFilter, onGlobalFilterChange, props.titulos.Buscador, props.titulos.TituloTabla);
 
     //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
@@ -108,31 +98,55 @@ const CrudStatus = ({ titulos, notificaciones }) => {
         console.log("[+]ID: " + product.id);
         if (!product.id) {
             createProduct(product);
-            toast.current.show({ severity: "success", summary: "Atencion!", detail: `${notificaciones.creacion}`, life: 3000 });
+            toast.current.show({
+                severity: "success",
+                summary: "Atencion!",
+                detail: "Status creado",
+                life: 3000,
+            });
         } else {
             updateProduct(product);
-            toast.current.show({ severity: "success", summary: "Atencion!", detail: `${notificaciones.modificacion}`, life: 3000 });
+            toast.current.show({
+                severity: "success",
+                summary: "Atencion!",
+                detail: "Status modificado",
+                life: 3000,
+            });
         }
         setProduct(emptyProduct);
         setProductDialog(false);
     };
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
-        console.log("Se elimino el ID: " + product.id);
+        console.log("Producto eliminado: " + product.id);
         deleteProduct(product.id);
         setProduct(emptyProduct);
-        toast.current.show({ severity: "error", summary: "Atencion!", detail: `${notificaciones.eliminacion}`, life: 3000 });
+        toast.current.show({
+            severity: "error",
+            summary: "Atencion!",
+            detail: "Status eliminado",
+            life: 3000,
+        });
         setDeleteProductDialog(false);
     };
     //------> Eliminar varios productos
     const deleteSelectedProducts = () => {
-        selectedProducts.map((producto) => {
-            console.log("Se elimino el ID: " + producto.id);
-            return deleteProduct(producto.id);
-        });
+        let _products = products.filter((val) => selectedProducts.includes(val)); // Producto a eliminar
+        console.log("[+]Registros eliminados: " + _products.length); // N# de productos a eliminar
+        for (let i = 0; i < _products.length; i++) {
+            deleteProduct(_products[i].id);
+            console.log("Registro eliminado: " + _products[i].id);
+        }
+
         setDeleteProductsDialog(false); // Ocultara dialogo
         setSelectedProducts(null); // Elemetos seleccionados = 0
-        toast.current.show({ severity: "error", summary: "Atencion!", detail: `${notificaciones.eliminaciones}`, life: 3000 });
+        toast.current.show({
+            severity: "error",
+            summary: "Atencion!",
+            detail: "Status eliminados",
+            life: 3000,
+        });
+        statusService.readAll().then((data) => setProducts(data));
     };
     //------> Editar producto
     const _editProduct = (product) => {
@@ -163,23 +177,23 @@ const CrudStatus = ({ titulos, notificaciones }) => {
     const [error, setError] = useState(null);
 
     async function CargarDatos() {
-        // setIsLoading(true);
-        // setError(null);
-        // try {
-        //     const data = await statusService.readAll(); // Hasta que no se termine de ejecutar la linea
-        //     if (data.ok) {
-        //         throw new Error("Algo salio mal");
-        //     }
-        //     setProducts(data);
-        // } catch (error) {
-        //     setError(error.message);
-        // }
+        setIsLoading(true);
+        setError(null);
+        /*try {
+      const data = await productService.readAll(); // Hasta que no se termine de ejecutar la linea
+      if (data.ok) {
+        throw new Error("Algo salio mal");
+      }
+      setProducts(data);
+    } catch (error) {
+      setError(error.message);
+    }*/
         setIsLoading(false);
     }
 
     let content = <p>Sin registros</p>;
     if (!isLoading && !error) {
-        content = <TablaTurnos BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
+        content = <TablaStatus BotonesCabezal={BotonesCabezal} ExportarRegistros={ExportarRegistros} dt={dt} products={products} selectedProducts={selectedProducts} filters={filters} setSelectedProducts={setSelectedProducts} header={header} actionBodyTemplate={actionBodyTemplate} />;
     }
 
     if (error) content = <p>{error}</p>;
@@ -191,17 +205,7 @@ const CrudStatus = ({ titulos, notificaciones }) => {
 
     useEffect(() => {
         statusService.readAll().then((data) => setProducts(data));
-    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
-    //--------------------| Abilitar o inhabilitar boton |--------------------
-    useEffect(() => {
-        if (product.id) {
-            // Tiene existe el ID
-            setTieneId(false);
-        } else {
-            // Sino tiene ID
-            setTieneId(true);
-        }
-    }, [product]);
+    }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
     //--------------------| Valor que regresara |--------------------
     return (
@@ -209,7 +213,7 @@ const CrudStatus = ({ titulos, notificaciones }) => {
             <Toast ref={toast} />
             {content}
 
-            <CrearModificar productDialog={productDialog} titulos={titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} tieneId={tieneId} />
+            <CrearModificar productDialog={productDialog} titulos={props.titulos} saveProduct={saveProduct} hideDialog={hideDialog} product={product} updateField={updateField} />
 
             <EliminarUno deleteProductDialog={deleteProductDialog} _deleteProduct={_deleteProduct} hideDeleteProductDialog={hideDeleteProductDialog} product={product} />
 
@@ -218,4 +222,4 @@ const CrudStatus = ({ titulos, notificaciones }) => {
     );
 };
 
-export default CrudStatus;
+export default Crud;

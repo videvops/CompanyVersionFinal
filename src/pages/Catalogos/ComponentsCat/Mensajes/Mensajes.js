@@ -7,7 +7,6 @@ export const Mensaje=(
 );
 
 export const MensajeHora=(
-
     <p style={{color:"red"}}>La hora de fin tiene que ser mayor que la hora de inicio</p>
 );
 
@@ -16,4 +15,3 @@ export const MensajeFiltro=(
         Todos los campos son obligatorios
     </div>
 )
-

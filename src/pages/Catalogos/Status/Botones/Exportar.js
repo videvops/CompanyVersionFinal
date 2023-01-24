@@ -7,23 +7,22 @@ const Exportar = (products) => {
         import("jspdf").then((jsPDF) => {
             import("jspdf-autotable").then(() => {
                 const doc = new jsPDF.default(0, 0);
+
                 doc.autoTable({
                     columns: [
                         // CAMBIAR...
                         { header: "ID", dataKey: "id" },
-                        { header: "Estatus", dataKey: "estatus" },
-                        { header: "Descripción", dataKey: "descripcion" },
-                        { header: "Fecha de creacion", dataKey: "fechaCreacion" },
+                        { header: "Modo Falla", dataKey: "nombreStatus" },
                     ],
                     body: products, // Registros de BD
                     margin: { top: 35 },
                     didDrawPage: function (data) {
-                        doc.text("Catalogo Estatus", 20, 30); // CAMBIAR...
+                        doc.text("Catalogo Status", 20, 30); // CAMBIAR...
                     },
                 });
 
                 const fecha = new Date().getTime(); // Fecha en tiempo real
-                doc.save(`Estatus_export_${fecha}.pdf`); // template string  /   CAMBIAR...
+                doc.save(`Lineas_export_${fecha}.pdf`); // template string  /   CAMBIAR...
             });
         });
     };
@@ -35,7 +34,7 @@ const Exportar = (products) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
             const excelBuffer = xlsx.write(workbook, { bookType: "xlsx", type: "array" });
-            saveAsExcelFile(excelBuffer, "Estatus"); // CAMBIAR...
+            saveAsExcelFile(excelBuffer, "Status"); // CAMBIAR...
         });
     };
 
