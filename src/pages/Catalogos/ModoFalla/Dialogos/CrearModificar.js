@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-// import { productDialogFooter } from '../Botones/CrearRegistro';
+import { Dropdown } from 'primereact/dropdown';
 import { productDialogFooter } from "../../ComponentsCat/Botones/CrearRegistro";
+import Axios from 'axios';
 
 const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct }) => {
     console.log("creando componente");
@@ -21,14 +22,33 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
             setBoton(false);
         }
     };
-
+ 
     //--------------------| Botones de confirmacion |--------------------
     //------> Botones para crear registro
     const crearRegistro = productDialogFooter(hideDialog, saveProduct, boton);
-
+    
     //--------------------| Valor que regresara  |--------------------
     return (
-        <Dialog visible={productDialog} style={{ width: "450px" }} header={titulos.VentanaCrear} modal className="p-fluid" footer={crearRegistro} onHide={hideDialog}>
+        <Dialog 
+        visible={productDialog}
+        style={{ width: "450px" }}
+        header={titulos.VentanaCrear}
+        modal className="p-fluid"
+        footer={![product.idPlanta,product.modoFalla].includes('')&&crearRegistro}  
+        onHide={hideDialog}>
+             <div className="field">
+                <label>Planta</label>
+                <Dropdown 
+                optionLabel="planta" 
+                optionValue="id" 
+                value={product.idPlanta} 
+                options={plantasDisponibles} 
+                onChange={(e) => 
+                    {updateField(e.value, "idPlanta")}} 
+                placeholder="--Selecciona una planta--"
+                required
+                />
+            </div>
             <div className="field">
                 {/* CAMBIAR.... */}
                 <label
@@ -43,13 +63,14 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                         updateField(e.target.value.trim(), "modoFalla"); // CAMBIAR...
                         Verificar(e.target.value);
                     }}
+                    placeholder="--Escribe el nombre del modo de falla--"
                     required
                     autoFocus
                     className={validarNombre}
                     maxLength="30"
                 />
-                {boton && Advertencia}
             </div>
+            {boton && Advertencia}
         </Dialog>
     );
 };

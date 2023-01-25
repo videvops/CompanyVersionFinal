@@ -4,10 +4,11 @@ import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { MultiSelect } from 'primereact/multiselect'
+
 import { formatearFecha } from '../../helpers/funciones'
 import { MensajeFiltro } from '../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
 
-const CabezalListParos = ({ setRegistros, setChartFiltros }) => {
+const CabezalDesperdicio = ({ setRegistros, setChartFiltros }) => {
 //--------------------| MultiSelect de Plantas  |--------------------
     //---> Obtener registros de back-end
     const [plantasDisponibles, setPlantasDisponibles] = useState([])
@@ -110,13 +111,13 @@ const CabezalListParos = ({ setRegistros, setChartFiltros }) => {
         <div className="col-12 ">
             <div className="card mb-0" style={{ textAlign: "center", background: "#6366f2" }}>
                 <span className=" font-bold" style={{ fontSize: "25px", color: "white" }}>
-                    Listado de Paros
+                    Desperdicio
                 </span>
             </div>
             <br/>
             <Button label="Filtro" icon="pi pi-filter-fill" onClick={() => setDialogo(true)} />
             <Dialog
-                header="Filtro para listado de paros"
+                header="Filtro para Desperdicio"
                 visible={dialogo}
                 footer={botonesAccion}
                 onHide={() => setDialogo(false)}
@@ -210,4 +211,4 @@ const CabezalListParos = ({ setRegistros, setChartFiltros }) => {
     )
 }
 
-export default CabezalListParos
+export default CabezalDesperdicio

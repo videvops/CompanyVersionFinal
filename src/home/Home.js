@@ -23,16 +23,17 @@ import OverlayDemo from "../components/OverlayDemo";
 import MediaDemo from "../components/MediaDemo";
 import PanelDemo from "../components/PanelDemo";
 import TreeDemo from "../components/TreeDemo";
-import Desperdecio from "../components/Desperdecio";
+import Desperdicio from  '../components/desperdicio/Desperdicio'
 import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
+
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
 import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
 import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
 import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
-import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
+import CatalogoModoFalla from "../pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
@@ -44,6 +45,8 @@ import TimelineDemo from "../pages/TimelineDemo";
 
 import PrimeReact from "primereact/api";
 import { Tooltip } from "primereact/tooltip";
+
+import MonitorDeLineas from "../components/monitorDeLineas/MonitorDeLineas";
 
 import "primereact/resources/primereact.css";
 import "primeicons/primeicons.css";
@@ -193,15 +196,17 @@ const Home = ({ setLogueado }) => {
         {
             label: "Reportes",
             icon: "pi pi-fw pi-sitemap",
-            items: [{ label: "Listado de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" }],
+            items: [
+                { label: "Listado de Paros", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
+                { label: "Monitor de Lineas", icon: "pi pi-fw pi-list text-blue-500", to: "/monitorDeLineas" }
+        
+            ],
         },
         {
             label: "Graficas",
             icon: "pi pi-fw pi-sitemap",
             items: [
-                { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
                 { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
                 { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
@@ -216,11 +221,9 @@ const Home = ({ setLogueado }) => {
                     // CAMBIAR....
                     items: [
                         { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas" },
-                        { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones" },
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas" },
                         { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
-                        { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo" },
                         { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos" },
                         { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios" },
                         { label: "Maquina", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoMaquinas" },
@@ -275,14 +278,13 @@ const Home = ({ setLogueado }) => {
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listadoParos" component={ListadoParos} />
-                    <Route path="/desperdicio" component={Desperdecio} />
+                    <Route path="/desperdicio" component={Desperdicio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
                     <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/catalogoRoles" component={CatalogoRoles} />
-                    <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
@@ -302,6 +304,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/timeline" component={TimelineDemo} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
+                    <Route path="/monitorDeLineas" component={MonitorDeLineas}/>
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
@@ -313,7 +316,7 @@ const Home = ({ setLogueado }) => {
                 <div className="layout-mask p-component-overlay"></div>
             </CSSTransition>
         </div>
-    );
+    ); 
 };
 
 export default Home;

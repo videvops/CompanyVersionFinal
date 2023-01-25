@@ -1,23 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CabezalListParos from '../components/listadoParo/Cabezal/CabezalListParos'
 import TablaListParos from '../components/listadoParo/Tabla/TablaListParos'
+import { SelectButton } from 'primereact/selectbutton';
+
+import BarChartTiempoMuertoGrafica from "../components/graficas/barChartTiempoMuerto/BarChartTiempoMuertoGrafica"
+import BarChartModoFallaGrafica from '../components/graficas/barChartModosFalla/BarChartModoFallaGrafica';
+
 
 const ListadoParos = () => {
-    const datosFicticios = [
-        {fecha:"12-10-2001",planta:"Planta1",area:"Area1",linea:"Linea1",maquina:"maquina1",modoFalla:"Falla1",inicioParo:"12:33",finParo:"12:31",tiempo:1},
-        {fecha:"14-06-2012",planta:"Planta2",area:"Area2",linea:"Linea2",maquina:"maquina2",modoFalla:"Falla2",inicioParo:"10:12",finParo:"10:14",tiempo:2},
-        {fecha:"17-11-2015",planta:"Planta3",area:"Area3",linea:"Linea3",maquina:"maquina3",modoFalla:"Falla3",inicioParo:"01:50",finParo:"01:51",tiempo:1},
-        {fecha:"23-04-2011",planta:"Planta4",area:"Area4",linea:"Linea4",maquina:"maquina4",modoFalla:"Falla4",inicioParo:"05:47",finParo:"05:48",tiempo:1},
-        {fecha:"09-02-2009",planta:"Planta5",area:"Area5",linea:"Linea5",maquina:"maquina5",modoFalla:"Falla5",inicioParo:"03:05",finParo:"03:06",tiempo:1},
-    ]
+    //---> Variable donde se almacena la informacion del back-end
+    const [registros, setRegistros] = useState([]) 
+    const [chartFiltros, setChartFiltros] =useState([])
+    const [value, setValue]=useState(0)
+
+    const headers  = [
+        {label: 'Grafica Modos de Falla'},
+        {label: 'Grafica Tiempo Muerto'},
+        {label: 'Tabla'}
+    ];
+    const modoFalla=document.getElementById('modoFallaDiv')
+    const tiempoMuerto=document.getElementById('tiempoMuertoDiv')
+    const tabla=document.getElementById('tablaDiv')
+
+    switch (value.label){
+        case 'Grafica Modos de Falla':
+            modoFalla.style.display ='inline';
+            tiempoMuerto.style.display ='none';
+            tabla.style.display ='none'; 
+        break;
+        case 'Grafica Tiempo Muerto':
+            modoFalla.style.display ='none';
+            tiempoMuerto.style.display ='inline';
+            tabla.style.display ='none'; 
+
+        break;
+        case 'Tabla':
+            modoFalla.style.display ='none';
+            tiempoMuerto.style.display ='none';
+            tabla.style.display ='inline'; 
+        break;
+    }
 
 //--------------------| Valor que regresara  |--------------------
     return (
-        <>
-            <CabezalListParos/>
-            <TablaListParos datos={datosFicticios} />
-        </>
+        <div>
+            <CabezalListParos 
+                setRegistros={setRegistros}
+                setChartFiltros={setChartFiltros}
+            />
+            <div className='col-12 md:col-12 grid p-fluid'>
+                <SelectButton className='col-12 md:col-12 grid p-fluid'
+                    options={headers} 
+                    onChange={(e) => setValue(e.value)}
+                />
+            </div>
+            <div className='col-12 md:col-12 grid p-fluid' id='modoFallaDiv' style={{display:'inline'}}>
+                <BarChartModoFallaGrafica
+                    filtros = {chartFiltros}
+                />
+            </div>
+            <div className='col-12 md:col-12 grid p-fluid' id='tiempoMuertoDiv' style={{display:'none'}}>
+                <BarChartTiempoMuertoGrafica
+                    filtros = {chartFiltros}
+                />
+            </div>             
+            <div className='col-12 md:col-12 grid p-fluid' id='tablaDiv' style={{display:'none'}}>
+                <TablaListParos 
+                    registros={registros}
+                />
+            </div>
+        </div>
     )
 }
 
-export default ListadoParos
+const comparisonFn = function (prevProps, nextProps) {
+    return prevProps.location.pathname === nextProps.location.pathname;
+};
+
+export default React.memo(ListadoParos, comparisonFn);

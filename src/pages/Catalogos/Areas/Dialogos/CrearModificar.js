@@ -6,7 +6,19 @@ import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
 import Axios from 'axios';
 import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
 
-const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,saveProduct,tieneId}) => {
+const CrearModificar = (
+    {
+        productDialog,
+        titulos, hideDialog,
+        product,
+        updateField,
+        saveProduct,
+        tieneId,
+        boton,
+        setBoton,
+        validarNombre,
+        setValidarNombre
+    }) => {
 //--------------------| Dropdown  |--------------------
     //---> Plantas
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
@@ -15,8 +27,6 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
     }, [])
 
 //--------------------| Validar campos  |--------------------
-    const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de planta
-    const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
     const Advertencia=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de advertencia
     const expresion=/^[a-zA-Z0-9._-]{1,40}$/;                            // Solo nombres y numeros
 
@@ -63,16 +73,16 @@ const CrearModificar = ({productDialog,titulos,hideDialog,product,updateField,sa
                     Area
                 </label>
                 <InputText 
-                id="area"                                        // CAMBIAR...
-                value={product.area}                             // CAMBIAR...
-                onChange={(e) => {
-                    updateField(e.target.value.trim(), "area");  // CAMBIAR...
-                    Verificar(e.target.value)
-                }} 
-                required 
-                autoFocus 
-                className={validarNombre}
-                maxLength="30" 
+                    id="area"                                        // CAMBIAR...
+                    value={product.area}                             // CAMBIAR...
+                    onChange={(e) => {
+                        updateField(e.target.value.trim(), "area");  // CAMBIAR...
+                        Verificar(e.target.value)
+                    }} 
+                    required 
+                    autoFocus 
+                    className={validarNombre}
+                    maxLength="30" 
                 />
                 {boton && Advertencia}
             </div>

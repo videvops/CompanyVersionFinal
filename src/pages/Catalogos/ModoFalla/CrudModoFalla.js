@@ -158,6 +158,7 @@ const CrudModoFalla = ({ titulos, notificaciones }) => {
     //--------------------| Obtener registros de back-end |--------------------
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
     //---> Obtendra los datos del back-end
     useEffect(() => {
         const cargarDatos = async () => {
