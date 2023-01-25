@@ -39,7 +39,6 @@ import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
 import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
 import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
-import CatalogoModoFalla from "../pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import EmptyPage from "../pages/EmptyPage";
 import TimelineDemo from "../pages/TimelineDemo";
 
