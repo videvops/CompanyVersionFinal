@@ -8,7 +8,6 @@ import { AppFooter } from "../AppFooter";
 import { AppMenu } from "../AppMenu";
 import { AppConfig } from "../AppConfig";
 
-
 import Dashboard from "../components/Dashboard";
 import ButtonDemo from "../components/ButtonDemo";
 import ChartDemo from "../components/ChartDemo";
@@ -40,6 +39,7 @@ import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
 import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
 import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
+import CatalogoModoFalla from "../pages/Catalogos/ModoFalla/CatalogoModoFalla";
 import EmptyPage from "../pages/EmptyPage";
 import TimelineDemo from "../pages/TimelineDemo";
 
@@ -154,14 +154,14 @@ const Home = ({ setLogueado }) => {
         mobileTopbarMenuClick = true;
         // localStorage.removeItem('logueado')     // Eliminar valor para terminar sesion
         // setLogueado(false)                      // Cerrar sesion
-        // console.log("Termino la sesion")    
+        // console.log("Termino la sesion")
     };
 
     const cerrarSesion = () => {
-        localStorage.removeItem('logueado')     // Eliminar valor para terminar sesion
-        setLogueado(false)                      // Cerrar sesion
-        console.log("Termino la sesion")        // Mensaje de cierre de sesion
-    }
+        localStorage.removeItem("logueado"); // Eliminar valor para terminar sesion
+        setLogueado(false); // Cerrar sesion
+        console.log("Termino la sesion"); // Mensaje de cierre de sesion
+    };
 
     const onMenuItemClick = (event) => {
         if (!event.item.items) {
@@ -226,8 +226,8 @@ const Home = ({ setLogueado }) => {
                         { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
                         { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos" },
                         { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios" },
-                        { label: "Maquina", icon: "pi pi-fw pi-bookmark text-blue-500",to: "/catalogoMaquinas",},
-                        { label: "Modo de Falla", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoModoDeFalla"},
+                        { label: "Maquina", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoMaquinas" },
+                        { label: "Modo de Falla", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoModoFalla" },
                     ],
                 },
             ],
@@ -260,19 +260,12 @@ const Home = ({ setLogueado }) => {
         "layout-theme-light": layoutColorMode === "light",
     });
 
-//--------------------| Valor que regresara  |--------------------
+    //--------------------| Valor que regresara  |--------------------
     return (
         <div className={wrapperClass} onClick={onWrapperClick}>
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
-            <AppTopbar
-                onToggleMenuClick={onToggleMenuClick}
-                layoutColorMode={layoutColorMode}
-                mobileTopbarMenuActive={mobileTopbarMenuActive}
-                onMobileTopbarMenuClick={onMobileTopbarMenuClick}
-                onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
-                cerrarSesion={cerrarSesion}
-            />
+            <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode} mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} cerrarSesion={cerrarSesion} />
 
             {/* Barra de navegacion */}
             <div className="layout-sidebar" onClick={onSidebarClick}>
@@ -295,7 +288,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
-                    <Route path="/catalogoModoDeFalla" component={CatalogoModoFalla}/>
+                    <Route path="/catalogoModoFalla" component={CatalogoModoFalla} />
                     <Route path="/list" component={ListDemo} />
                     <Route path="/tree" component={TreeDemo} />
                     <Route path="/panel" component={PanelDemo} />

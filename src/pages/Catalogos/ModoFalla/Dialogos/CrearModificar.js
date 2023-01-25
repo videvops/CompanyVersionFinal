@@ -6,13 +6,7 @@ import { productDialogFooter } from "../../ComponentsCat/Botones/CrearRegistro";
 import Axios from 'axios';
 
 const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct }) => {
-    
-    //--------------------| Dropdown dinamico|--------------------
-    //---> Plantas
-    const [plantasDisponibles,setPlantasDisponibles]=useState([])
-    useEffect(() => {
-        Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
-    }, [])    
+    console.log("creando componente");
     //--------------------| Validar campos  |--------------------
     const [validarNombre, setValidarNombre] = useState(""); // Validar nombre de planta
     const [boton, setBoton] = useState(false); // Activar o desactivar boton
@@ -56,12 +50,17 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
                 />
             </div>
             <div className="field">
-                <label htmlFor="nombreModoFalla">Modo de falla</label>
-                <InputText 
-                    id="nombreModoFalla"
-                    value={product.modoFalla}
-                    onChange={(e)=>{
-                        updateField(e.target.value.trim(), "nombreModoFalla"); // CAMBIAR...
+                {/* CAMBIAR.... */}
+                <label
+                    htmlFor="modoFalla" // CAMBIAR...
+                >
+                    Modo de Falla
+                </label>
+                <InputText
+                    id="modoFalla" // CAMBIAR...
+                    value={product.modoFalla} // CAMBIAR...
+                    onChange={(e) => {
+                        updateField(e.target.value.trim(), "modoFalla"); // CAMBIAR...
                         Verificar(e.target.value);
                     }}
                     placeholder="--Escribe el nombre del modo de falla--"
