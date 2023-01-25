@@ -12,6 +12,7 @@ const CrearModificar = ({ productDialog, titulos, hideDialog, product, updateFie
     const [boton, setBoton] = useState(false); // Activar o desactivar boton
     const Advertencia = <p style={{ color: "red" }}>Campo no valido</p>; // Mensaje de advertencia
     const expresion = /^[a-zA-Z0-9._-]{1,40}$/; // Solo nombres y numeros
+    
 
     //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
