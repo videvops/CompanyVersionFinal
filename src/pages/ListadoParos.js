@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import CabezalListParos from '../components/listadoParo/Cabezal/CabezalListParos'
 import TablaListParos from '../components/listadoParo/Tabla/TablaListParos'
-import { TabView, TabPanel } from 'primereact/tabview';
+import { SelectButton } from 'primereact/selectbutton';
 
 import BarChartTiempoMuertoGrafica from "../components/graficas/barChartTiempoMuerto/BarChartTiempoMuertoGrafica"
 import BarChartModoFallaGrafica from '../components/graficas/barChartModosFalla/BarChartModoFallaGrafica';
@@ -10,8 +10,36 @@ import BarChartModoFallaGrafica from '../components/graficas/barChartModosFalla/
 const ListadoParos = () => {
     //---> Variable donde se almacena la informacion del back-end
     const [registros, setRegistros] = useState([]) 
-    const [activeIndex, setActiveIndex] = useState(0)
     const [chartFiltros, setChartFiltros] =useState([])
+    const [value, setValue]=useState(0)
+
+    const headers  = [
+        {label: 'Grafica Modos de Falla'},
+        {label: 'Grafica Tiempo Muerto'},
+        {label: 'Tabla'}
+    ];
+    const modoFalla=document.getElementById('modoFallaDiv')
+    const tiempoMuerto=document.getElementById('tiempoMuertoDiv')
+    const tabla=document.getElementById('tablaDiv')
+
+    switch (value.label){
+        case 'Grafica Modos de Falla':
+            modoFalla.style.display ='inline';
+            tiempoMuerto.style.display ='none';
+            tabla.style.display ='none'; 
+        break;
+        case 'Grafica Tiempo Muerto':
+            modoFalla.style.display ='none';
+            tiempoMuerto.style.display ='inline';
+            tabla.style.display ='none'; 
+
+        break;
+        case 'Tabla':
+            modoFalla.style.display ='none';
+            tiempoMuerto.style.display ='none';
+            tabla.style.display ='inline'; 
+        break;
+    }
 
 //--------------------| Valor que regresara  |--------------------
     return (
@@ -20,22 +48,27 @@ const ListadoParos = () => {
                 setRegistros={setRegistros}
                 setChartFiltros={setChartFiltros}
             />
-            <TablaListParos 
-                registros={registros}           // Se muestran los registros
-            />
-            <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>   
-                <TabPanel header="Modos de falla">
-                    <BarChartModoFallaGrafica
-                        filtros = {chartFiltros}
-                    />
-                </TabPanel>
-
-                <TabPanel header="Tiempo Muerto Por Maquina">
-                    <BarChartTiempoMuertoGrafica
-                        filtros = {chartFiltros}
-                    />
-                </TabPanel>    
-            </TabView>
+            <div className='col-12 md:col-12 grid p-fluid'>
+                <SelectButton className='col-12 md:col-12 grid p-fluid'
+                    options={headers} 
+                    onChange={(e) => setValue(e.value)}
+                />
+            </div>
+            <div className='col-12 md:col-12 grid p-fluid' id='modoFallaDiv' style={{display:'inline'}}>
+                <BarChartModoFallaGrafica
+                    filtros = {chartFiltros}
+                />
+            </div>
+            <div className='col-12 md:col-12 grid p-fluid' id='tiempoMuertoDiv' style={{display:'none'}}>
+                <BarChartTiempoMuertoGrafica
+                    filtros = {chartFiltros}
+                />
+            </div>             
+            <div className='col-12 md:col-12 grid p-fluid' id='tablaDiv' style={{display:'none'}}>
+                <TablaListParos 
+                    registros={registros}
+                />
+            </div>
         </div>
     )
 }

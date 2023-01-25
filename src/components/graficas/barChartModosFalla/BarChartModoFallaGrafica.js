@@ -4,7 +4,7 @@ import {getDateSplitted} from "../../helpers/funciones"
 
 const BarChartModoFallaGrafica = ({filtros}) => {
     if(Object.entries(filtros).length === 0){
-        return(<h2>No hay info</h2>)
+        return(<h3>No hay informacion disponible</h3>)
     }else{
         let strMaquinas = ""
         filtros.maquinas.forEach((numero, index) => {

@@ -24,7 +24,7 @@ import OverlayDemo from "../components/OverlayDemo";
 import MediaDemo from "../components/MediaDemo";
 import PanelDemo from "../components/PanelDemo";
 import TreeDemo from "../components/TreeDemo";
-import Desperdecio from "../components/Desperdecio";
+import Desperdicio from  '../components/desperdicio/Desperdicio'
 import BlocksDemo from "../components/BlocksDemo";
 import IconsDemo from "../components/IconsDemo";
 
@@ -285,7 +285,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listadoParos" component={ListadoParos} />
-                    <Route path="/desperdicio" component={Desperdecio} />
+                    <Route path="/desperdicio" component={Desperdicio} />
                     <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
                     <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
