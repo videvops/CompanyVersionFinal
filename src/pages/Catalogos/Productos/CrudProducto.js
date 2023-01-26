@@ -6,7 +6,7 @@ import Exportar from './Botones/Exportar';
 import TablaTurnos from './Tabla/TablaProducto';
 import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
-import CrearM1 from './Dialogos/CrearM1';
+import CrearModificar from './Dialogos/CrearModificar';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
@@ -36,7 +36,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
 
 //--------------------| Uso de estados |--------------------
     const [productDialog, setProductDialog] = useState(false);
-    const [siguiente, setSiguiente] = useState(false)
+    // const [siguiente, setSiguiente] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(productoVacio);
@@ -68,13 +68,13 @@ const CrudProducto = ({titulos, notificaciones}) => {
 //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
     const openNew = () => {
-        setSiguiente(false)
         setProduct(productoVacio);
         setProductDialog(true);
     }
     //------> Ocultar dialogo de crear
     const hideDialog = () => {
         setProductDialog(false);
+        mostrarM1()
     }
     //------> Ocultar dialogo de eliminar 1 producto
     const hideDeleteProductDialog = () => {
@@ -195,7 +195,19 @@ const CrudProducto = ({titulos, notificaciones}) => {
         turnoService.readAll().then((data) => setProducts(data));
     }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
+//--------------------| Modal |--------------------
+    const [m1, setM1] = useState(true)
+    const [m2, setM2] = useState(false)
 
+    //---> Funciones mostrar y ocultar
+    const mostrarM1 = () => {
+        setM1(true)
+        setM2(false)
+    }
+    const mostrarM2 = () => {
+        setM1(false)
+        setM2(true)
+    }
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="datatable-crud-demo">
@@ -215,15 +227,24 @@ const CrudProducto = ({titulos, notificaciones}) => {
             {isLoading&&<Spinner/>}
             {error&&<p>{error}</p>}
 
-            <CrearM1
+            {/* <CrearM1
                 productDialog={productDialog}
                 titulos={titulos}
                 saveProduct={saveProduct}
                 hideDialog={hideDialog}
                 product={product}
                 updateField={updateField}
-                siguienteModal={siguienteModal}
-                siguiente={siguiente}
+            /> */}
+            <CrearModificar
+                titulos={titulos}
+                productDialog={productDialog}
+                hideDialog={hideDialog}
+                updateField={updateField}
+                product={product}
+                m1={m1}
+                m2={m2}
+                mostrarM1={mostrarM1}
+                mostrarM2={mostrarM2}
             />
 
             <EliminarUno

@@ -1,28 +1,25 @@
 import React, {useEffect, useState} from 'react'
-import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-// import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
-import { botonSiguiente } from '../../ComponentsCat/Botones/BotonSiguiente'
+import { Button } from 'primereact/button';
 import { Mensaje } from '../../ComponentsCat/Mensajes/Mensajes';
 import Axios from 'axios';
-import CrearM2 from './CrearM2';
 
-const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, saveProduct, siguienteModal, siguiente }) => {
+const CrearM1 = ({ hideDialog, product, updateField, mostrarM2 }) => {
 //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
     useEffect(() => {
         Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
     }, [])
-
+    //---> Areas
     const [areasDisponibles, setAreasDisponibles]=useState([])
     useEffect(() => {
         if(product.idPlanta!==''){
             Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
         }
     }, [product.idPlanta])
-
+    //---> Lineas
     const [lineasDisponibles,setLineasDisponibles]=useState([])
     useEffect(() => {
         if(product.idArea!==''){
@@ -45,24 +42,15 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
             setBoton(false);
         }
     }
-
-
-//--------------------| Botones de confirmacion |--------------------
-    //------> Botones para crear registro
-    // const crearRegistro=productDialogFooter(hideDialog,saveProduct,boton);
-    const continuarRegistros = botonSiguiente(hideDialog, siguienteModal,boton)
-
+//--------------------| Envio de datos  |--------------------
+    const enviarParte1 = () => {
+        mostrarM2()
+        console.log("Se envio la parte 1")
+    }
+    
 //--------------------| Valor que regresara  |--------------------
     return (
-        <Dialog 
-            visible={productDialog} 
-            style={{ width: '450px' }} 
-            header={titulos.VentanaCrear} 
-            modal 
-            className="p-fluid" 
-            footer={continuarRegistros} 
-            onHide={hideDialog}
-        >
+        <div>
             <div className="field">
                 <label>Planta</label>
                 <Dropdown 
@@ -104,9 +92,9 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
                 </label>
                 <InputText 
                     id="turno"                                        // CAMBIAR...
-                    value={product.turno}                             // CAMBIAR...
+                    value={product.producto}                             // CAMBIAR...
                     onChange={(e) => {
-                        updateField(e.target.value.trim(), "turno");  // CAMBIAR...
+                        updateField(e.target.value.trim(), "producto");  // CAMBIAR...
                         VerificarNombre(e.target.value)
                     }} 
                     required 
@@ -116,10 +104,11 @@ const CrearM1 = ({ productDialog, titulos, hideDialog, product, updateField, sav
                 />
                 {validarNombre && Mensaje}
             </div>
-            <CrearM2
-                siguiente={siguiente}
-            />
-        </Dialog>
+            <div className='flex'>
+                <Button label="Cancelar" className="p-button-rounded" onClick={hideDialog}/>
+                <Button label="Siguiente" className="p-button-rounded" onClick={enviarParte1}/>
+            </div>
+        </div>
     )
 }
 

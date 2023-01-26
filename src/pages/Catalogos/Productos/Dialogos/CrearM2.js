@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Column } from 'primereact/column';
-import { Dialog } from 'primereact/dialog';
 import { Checkbox } from 'primereact/checkbox';
 import { DataTable } from 'primereact/datatable';
+import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
-const CrearM2 = ({ siguiente }) => {
+const CrearM2 = ({ mostrarM1 }) => {
     const datos = [
         {linea:"linea1",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"linea2",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"linea3",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"linea4",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
+        {linea:"maquina1",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
+        {linea:"maquina2",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
+        {linea:"maquina3",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
     ]
 
     const textEditor = (options) => {
@@ -42,13 +42,7 @@ const CrearM2 = ({ siguiente }) => {
     // }
 //--------------------| Valor que regresara  |--------------------
     return (
-        <Dialog
-            header="SKU: SKU H"
-            visible={siguiente}
-            style={{ width: '80vw' }}
-            // footer={renderFooter('displayBasic')}
-            // onHide={() => onHide('displayBasic')}
-        >
+        <div>
             <p>Descripcion: Galleta mini chispa chocolate 20 oz</p>
             <DataTable value={datos} editMode="row" dataKey="id" /*onRowEditComplete={onRowEditComplete1}*/ responsiveLayout="scroll">
                 <Column field="linea" header="Linea" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
@@ -58,7 +52,11 @@ const CrearM2 = ({ siguiente }) => {
                 <Column field="habilitado" header="¿Habilitado?" editor={(options) => checkEditor(options)} style={{ width: '20%' }}/>
                 <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}/>
             </DataTable>
-        </Dialog>
+            <div className='flex'>
+                <Button label="Atras" className="p-button-rounded" onClick={mostrarM1} />
+                <Button label="Enviar" className="p-button-rounded" onClick={()=>{console.log("Se enviaron los datos")}}/>
+            </div>
+        </div>
     )
 }
 
