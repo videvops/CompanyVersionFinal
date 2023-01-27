@@ -1,26 +1,27 @@
 import React, {useEffect, useState} from 'react'
-import { Dropdown } from 'primereact/dropdown';
-import { InputText } from 'primereact/inputtext';
+import Axios from 'axios';
 import { Button } from 'primereact/button';
 import { Mensaje } from '../../ComponentsCat/Mensajes/Mensajes';
-import Axios from 'axios';
+import { Dropdown } from 'primereact/dropdown';
+import { InputText } from 'primereact/inputtext';
+import { MensajeFiltro } from '../../ComponentsCat/Mensajes/Mensajes';
 
-const CrearM1 = ({ hideDialog, product, updateField, mostrarM2 }) => {
+const CrearM1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) => {
 //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
-    const [plantasDisponibles,setPlantasDisponibles]=useState([])
+    const [plantasDisponibles, setPlantasDisponibles] = useState([])
     useEffect(() => {
         Axios.get("http://localhost:8080/plantas/list").then(res=>setPlantasDisponibles(res.data))
     }, [])
     //---> Areas
-    const [areasDisponibles, setAreasDisponibles]=useState([])
+    const [areasDisponibles, setAreasDisponibles] = useState([])
     useEffect(() => {
         if(product.idPlanta!==''){
             Axios.get(`http://localhost:8080/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
         }
     }, [product.idPlanta])
     //---> Lineas
-    const [lineasDisponibles,setLineasDisponibles]=useState([])
+    const [lineasDisponibles, setLineasDisponibles] = useState([])
     useEffect(() => {
         if(product.idArea!==''){
             Axios.get(`http://localhost:8080/lineas/area/${product.idArea}`).then(res=>setLineasDisponibles(res.data))
@@ -29,6 +30,7 @@ const CrearM1 = ({ hideDialog, product, updateField, mostrarM2 }) => {
 
 //--------------------| Validar campos  |--------------------
     const [validarNombre, setValidarNombre] = useState("");                // Validar nombre de turno
+    const [envioIncorrecto, setEnvioIncorrecto] = useState(false)
     const [boton, setBoton] = useState(false);                             // Activar o desactivar boton
     const exprNombre = /^[a-zA-Z0-9._-]{1,40}$/;                          // Nombres,numeros y guiones
     //---> Nombre
@@ -43,9 +45,23 @@ const CrearM1 = ({ hideDialog, product, updateField, mostrarM2 }) => {
         }
     }
 //--------------------| Envio de datos  |--------------------
+    const enviarDatos = async (datos) => {
+        const respuesta = await Axios.post("http://localhost:8080/productos", datos)
+        setResultado(respuesta.data.maquinas)
+    }
+
     const enviarParte1 = () => {
+        if ([product.idPlanta, product.idArea, product.idLinea, product.producto].includes("")) {
+            console.log("Se deben llenar todos los campos")
+            setEnvioIncorrecto(true)
+            setTimeout(() => {
+                setEnvioIncorrecto(false)
+            }, 3000);
+            return
+        }
+        const objeto = { producto: product.producto, idLinea: product.idLinea }
+        enviarDatos(objeto)
         mostrarM2()
-        console.log("Se envio la parte 1")
     }
     
 //--------------------| Valor que regresara  |--------------------
@@ -103,10 +119,11 @@ const CrearM1 = ({ hideDialog, product, updateField, mostrarM2 }) => {
                     maxLength="30" 
                 />
                 {validarNombre && Mensaje}
+                {envioIncorrecto && MensajeFiltro}
             </div>
             <div className='flex'>
                 <Button label="Cancelar" className="p-button-rounded" onClick={hideDialog}/>
-                <Button label="Siguiente" className="p-button-rounded" onClick={enviarParte1}/>
+                <Button label="Siguiente" className="p-button-rounded" onClick={enviarParte1} />
             </div>
         </div>
     )

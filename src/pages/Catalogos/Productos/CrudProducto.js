@@ -36,13 +36,11 @@ const CrudProducto = ({titulos, notificaciones}) => {
 
 //--------------------| Uso de estados |--------------------
     const [productDialog, setProductDialog] = useState(false);
-    // const [siguiente, setSiguiente] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(productoVacio);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
-
     // CAMBIAR...
     const [filters, setFilters] = useState({
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -70,6 +68,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
     const openNew = () => {
         setProduct(productoVacio);
         setProductDialog(true);
+        setObjetoParte2([])
     }
     //------> Ocultar dialogo de crear
     const hideDialog = () => {
@@ -164,10 +163,6 @@ const CrudProducto = ({titulos, notificaciones}) => {
             </>
         );
     }
-    const siguienteModal = () => {
-        setProductDialog(false)
-        setSiguiente(true)
-    }
 
 //--------------------| Obtener registros de back-end |--------------------
     const [isLoading, setIsLoading] = useState(false)
@@ -198,6 +193,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
 //--------------------| Modal |--------------------
     const [m1, setM1] = useState(true)
     const [m2, setM2] = useState(false)
+    const [objetoParte2, setObjetoParte2] = useState([])
 
     //---> Funciones mostrar y ocultar
     const mostrarM1 = () => {
@@ -245,6 +241,8 @@ const CrudProducto = ({titulos, notificaciones}) => {
                 m2={m2}
                 mostrarM1={mostrarM1}
                 mostrarM2={mostrarM2}
+                objetoParte2={objetoParte2}
+                setObjetoParte2={setObjetoParte2}
             />
 
             <EliminarUno

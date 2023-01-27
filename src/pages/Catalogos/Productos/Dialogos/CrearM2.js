@@ -5,14 +5,7 @@ import { DataTable } from 'primereact/datatable';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
-const CrearM2 = ({ mostrarM1 }) => {
-    const datos = [
-        {linea:"linea1",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"maquina1",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"maquina2",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-        {linea:"maquina3",velocidadEstandar:"",factorConversionI:"",factorConversionO:"",habilitado:""},
-    ]
-
+const CrearM2 = ({ mostrarM1, objetoParte2 }) => {
     const textEditor = (options) => {
         return (
             <InputText
@@ -27,7 +20,6 @@ const CrearM2 = ({ mostrarM1 }) => {
         return (
             <div className="field-checkbox">
                 <Checkbox inputId="binary" checked={checked} onChange={e => setChecked(e.checked)} />
-                <label htmlFor="binary">Remember Me</label>
             </div>
         )
     }
@@ -44,8 +36,10 @@ const CrearM2 = ({ mostrarM1 }) => {
     return (
         <div>
             <p>Descripcion: Galleta mini chispa chocolate 20 oz</p>
-            <DataTable value={datos} editMode="row" dataKey="id" /*onRowEditComplete={onRowEditComplete1}*/ responsiveLayout="scroll">
-                <Column field="linea" header="Linea" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
+            <DataTable value={objetoParte2} editMode="row" dataKey="id" /*onRowEditComplete={onRowEditComplete1}*/ responsiveLayout="scroll">
+                <Column field="id" header="ID" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
+                <Column field="tipo" header="Tipo" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
+                <Column field="nombre" header="Nombre" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                 <Column field="velocidadEstandar" header="Velocidad Estandar" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                 <Column field="factorConversionI" header="Factor de Conversion Input" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                 <Column field="factorConversionO" header="Factor de Conversion Output" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
