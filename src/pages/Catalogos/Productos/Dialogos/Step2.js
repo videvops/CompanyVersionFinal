@@ -33,9 +33,8 @@ const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2 }) => {
 
 //--------------------| Envio de datos  |--------------------
     const enviarParte2 = () => {
-        const objetoEnviar = { config: [objetoParte2] }
-        const prueba={config: [objetoParte2]}
-        Axios.post("http://localhost:8080/productos/config/velocidades", prueba)
+        const objetoEnviar = { config: objetoParte2 }
+        Axios.post("http://localhost:8080/productos/config/velocidades", objetoEnviar)
         console.log("Datos enviados")
         console.log(objetoEnviar)
         hideDialog()

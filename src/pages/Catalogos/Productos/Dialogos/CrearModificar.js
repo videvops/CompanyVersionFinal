@@ -25,7 +25,7 @@ const CrearModificar = ({
         velocidadEstandar: "",
         factorConversionI: "",
         factorConversionO: "",
-        habilitado: "false"
+        habilitado: false
     }]
     useEffect(() => {
         if (resultado.length>0) {
@@ -38,7 +38,7 @@ const CrearModificar = ({
                     velocidadEstandar: "",
                     factorConversionI: "",
                     factorConversionO: "",
-                    habilitado: "false"
+                    habilitado: false
                 })
                 i++
             }
