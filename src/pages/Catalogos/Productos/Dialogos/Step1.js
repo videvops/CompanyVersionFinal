@@ -6,7 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { MensajeFiltro } from '../../ComponentsCat/Mensajes/Mensajes';
 
-const CrearM1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) => {
+const Step1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) => {
 //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
     const [plantasDisponibles, setPlantasDisponibles] = useState([])
@@ -31,17 +31,17 @@ const CrearM1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) 
 //--------------------| Validar campos  |--------------------
     const [validarNombre, setValidarNombre] = useState("");                // Validar nombre de turno
     const [envioIncorrecto, setEnvioIncorrecto] = useState(false)
-    const [boton, setBoton] = useState(false);                             // Activar o desactivar boton
+    // const [boton, setBoton] = useState(false);                             // Activar o desactivar boton
     const exprNombre = /^[a-zA-Z0-9._-]{1,40}$/;                          // Nombres,numeros y guiones
     //---> Nombre
     const VerificarNombre=(texto)=>{
         if (!exprNombre.test(texto)){
             setValidarNombre("p-invalid");
-            setBoton(true);
+            // setBoton(true);
             
         }else{
             setValidarNombre("");
-            setBoton(false);
+            // setBoton(false);
         }
     }
 //--------------------| Envio de datos  |--------------------
@@ -129,4 +129,4 @@ const CrearM1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) 
     )
 }
 
-export default CrearM1
+export default Step1
