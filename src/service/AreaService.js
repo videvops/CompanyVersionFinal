@@ -1,14 +1,20 @@
 import axios from "axios";
+import Environment from '../Environment';
+
+
+const getRoute = Environment();
 
 export class AreaService {
-    //------> Link para hacer peticiones
-    baseUrl = "http://localhost:8080/areas";
+    //------> Link para hacer peticiones  
+    baseUrl = getRoute+"/areas";
+
     //------> Agregar nuevo registro
     create(product){
         return axios.post(this.baseUrl, product).then(res => res.data);
     }
     //------> Obtener registros de BD
     readAll(){
+        console.log(this.baseUrl);
         return axios.get(this.baseUrl).then(res => res.data);
     }
     //------> Modificar registro
