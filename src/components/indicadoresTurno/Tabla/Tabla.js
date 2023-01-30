@@ -1,6 +1,6 @@
 import Axios from "axios";
 import React, { useState, useEffect } from "react";
-import TablaDesing from "../UI/DiseñoTabla";
+import TablaDesing from "../UI/DiseñoTabla";
 import Totales from "../Promedio/Totales";
 import { Column } from "primereact/column";
 // import { ProgressSpinner } from 'primereact/progressspinner'

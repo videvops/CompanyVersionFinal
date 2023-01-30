@@ -1,6 +1,6 @@
 import React from 'react'
 import { Column } from "primereact/column";
-import TablaDesing from '../../indicadoresTurno/UI/DiseñoTabla'
+import TablaDesing from '../../indicadoresTurno/UI/DiseñoTabla'
 import { CardTabla } from '../../indicadoresTurno/UI/Cards'
 import { CardGeneral } from '../../indicadoresTurno/UI/Cards'
 
