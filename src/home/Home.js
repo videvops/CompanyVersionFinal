@@ -4,44 +4,28 @@ import { Route, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { AppTopbar } from "../AppTopbar";
-import { AppFooter } from "../AppFooter";
 import { AppMenu } from "../AppMenu";
 import { AppConfig } from "../AppConfig";
 
 
 import Dashboard from "../components/Dashboard";
-import ButtonDemo from "../components/ButtonDemo";
-import ChartDemo from "../components/ChartDemo";
-import Documentation from "../components/Documentation";
-import FileDemo from "../components/FileDemo";
 import IndicadoresTurno from "../pages/IndicadoresTurno";
 import StatusLineas from "../pages/StatusLineas";
-import ListDemo from "../components/ListDemo";
-import MenuDemo from "../components/MenuDemo";
-import MessagesDemo from "../components/MessagesDemo";
-import MiscDemo from "../components/MiscDemo";
-import OverlayDemo from "../components/OverlayDemo";
-import MediaDemo from "../components/MediaDemo";
-import PanelDemo from "../components/PanelDemo";
-import TreeDemo from "../components/TreeDemo";
-import Desperdecio from "../components/Desperdecio";
-import BlocksDemo from "../components/BlocksDemo";
-import IconsDemo from "../components/IconsDemo";
+
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
-import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
-import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
+// import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
+// import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
 import CatalogoLineas from "../pages/Catalogos/Lineas/CatalogoLineas";
-import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
-import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
+// import CatalogoPlantas from "../pages/Catalogos/Plantas/CatalogoPlantas";
+// import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoProducto from "../pages/Catalogos/Productos/CatalogoProducto";
-import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
-import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
-import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
-import EmptyPage from "../pages/EmptyPage";
-import TimelineDemo from "../pages/TimelineDemo";
+// import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
+// import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
+// import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
+
 
 import PrimeReact from "primereact/api";
 import { Tooltip } from "primereact/tooltip";
@@ -188,7 +172,7 @@ const Home = ({ setLogueado }) => {
             items: [
                 { label: "Indicadores de Turno", icon: "pi pi-fw pi-check-square text-blue-500 ", to: "/indicadoresTurno" },
                 { label: "Status Lineas", icon: "pi pi-fw pi-chart-line text-blue-500 ", to: "/statusLineas" },
-                { label: "Últimos Paros", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "/desperdicio" },
+                // { label: "Últimos Paros", icon: "pi pi-fw pi-exclamation-circle text-blue-500", to: "/desperdicio" },
             ],
         },
         {
@@ -201,9 +185,9 @@ const Home = ({ setLogueado }) => {
             icon: "pi pi-fw pi-sitemap",
             items: [
                 { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
-                { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
+                // { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
+                // { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
+                // { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
         {
@@ -216,24 +200,17 @@ const Home = ({ setLogueado }) => {
                     icon: "pi pi-fw pi-database text-blue-500",
                     // CAMBIAR....
                     items: [
-                        { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas" },
-                        { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones" },
+                        // { label: "Áreas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoAreas" },
+                        // { label: "Direcciones", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoDirecciones" },
                         { label: "Líneas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoLineas" },
-                        { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
+                        // { label: "Plantas", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoPlantas" },
                         { label: "Productos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoProductos" },
-                        { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
-                        { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo" },
+                        // { label: "Roles", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoRoles" },
+                        // { label: "TipoParo", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTipoParo" },
                         { label: "Turnos", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoTurnos" },
-                        { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios" },
-                        {
-                            label: "Maquina",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
-                            to: "/catalogoMaquinas",
-                        },
-                        {
-                            label: "Modo de Falla",
-                            icon: "pi pi-fw pi-bookmark text-blue-500",
-                        },
+                        // { label: "Usuarios", icon: "pi pi-fw pi-table text-blue-500", to: "/catalogoUsuarios" },
+                        // {label: "Maquina",icon: "pi pi-fw pi-bookmark text-blue-500",to: "/catalogoMaquinas",},
+                        // {label: "Modo de Falla",icon: "pi pi-fw pi-bookmark text-blue-500",},
                     ],
                 },
             ],
@@ -291,36 +268,21 @@ const Home = ({ setLogueado }) => {
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listadoParos" component={ListadoParos} />
-                    <Route path="/desperdicio" component={Desperdecio} />
-                    <Route path="/button" component={ButtonDemo} />
-                    <Route path="/catalogoAreas" component={CatalogoAreas} />
-                    <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
+                    {/* <Route path="/desperdicio" component={Desperdecio} /> */}
+                    {/* <Route path="/button" component={ButtonDemo} /> */}
+                    {/* <Route path="/catalogoAreas" component={CatalogoAreas} /> */}
+                    {/* <Route path="/catalogoDirecciones" component={CatalogoDirecciones} /> */}
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
-                    <Route path="/catalogoPlantas" component={CatalogoPlantas} />
+                    {/* <Route path="/catalogoPlantas" component={CatalogoPlantas} /> */}
                     <Route path="/catalogoProductos" component={CatalogoProducto} />
-                    <Route path="/catalogoRoles" component={CatalogoRoles} />
-                    <Route path="/catalogoTipoParo" component={CatalogoTipoParo} />
+                    {/* <Route path="/catalogoRoles" component={CatalogoRoles} /> */}
+                    {/* <Route path="/catalogoTipoParo" component={CatalogoTipoParo} /> */}
                     <Route path="/catalogoTurnos" component={CatalogoTurnos} />
-                    <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
-                    <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
-                    <Route path="/list" component={ListDemo} />
-                    <Route path="/tree" component={TreeDemo} />
-                    <Route path="/panel" component={PanelDemo} />
-                    <Route path="/overlay" component={OverlayDemo} />
-                    <Route path="/media" component={MediaDemo} />
-                    <Route path="/menu" component={MenuDemo} />
-                    <Route path="/messages" component={MessagesDemo} />
-                    <Route path="/blocks" component={BlocksDemo} />
-                    <Route path="/icons" component={IconsDemo} />
-                    <Route path="/file" component={FileDemo} />
-                    <Route path="/chart" render={() => <ChartDemo colorMode={layoutColorMode} location={location} />} />
-                    <Route path="/misc" component={MiscDemo} />
-                    <Route path="/timeline" component={TimelineDemo} />
-                    <Route path="/empty" component={EmptyPage} />
-                    <Route path="/documentation" component={Documentation} />
+                    {/* <Route path="/catalogoUsuarios" component={CatalogoUsuarios} /> */}
+                    {/* <Route path="/catalogoMaquinas" component={CatalogoMaquinas} /> */}
                 </div>
 
-                <AppFooter layoutColorMode={layoutColorMode} />
+                {/* <AppFooter layoutColorMode={layoutColorMode} /> */}
             </div>
 
             <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
