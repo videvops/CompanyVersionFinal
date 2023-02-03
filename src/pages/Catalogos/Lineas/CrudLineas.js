@@ -98,16 +98,20 @@ const CrudLineas = ({titulos, notificaciones}) => {
         console.log(product);
     };
     //------> Agregar nuevo registro
-    const saveProduct = () => {
+    const saveProduct = async() => {
         console.log("[+]ID: " + product.id);
         if (!product.id) {
-            createProduct(product);
-            toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.creacion}`, life: 3000 });
+            await createProduct(product);
+            await toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.creacion}`, life: 3000 });
         } else {
             updateProduct(product);
             toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.modificacion}`, life: 3000 });
         }
         setProduct(emptyProduct);
+        const data = await lineaService.readAll()
+        console.log(data)
+        setProducts(data)
+        // lineaService.readAll().then((data) => setProducts(data));
         setProductDialog(false);
     }
     //------> Eliminar 1 producto
@@ -182,9 +186,9 @@ const CrudLineas = ({titulos, notificaciones}) => {
         }
     },[]); // eslint-disable-line react-hooks/exhaustive-deps    
 
-    useEffect(() => {
-        lineaService.readAll().then((data) => setProducts(data));
-    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     lineaService.readAll().then((data) => setProducts(data));
+    // }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
     //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(()=>{
