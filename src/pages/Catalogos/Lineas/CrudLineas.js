@@ -37,6 +37,8 @@ const CrudLineas = ({titulos, notificaciones}) => {
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
     const [tieneId, setTieneId] = useState(false)
+    const [validarNombre, setValidarNombre] = useState("");                
+    const [boton, setBoton] = useState(false);
 
     // CAMBIAR...
     const [filters, setFilters] = useState({
@@ -65,6 +67,8 @@ const CrudLineas = ({titulos, notificaciones}) => {
     const openNew = () => {
         setProduct(emptyProduct);
         setProductDialog(true);
+        setValidarNombre("")
+        setBoton(false)
     }
     //------> 
     const hideDialog = () => {
@@ -99,19 +103,16 @@ const CrudLineas = ({titulos, notificaciones}) => {
     };
     //------> Agregar nuevo registro
     const saveProduct = async() => {
-        console.log("[+]ID: " + product.id);
         if (!product.id) {
-            await createProduct(product);
-            await toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.creacion}`, life: 3000 });
+            createProduct(product);
+            toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.creacion}`, life: 3000 });
         } else {
             updateProduct(product);
             toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.modificacion}`, life: 3000 });
         }
         setProduct(emptyProduct);
         const data = await lineaService.readAll()
-        console.log(data)
         setProducts(data)
-        // lineaService.readAll().then((data) => setProducts(data));
         setProductDialog(false);
     }
     //------> Eliminar 1 producto
@@ -186,10 +187,6 @@ const CrudLineas = ({titulos, notificaciones}) => {
         }
     },[]); // eslint-disable-line react-hooks/exhaustive-deps    
 
-    // useEffect(() => {
-    //     lineaService.readAll().then((data) => setProducts(data));
-    // }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
-
     //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(()=>{
         if(product.id){                        // Tiene existe el ID
@@ -219,13 +216,17 @@ const CrudLineas = ({titulos, notificaciones}) => {
             {error&&<p>{error}</p>}
 
             <CrearModificar
-            productDialog={productDialog}
-            titulos={titulos}
-            saveProduct={saveProduct}
-            hideDialog={hideDialog}
-            product={product}
-            updateField={updateField}
-            tieneId={tieneId}
+                productDialog={productDialog}
+                titulos={titulos}
+                saveProduct={saveProduct}
+                hideDialog={hideDialog}
+                product={product}
+                updateField={updateField}
+                tieneId={tieneId}
+                boton={boton}
+                setBoton={setBoton}
+                validarNombre={validarNombre}
+                setValidarNombre={setValidarNombre}
             />
 
             <EliminarUno

@@ -9,21 +9,15 @@ import EliminarVarios from './Dialogos/EliminarVarios';
 import CrearModificar from './Dialogos/CrearModificar';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
-// import { renderHeader } from '../ComponentsCat/Buscador/Cabezal';
 //CAMBIAR...
-// import { TurnoService } from '../../../service/TurnoService';
 import { productoVacio } from './Objetos/ProductoVacio';
 
 
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-// import { FilterMatchMode } from 'primereact/api';
 
 
 const CrudProducto = ({titulos, notificaciones}) => {
-//--------------------| Importacion de metodos axios |--------------------
-    // const turnoService = new TurnoService();
-
 //--------------------| Uso de Contextos |--------------------
     const {
         // createProduct,
@@ -40,28 +34,9 @@ const CrudProducto = ({titulos, notificaciones}) => {
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(productoVacio);
     const [selectedProducts, setSelectedProducts] = useState(null);
-    // const [globalFilter, setGlobalFilter] = useState('');
-    // CAMBIAR...
-    // const [filters, setFilters] = useState({
-    //     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
-    //     'id': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    //     'turno': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    //     'linea': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    // });
+    
     const toast = useRef(null);
     const dt = useRef(null);
-
-//--------------------| Barra de Buscar |--------------------
-    // const onGlobalFilterChange = (e) => {
-    //     const value = e.target.value;
-    //     let _filters = { ...filters };
-    //     _filters['global'].value = value;
-
-    //     setFilters(_filters);
-    //     setGlobalFilter(value);
-    // }
-    //------> Cabezal de buscador
-    // const header=renderHeader(globalFilter,onGlobalFilterChange,titulos.Buscador,titulos.TituloTabla)
 
 //--------------------| Funciones para mostrar dialogos |--------------------
     //------> Nuevo gasto
@@ -199,7 +174,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         cargarDatos({ page: pagina, total: filas })
         return () => {                                      // Funcion de limpieza
             setProducts([])
-        }
+        }// eslint-disable-next-line
     }, [filas]);
 
 //--------------------| Modal |--------------------
@@ -216,6 +191,17 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setM1(false)
         setM2(true)
     }
+
+//--------------------| Validar ID |--------------------
+    const [tieneID, setTieneID] = useState(false)
+    useEffect(() => { 
+        if (product.id) {
+            setTieneID(true)
+        } else {
+            setTieneID(false)
+        }
+    }, [product.id])
+
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="datatable-crud-demo">
@@ -255,6 +241,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
                 mostrarM2={mostrarM2}
                 objetoParte2={objetoParte2}
                 setObjetoParte2={setObjetoParte2}
+                tieneID={tieneID}
             />
 
             <EliminarUno
