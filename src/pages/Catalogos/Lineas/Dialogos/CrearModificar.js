@@ -1,10 +1,12 @@
+import Axios from 'axios';
 import React, {useState, useEffect} from 'react'
+import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-import { productDialogFooter } from '../../ComponentsCat/Botones/CrearRegistro';
-import Axios from 'axios';
 import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
+import {MensajeFiltro} from '../../ComponentsCat/Mensajes/Mensajes'
+
 import Environment from '../../../../Environment';
 
 const getRoute = Environment()
@@ -26,20 +28,19 @@ const CrearModificar = ({
     //---> Plantas
     const [plantasDisponibles,setPlantasDisponibles]=useState([])
     useEffect(() => {
-        Axios.get(getRoute+"/plantas/list").then(res=>setPlantasDisponibles(res.data))
+        Axios.get(getRoute + "/plantas/list").then(res => setPlantasDisponibles(res.data))
     }, [])
     //---> Areas
     const [areasDisponibles, setAreasDisponibles]=useState([])
     useEffect(() => {
         if(product.idPlanta!==''){
-        Axios.get(getRoute+`/areas/planta/${product.idPlanta}`).then(res=>setAreasDisponibles(res.data))
+            Axios.get(getRoute + `/areas/planta/${product.idPlanta}`).then(res => setAreasDisponibles(res.data))
         }
     }, [product.idPlanta])
 
 //--------------------| Validar campos  |--------------------
-    // const [validarNombre,setValidarNombre]=useState("");                // Validar nombre de planta
-    // const [boton,setBoton]=useState(false);                             // Activar o desactivar boton
-    const Advertencia=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de advertencia
+    const [campoVacio, setCampoVacio] = useState(false)
+    const nombreIncorrecto=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de nombreIncorrecto
     const expresion=/^[a-zA-Z0-9._-\s]{1,40}$/;                            // Solo nombres y numeros
 
     const Verificar=(texto)=>{
@@ -52,19 +53,41 @@ const CrearModificar = ({
         }
     }
 
-    // useEffect(() => { 
-    //     if (Object.values(product).includes("")) {
-    //         console.log("esta vacio")
-    //         setBoton(true)
-    //     } else {
-    //         console.log("ya no esta vacio")
-    //         setBoton(false)
-    //     }
-    // }, [product])
+    const enviarDatos = () => {
+        if (Object.values(product).includes("") || boton) {
+            console.log("Los campos estan incorrectos")
+            setCampoVacio(true)
+            setTimeout(() => {
+                setCampoVacio(false)
+            }, 3000);
+            return
+        }
+        saveProduct()
+    }
+
+    const botones = () => {
+        return (
+        <>
+            <Button
+                label="Cancelar"
+                icon="pi pi-times"
+                className="p-button-text"
+                onClick={hideDialog}
+            />
+            <Button
+                label="Guardar"
+                icon="pi pi-check"
+                className="p-button-text"
+                onClick={enviarDatos}
+                // disabled={boton}
+                />
+        </>
+        )
+    }
 
 //--------------------| Botones de confirmacion |--------------------
     //------> Botones para crear registro
-    const crearRegistro = productDialogFooter(hideDialog, saveProduct, boton, product);
+    // const crearRegistro = productDialogFooter(hideDialog, saveProduct, boton, product);
 
 //--------------------| Valor que regresara  |--------------------
     return (
@@ -74,7 +97,7 @@ const CrearModificar = ({
         header={titulos.VentanaCrear} 
         modal 
         className="p-fluid" 
-        footer={crearRegistro} 
+        footer={botones} 
         onHide={hideDialog}
         >
             <div className="field">
@@ -101,15 +124,15 @@ const CrearModificar = ({
             </div>
             <div className="field">
                 <label 
-                htmlFor="linea"                                   // CAMBIAR...
+                htmlFor="linea"                                 // CAMBIAR...
                 >
                     Linea
                 </label>
                 <InputText 
-                id="linea"                                        // CAMBIAR...
-                value={product.linea}                             // CAMBIAR...
+                id="linea"                                      // CAMBIAR...
+                value={product.linea}                           // CAMBIAR...
                 onChange={(e) => {
-                    updateField(e.target.value, "linea");  // CAMBIAR...
+                    updateField(e.target.value, "linea");       // CAMBIAR...
                     Verificar(e.target.value)
                 }} 
                 required 
@@ -117,7 +140,7 @@ const CrearModificar = ({
                 className={validarNombre}
                 maxLength="30" 
                 />
-                {boton && Advertencia}
+                {boton && nombreIncorrecto}
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
@@ -131,6 +154,7 @@ const CrearModificar = ({
                     placeholder="--Selecciona un status--"
                 />
             </div>)}
+            {campoVacio&&MensajeFiltro}
         </Dialog>
     )
 }

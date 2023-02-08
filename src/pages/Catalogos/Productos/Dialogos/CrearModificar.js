@@ -19,34 +19,38 @@ const CrearModificar = ({
 }) => {
 //--------------------| Crear objeto para componente 2 |--------------------
     const [resultado, setResultado] = useState([])
-    let arreglo = [{
-        id: product.idLinea,
-        tipo: "linea",
-        nombre: "linea1",
-        velocidadEstandar: "",
-        factorConversionI: "",
-        factorConversionO: "",
-        habilitado: false
-    }]
+    const [tieneAlgo, setTieneAlgo] = useState(false)
+    let arreglo = []
     useEffect(() => {
-        if (resultado.length>0) {
+        if (resultado.length > 0) {
+            arreglo.push({
+                id: product.idLinea,
+                tipo: "linea",
+                nombre: "linea1",
+                velocidadEstandar: null,
+                factorConversionI: null,
+                factorConversionO: null,
+                habilitado: "false"
+            })
             let i = 0
             while (i < resultado.length) {
                 arreglo.push({
                     id: resultado[i].id,
                     tipo: "maquina",
                     nombre: resultado[i].maquina,
-                    velocidadEstandar: "",
-                    factorConversionI: "",
-                    factorConversionO: "",
-                    habilitado: false
+                    velocidadEstandar: null,
+                    factorConversionI: null,
+                    factorConversionO: null,
+                    habilitado: "false"
                 })
                 i++
             }
             setObjetoParte2(arreglo)
-            console.log(arreglo)
+            setTieneAlgo(true)
+            // console.log(arreglo)
         } else {
             setObjetoParte2([])
+            setTieneAlgo(false)
         }// eslint-disable-next-line
     }, [resultado])
 
@@ -76,6 +80,7 @@ const CrearModificar = ({
                     hideDialog={hideDialog}
                     objetoParte2={objetoParte2}
                     setObjetoParte2={setObjetoParte2}
+                    tieneAlgo={tieneAlgo}
                 />
             )}
         </Dialog>
