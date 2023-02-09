@@ -128,7 +128,7 @@ const Step1 = ({ hideDialog, product, updateField, mostrarM2, setResultado, tien
                 {validarNombre && Mensaje}
                 {envioIncorrecto && MensajeFiltro}
             </div>
-            <div className='flex'>
+            <div className='mt-5 flex'>
                 <Button label="Cancelar" className="p-button-rounded" onClick={hideDialog}/>
                 <Button label="Siguiente" className="p-button-rounded" onClick={enviarParte1} />
             </div>

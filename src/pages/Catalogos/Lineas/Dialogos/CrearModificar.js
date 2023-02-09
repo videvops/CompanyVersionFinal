@@ -1,11 +1,11 @@
-import Axios from 'axios';
 import React, {useState, useEffect} from 'react'
+import Axios from 'axios';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
-import {MensajeFiltro} from '../../ComponentsCat/Mensajes/Mensajes'
+import { TextoAdvertencia, MensajeAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
 
 import Environment from '../../../../Environment';
 
@@ -39,55 +39,57 @@ const CrearModificar = ({
     }, [product.idPlanta])
 
 //--------------------| Validar campos  |--------------------
-    const [campoVacio, setCampoVacio] = useState(false)
-    const nombreIncorrecto=(<p style={{color:"red"}}>Campo no valido</p>);   // Mensaje de nombreIncorrecto
-    const expresion=/^[a-zA-Z0-9._-\s]{1,40}$/;                            // Solo nombres y numeros
-
+    const [datosInvalidos, setDatosInvalidos] = useState(false)     // Validar envio
+    const [mensaje, setMensaje] = useState("")                      // Mensaje para envio
+    const [texto, setTexto] = useState("")                          // Mensaje para input
+    const expresion=/^[a-zA-Z0-9._-\s]{1,40}$/;                     // Todo menos ','
+    //--> Validar input
     const Verificar=(texto)=>{
         if (!expresion.test(texto)){
-            setValidarNombre("p-invalid");
-            setBoton(true);
+            setValidarNombre("p-invalid")   // Input rojo
+            setTexto("Campo invalido")      // Texto de advertencia de input
+            setBoton(true);                 // Validacion para input invalido
         }else{
-            setValidarNombre("");
-            setBoton(false);
+            setValidarNombre("")
+            setTexto("")
+            setBoton(false)
         }
     }
-
+    //--> Validar datos antes de envio
     const enviarDatos = () => {
-        if (Object.values(product).includes("") || boton) {
-            console.log("Los campos estan incorrectos")
-            setCampoVacio(true)
+        if (Object.values(product).includes("")) {
+            setMensaje("Todos los campos son obligatorios")
+            setDatosInvalidos(true)
             setTimeout(() => {
-                setCampoVacio(false)
+                setDatosInvalidos(false)
             }, 3000);
             return
         }
+        else {
+            if (boton) {
+                setMensaje("El nombre no es valido")
+                setDatosInvalidos(true)
+                setTimeout(() => {
+                    setDatosInvalidos(false)
+                }, 3000);
+                return
+            }
+        }
         saveProduct()
     }
-
+    //--> Botones de accion
     const botones = () => {
         return (
-        <>
-            <Button
-                label="Cancelar"
-                icon="pi pi-times"
-                className="p-button-text"
-                onClick={hideDialog}
-            />
-            <Button
-                label="Guardar"
-                icon="pi pi-check"
-                className="p-button-text"
-                onClick={enviarDatos}
-                // disabled={boton}
+            <>
+                <Button
+                    label="Cancelar" icon="pi pi-times" className="p-button-rounded" onClick={hideDialog}
+                />                
+                <Button
+                    label="Guardar" icon="pi pi-check" className="p-button-rounded" onClick={enviarDatos}
                 />
-        </>
+            </>
         )
     }
-
-//--------------------| Botones de confirmacion |--------------------
-    //------> Botones para crear registro
-    // const crearRegistro = productDialogFooter(hideDialog, saveProduct, boton, product);
 
 //--------------------| Valor que regresara  |--------------------
     return (
@@ -103,44 +105,42 @@ const CrearModificar = ({
             <div className="field">
                 <label>Planta</label>
                 <Dropdown 
-                optionLabel="planta" 
-                optionValue="id" 
-                value={product.idPlanta} 
-                options={plantasDisponibles} 
-                onChange={(e) => {updateField(e.value, "idPlanta")}} 
-                placeholder="--Selecciona una planta--"
+                    optionLabel="planta" 
+                    optionValue="id" 
+                    value={product.idPlanta} 
+                    options={plantasDisponibles} 
+                    onChange={(e) => {updateField(e.value, "idPlanta")}} 
+                    placeholder="--Selecciona una planta--"
                 />
             </div>
             <div className="field">
                 <label>Area</label>
                 <Dropdown 
-                optionLabel="area" 
-                optionValue="id" 
-                value={product.idArea} 
-                options={areasDisponibles} 
-                onChange={(e) => {updateField(e.value, "idArea")}} 
-                placeholder="--Selecciona una area--"
+                    optionLabel="area" 
+                    optionValue="id" 
+                    value={product.idArea} 
+                    options={areasDisponibles} 
+                    onChange={(e) => {updateField(e.value, "idArea")}} 
+                    placeholder="--Selecciona una area--"
                 />
             </div>
             <div className="field">
-                <label 
-                htmlFor="linea"                                 // CAMBIAR...
-                >
+                <label htmlFor="linea">
                     Linea
                 </label>
                 <InputText 
-                id="linea"                                      // CAMBIAR...
-                value={product.linea}                           // CAMBIAR...
-                onChange={(e) => {
-                    updateField(e.target.value, "linea");       // CAMBIAR...
-                    Verificar(e.target.value)
-                }} 
-                required 
-                autoFocus 
-                className={validarNombre}
-                maxLength="30" 
+                    id="linea"                                      // CAMBIAR...
+                    value={product.linea}                           // CAMBIAR...
+                    onChange={(e) => {
+                        updateField(e.target.value, "linea");       // CAMBIAR...
+                        Verificar(e.target.value)
+                    }} 
+                    required 
+                    autoFocus 
+                    className={validarNombre}
+                    maxLength="30" 
                 />
-                {boton && nombreIncorrecto}
+                {boton && <TextoAdvertencia>{texto}</TextoAdvertencia>}
             </div>
             {!tieneId && (<div className="field">
                 <label>Status</label>
@@ -154,7 +154,7 @@ const CrearModificar = ({
                     placeholder="--Selecciona un status--"
                 />
             </div>)}
-            {campoVacio&&MensajeFiltro}
+            {datosInvalidos && <MensajeAdvertencia>{mensaje}</MensajeAdvertencia>}
         </Dialog>
     )
 }

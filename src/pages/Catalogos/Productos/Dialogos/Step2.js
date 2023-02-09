@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { InputNumber } from 'primereact/inputnumber';
 
-const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2, tieneAlgo }) => {
+const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2, tieneAlgo, setTieneAlgo }) => {
 //--------------------| Editar tabla  |--------------------
     //---> Funcion principal
     const onRowEditComplete = (e) => {
@@ -37,6 +37,7 @@ const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2, tieneAlgo
         )
     }
     //---> Dropdown para si o no
+    // operador ternario, implementar
     const opcionesHabilitado = [
         { label: 'Si', value: "true" },
         { label: 'No', value: "false" },
@@ -78,19 +79,22 @@ const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2, tieneAlgo
                         <Column field="habilitado" header="¿Habilitado?" editor={(options) => dropEditor(options)} style={{ width: '20%' }}/>
                         <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}/>
                     </DataTable>
-                    <div className='flex'>
-                        <Button label="Atras" className="p-button-rounded" onClick={mostrarM1} />
-                        <Button label="Enviar" className="p-button-rounded" onClick={enviarParte2}/>
+                    <div className='mt-5 flex justify-content-end'>
+                        <Button label="Atras" className="w-2 p-button-rounded" onClick={mostrarM1} />
+                        <Button label="Enviar" className="w-2 p-button-rounded" onClick={enviarParte2}/>
                     </div>
                 </div>
             ) : (
-                    <>
-                        <p>Lo sentimos la linea no cuenta con maquinas</p>
-                        <div className='flex'>
-                            <Button label="Atras" className="p-button-rounded" onClick={mostrarM1} />
+                    <div>
+                        <p>La linea seleccionada no cuenta con maquinas</p>
+                        <p>¿Desea continuar?</p>
+                        <div className='mt-5 flex justify-content-end'>
+                            <Button label="Atras" className="w-2 p-button-rounded" onClick={mostrarM1} />
+                            <Button label="Continuar" className="w-2 p-button-rounded" onClick={()=>setTieneAlgo(true)}/>
                         </div>
-                    </>
-            )}
+                    </div>
+            )
+            }
         </>
     )
 }
