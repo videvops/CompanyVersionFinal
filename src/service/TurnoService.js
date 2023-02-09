@@ -13,6 +13,7 @@ export class TurnoService {
     }
     //------> Obtener registros de BD
     readAll(){
+        console.log("calling turnos")
         return axios.get(this.baseUrl).then(res => res.data);
     }
     //------> Modificar registro

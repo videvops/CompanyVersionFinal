@@ -9,23 +9,10 @@ import { AppMenu } from "../AppMenu";
 import { AppConfig } from "../AppConfig";
 
 import Dashboard from "../components/Dashboard";
-import ButtonDemo from "../components/ButtonDemo";
-import ChartDemo from "../components/ChartDemo";
-import Documentation from "../components/Documentation";
-import FileDemo from "../components/FileDemo";
 import IndicadoresTurno from "../pages/IndicadoresTurno";
 import StatusLineas from "../pages/StatusLineas";
-import ListDemo from "../components/ListDemo";
-import MenuDemo from "../components/MenuDemo";
-import MessagesDemo from "../components/MessagesDemo";
-import MiscDemo from "../components/MiscDemo";
-import OverlayDemo from "../components/OverlayDemo";
-import MediaDemo from "../components/MediaDemo";
-import PanelDemo from "../components/PanelDemo";
-import TreeDemo from "../components/TreeDemo";
-import Desperdecio from "../components/Desperdecio";
-import BlocksDemo from "../components/BlocksDemo";
-import IconsDemo from "../components/IconsDemo";
+
+
 
 //----------------| Catalogos |----------------
 import ListadoParos from "../pages/ListadoParos";
@@ -36,11 +23,9 @@ import CatalogoTipoParo from "../pages/Catalogos/TiposParo/CatalogoTipoParo";
 import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoUsuarios from "../pages/Catalogos/Usuarios/CatalogoUsuarios";
 import CatalogoTurnos from "../pages/Catalogos/Turnos/CatalogoTurnos";
-import CatalogoDirecciones from "../pages/Catalogos/Direcciones/CatalogoDirecciones";
 import CatalogoMaquinas from "../pages/Catalogos/Maquinas/CatalogoMaquinas";
 import CatalogoModoFalla from "../pages/Catalogos/ModoFalla/CatalogoModoFalla";
-import EmptyPage from "../pages/EmptyPage";
-import TimelineDemo from "../pages/TimelineDemo";
+import Bitacora  from "../pages/Catalogos/Bitacora/Bitacora";
 
 import PrimeReact from "primereact/api";
 import { Tooltip } from "primereact/tooltip";
@@ -227,12 +212,17 @@ const Home = ({ setLogueado }) => {
                         { label: "Modo de Falla", icon: "pi pi-fw pi-bookmark text-blue-500", to: "/catalogoModoFalla" },
                     ],
                 },
-            ],
+            ]
         },
         {
             label: "Configuración",
             icon: "pi pi-fw pi-sitemap",
-            items: [{ label: "Configuración", icon: "pi pi-fw pi-cog text-blue-500", to: "/table" }],
+            items: [
+                { 
+                    label: "Bitacora", icon: "pi pi-fw pi-cog text-blue-500", to: "/Bitacora"
+                    
+                }
+            ],
         },
     ];
 
@@ -275,10 +265,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listadoParos" component={ListadoParos} />
-                    <Route path="/desperdicio" component={Desperdecio} />
-                    <Route path="/button" component={ButtonDemo} />
                     <Route path="/catalogoAreas" component={CatalogoAreas} />
-                    <Route path="/catalogoDirecciones" component={CatalogoDirecciones} />
                     <Route path="/catalogoLineas" component={CatalogoLineas} />
                     <Route path="/catalogoPlantas" component={CatalogoPlantas} />
                     <Route path="/catalogoRoles" component={CatalogoRoles} />
@@ -287,21 +274,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/catalogoUsuarios" component={CatalogoUsuarios} />
                     <Route path="/catalogoMaquinas" component={CatalogoMaquinas} />
                     <Route path="/catalogoModoFalla" component={CatalogoModoFalla} />
-                    <Route path="/list" component={ListDemo} />
-                    <Route path="/tree" component={TreeDemo} />
-                    <Route path="/panel" component={PanelDemo} />
-                    <Route path="/overlay" component={OverlayDemo} />
-                    <Route path="/media" component={MediaDemo} />
-                    <Route path="/menu" component={MenuDemo} />
-                    <Route path="/messages" component={MessagesDemo} />
-                    <Route path="/blocks" component={BlocksDemo} />
-                    <Route path="/icons" component={IconsDemo} />
-                    <Route path="/file" component={FileDemo} />
-                    <Route path="/chart" render={() => <ChartDemo colorMode={layoutColorMode} location={location} />} />
-                    <Route path="/misc" component={MiscDemo} />
-                    <Route path="/timeline" component={TimelineDemo} />
-                    <Route path="/empty" component={EmptyPage} />
-                    <Route path="/documentation" component={Documentation} />
+                    <Route path="/Bitacora" component={Bitacora} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />

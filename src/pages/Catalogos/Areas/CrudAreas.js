@@ -106,8 +106,24 @@ const CrudAreas = ({titulos, notificaciones}) => {
             updateProduct(product);
             toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.modificacion}`, life: 3000 });
         }
-        setProduct(emptyProduct);
-        setProductDialog(false);
+      
+        // setProducts(listaAct => {
+        //     const newProducts = [...listaAct];
+        //     newProducts.unshift({ 
+        //         id: 1,
+        //         area: '',
+        //         descripcion:'prueba',
+        //         fechaCreacion:'2022-12-17 12:12:43',
+        //         idEstatus:1,
+        //         idPlanta:1, 
+        //         estatus:'Activo' });
+        //     console.log(newProducts);
+        //     return newProducts;
+        //   });
+
+          setProduct(emptyProduct);
+          setProductDialog(false);
+
     }
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
@@ -165,11 +181,13 @@ const CrudAreas = ({titulos, notificaciones}) => {
     //---> Obtendra los datos del back-end
     useEffect(()=>{
         const cargarDatos=async()=>{
+            console.log("cargando nuevamente");
             setIsLoading(true)
             setError(null)
             try{
                 const data=await areaService.readAll()
                 setProducts(data)  
+                console.log(data)
             } catch(error){
                 setError(error.message)
             }
@@ -181,9 +199,6 @@ const CrudAreas = ({titulos, notificaciones}) => {
         }
     },[]); // eslint-disable-line react-hooks/exhaustive-deps    
 
-    useEffect(() => {
-        areaService.readAll().then((data) => setProducts(data));
-    }, [products]); // eslint-disable-line react-hooks/exhaustive-deps
 
 //--------------------| Abilitar o inhabilitar boton |--------------------
     useEffect(()=>{
