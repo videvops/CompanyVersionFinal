@@ -93,8 +93,7 @@ const Step2 = ({ mostrarM1, hideDialog, objetoParte2, setObjetoParte2, tieneAlgo
                             <Button label="Continuar" className="w-2 p-button-rounded" onClick={()=>setTieneAlgo(true)}/>
                         </div>
                     </div>
-            )
-            }
+            )}
         </>
     )
 }

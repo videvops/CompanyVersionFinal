@@ -30,18 +30,18 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setProducts
     }=useContext(ProductContext);
 
-    const registroVacio = { idProducto: null, producto: "", lineasAsignadas: [], lineasDisponibles: [] }
+    const edicionVacio = { idProducto: null, producto: "", lineasAsignadas: [{ id: null, linea: "", config: null, maqinasConfig: null }] }
 //--------------------| Uso de estados |--------------------
+    const [edicion, setEdicion] = useState(edicionVacio)        // Informacion para actualizar
+    const [product, setProduct] = useState(productoVacio)
     const [productDialog, setProductDialog] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false)
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false)
-    const [product, setProduct] = useState(productoVacio)
     const [selectedProducts, setSelectedProducts] = useState(null)
     //---> Para editar registro
     const [modalDesicion, setModalDesicion] = useState(false)       // Pregunta al usuario
     const [modalEditar, setModalEditar] = useState(false)           // Editar registro
     const [dataProducto, setDataProducto] = useState({})            // Informacion de 1 producto
-    const [dataEnvio, setDataEnvio] = useState(registroVacio)       // Informacion para actualizar
 
     const toast = useRef(null);
     const dt = useRef(null);
@@ -85,19 +85,14 @@ const CrudProducto = ({titulos, notificaciones}) => {
         });
         console.log(product);
     };
-    //------> Agregar nuevo registro
-    // const saveProduct = () => {
-    //     console.log("[+]ID: " + product.id);
-    //     if (!product.id) {
-    //         createProduct(product);
-    //         toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.creacion}`, life: 3000 });
-    //     } else {
-    //         updateProduct(product);
-    //         toast.current.show({ severity: 'success', summary: 'Atencion!', detail: `${notificaciones.modificacion}`, life: 3000 });
-    //     }
-    //     setProduct(productoVacio);
-    //     setProductDialog(false);
-    // }
+    const actualizarEdicion = (data, field) => {
+        setEdicion({
+        ...edicion,
+        [field]: data,
+        });
+        console.log(edicion);
+    };
+
     //------> Eliminar 1 producto
     const _deleteProduct = () => {
         console.log("Se elimino el ID: "+product.id);
@@ -116,11 +111,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setSelectedProducts(null);                                              // Elemetos seleccionados = 0
         toast.current.show({ severity: 'error', summary: 'Atencion!', detail: `${notificaciones.eliminaciones}`, life: 3000 });
     }
-    //------> Editar producto
-    // const _editProduct = (product) => {
-    //     setProduct({...product});
-    //     setProductDialog(true);
-    // }
+
     const decision = (informacion) => {
         setModalDesicion(true)
         setDataProducto(informacion)
@@ -234,44 +225,43 @@ const CrudProducto = ({titulos, notificaciones}) => {
             {error&&<p className='uppercase font-bold text-center'>{error}</p>}
 
             <Crear
-                titulos={titulos}
-                productDialog={productDialog}
-                hideDialog={hideDialog}
-                updateField={updateField}
-                product={product}
                 m1={m1}
                 m2={m2}
+                product={product}
+                titulos={titulos}
                 mostrarM1={mostrarM1}
                 mostrarM2={mostrarM2}
+                hideDialog={hideDialog}
+                updateField={updateField}
                 objetoParte2={objetoParte2}
-                setObjetoParte2={setObjetoParte2}
-            />
+                productDialog={productDialog}
+                setObjetoParte2={setObjetoParte2} />
+
             <Desicion
-                modalDesicion={modalDesicion}
-                setModalDesicion={setModalDesicion}
-                setModalEditar={setModalEditar}
                 openNew={openNew}
+                setEdicion={setEdicion}
                 dataProducto={dataProducto}
-                setDataEnvio={setDataEnvio} />
+                modalDesicion={modalDesicion}
+                setModalEditar={setModalEditar}
+                setModalDesicion={setModalDesicion} />
+
             <Editar
+                edicion={edicion}
                 modalEditar={modalEditar}
                 setModalEditar={setModalEditar}
-                dataEnvio={dataEnvio}
-                setDataEnvio={setDataEnvio} />
+                actualizarEdicion={actualizarEdicion} />
 
             <EliminarUno
-                deleteProductDialog={deleteProductDialog} 
-                _deleteProduct={_deleteProduct}
-                hideDeleteProductDialog={hideDeleteProductDialog} 
                 product={product}
-            />
+                _deleteProduct={_deleteProduct}
+                deleteProductDialog={deleteProductDialog} 
+                hideDeleteProductDialog={hideDeleteProductDialog} />
 
             <EliminarVarios 
+                product={product}
                 deleteProductsDialog={deleteProductsDialog}
                 deleteSelectedProducts={deleteSelectedProducts}
-                hideDeleteProductsDialog={hideDeleteProductsDialog}
-                product={product}
-            />
+                hideDeleteProductsDialog={hideDeleteProductsDialog} />
         </div>
     );
 }

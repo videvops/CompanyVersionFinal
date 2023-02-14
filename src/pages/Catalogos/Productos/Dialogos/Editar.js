@@ -1,70 +1,58 @@
-import React from 'react'
-import { Button } from 'primereact/button';
+import React, { useState } from 'react'
 import { Dialog } from 'primereact/dialog';
-import { Dropdown } from 'primereact/dropdown';
-import { InputText } from 'primereact/inputtext';
+import useBotones from '../../../../components/hooks/useBotones';
+import EditarStep1 from './EditarStep1';
+import EditarStep2 from './EditarStep2';
 
-const Editar = ({ modalEditar, setModalEditar, dataEnvio, setDataEnvio }) => {
-    //---> Destructuracion
-    const { producto, lineasAsignadas } = dataEnvio
-    //---> Dropdown de lineas Asignadas
-    // const [lineasDisponibles, setLineasDisponibles] = useState([lineasAsignadas])
+const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => {
+    //--> Variables para componentes
+    const [componente1, setComponente1] = useState(true)
+    const [componente2, setComponente2] = useState(false)
 
-    //---> Pasar al siguiente modal
-    const siguienteComponente = () => {
-        console.log(lineasAsignadas)
+    //--> Pasar al siguiente modal
+    const mostrarComponente2 = () => {
+        console.log(edicion)
+        if (edicion.lineasAsignadas[0]?.config) {
+            console.log("tiene algo")
+        }
+        setComponente1(false)
+        setComponente2(true)
+        
     }
-
-    //---> Permite cancelar o guardar el registro
-    const botonesAccion = () => {
-        return (
-            <>
-                <Button
-                    label="Cancelar"
-                    className="py-2 p-button-rounded"
-                    onClick={() => setModalEditar(false)}
-                />
-                <Button
-                    label="Siguiente"
-                    className="py-2 p-button-rounded"
-                    onClick={siguienteComponente}
-                />
-            </>
-        )
+    const mostrarComponente1 = () => {
+        setComponente1(true)
+        setComponente2(false)
     }
+    const cerrarTodo = () => {
+        setModalEditar(false)
+        setComponente1(true)
+        setComponente2(false)
+    }
+    //---> Cancelar o guardar el registro
+    const [botonesStep1] = useBotones(
+        "Cancelar", "", "py-2 p-button-rounded", cerrarTodo,
+        "Siguiente", "", "py-2 p-button-rounded", mostrarComponente2
+    )
+    const [botonesStep2] = useBotones(
+        "Atras", "", "py-2 p-button-rounded", mostrarComponente1,
+        "Enviar", "", "py-2 p-button-rounded", ()=>{console.log("enviado")}
+    )
 
 //--------------------| Valor que regresara |--------------------
     return (
         <Dialog
             visible={modalEditar} 
-            style={{ width: "350px" }}
+            style={{ width: `${componente1 ? 350 : 850}px` }}
             header="Editar registro"
             className="p-fluid" 
-            onHide={() => setModalEditar(false)}
-            footer={botonesAccion}
-        >
-            <div className="field">
-                <label>Linea Asignada</label>
-                <Dropdown
-                    optionLabel="linea" 
-                    optionValue="id"
-                    options={lineasAsignadas}
-                    placeholder="--Selecciona una linea--"
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="producto">Nombre del Producto</label>
-                <InputText 
-                    id="producto"
-                    value={producto}
-                    // onChange={(e) => producto(e.target.value)}
-                    // onChange={(e) => {
-                    //     updateField(e.target.value, "producto")
-                    //     VerificarNombre(e.target.value)
-                    // }} 
-                    // required autoFocus className={validarNombre} maxLength="30"
-                />
-            </div>
+            onHide={cerrarTodo}
+            footer={componente1 ? botonesStep1 : botonesStep2}>
+            {componente1 && (<EditarStep1
+                componente2={componente2}
+                edicion={edicion}
+                actualizarEdicion={actualizarEdicion} />
+            )}
+            {componente2 && (<EditarStep2 />)}
         </Dialog>
     )
 }
