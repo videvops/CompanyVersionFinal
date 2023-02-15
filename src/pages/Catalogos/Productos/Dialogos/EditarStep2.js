@@ -1,17 +1,18 @@
 import React from 'react'
-import { Column } from 'primereact/column'
-import { Dropdown } from 'primereact/dropdown'
-import { InputText } from 'primereact/inputtext'
-import { DataTable } from 'primereact/datatable'
-import { InputNumber } from 'primereact/inputnumber'
+import { Column } from 'primereact/column';
+import { Dropdown } from 'primereact/dropdown';
+import { InputText } from 'primereact/inputtext';
+import { DataTable } from 'primereact/datatable';
+import { InputNumber } from 'primereact/inputnumber';
 
-const EditarStep2 = ({ edicion,setEdicion }) => {
+// const EditarStep2 = ({ edicion,setEdicion }) => {
+const EditarStep2 = ({ registrosEditados, setRegistrosEditados }) => {
     //---> Funcion principal
     const onRowEditComplete = (e) => {
-        let registros = [...edicion]     
+        let registros = [...registrosEditados]     
         let { newData, index } = e
         registros[index] = newData
-        setEdicion(registros)
+        setRegistrosEditados(registros)
     }
     //---> Editar texto
     const textEditor = (options) => {
@@ -56,9 +57,9 @@ const EditarStep2 = ({ edicion,setEdicion }) => {
         <div>
             <div>
                 <p>Descripcion: Galleta mini chispa chocolate 20 oz</p>
-                <DataTable value={edicion} editMode="row" dataKey="id" onRowEditComplete={onRowEditComplete} responsiveLayout="scroll">
-                    <Column field="id" header="ID" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
-                    <Column field="tipo" header="Tipo" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
+                <DataTable value={registrosEditados} editMode="row" onRowEditComplete={onRowEditComplete} responsiveLayout="scroll">
+                    <Column field="id" header="ID"  style={{ width: '20%' }}/>
+                    <Column field="tipo" header="Tipo" style={{ width: '20%' }}/>
                     <Column field="nombre" header="Nombre" editor={(options) => textEditor(options)} style={{ width: '20%' }}/>
                     <Column field="velocidadEstandar" header="Velocidad Estándar" editor={(options) => numEditor(options)} style={{ width: '20%' }}/>
                     <Column field="factorConversionI" header="Factor de Conversión Input" editor={(options) => numEditor(options)} style={{ width: '20%' }}/>

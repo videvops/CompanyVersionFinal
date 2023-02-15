@@ -31,9 +31,11 @@ const CrudProducto = ({titulos, notificaciones}) => {
     }=useContext(ProductContext);
 
     const edicionVacio = { idProducto: null, producto: "", lineasAsignadas: [{ id: null, linea: "", config: null, maqinasConfig: null }] }
-//--------------------| Uso de estados |--------------------
+//--------------------| Variables |--------------------
+    //---> Objetos
     const [edicion, setEdicion] = useState(edicionVacio)        // Informacion para actualizar
     const [product, setProduct] = useState(productoVacio)
+    //---> Modales
     const [productDialog, setProductDialog] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false)
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false)
