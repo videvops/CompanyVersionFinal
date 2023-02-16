@@ -2,7 +2,7 @@ import React from 'react'
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 
-const EditarStep1 = ({ edicion, actualizarEdicion }) => {
+const EditarStep1 = ({ edicion, actualizarEdicion, lineaSeleccionada, setLineaSeleccionada }) => {
     return (
         <div>
             <div className="field">
@@ -10,9 +10,9 @@ const EditarStep1 = ({ edicion, actualizarEdicion }) => {
                 <Dropdown
                     optionLabel="linea" 
                     optionValue="id"
-                    value={edicion.lineasAsignadas[0]?.linea}
+                    value={lineaSeleccionada}
                     options={edicion.lineasAsignadas}
-                    onChange={(e) => { actualizarEdicion(e.target.value, "lineasAsigna") }}
+                    onChange={(e) => setLineaSeleccionada(e.target.value)}
                     placeholder="--Selecciona una linea--"
                 />
             </div>

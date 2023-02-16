@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Axios from 'axios'
+// import Axios from 'axios'
 import useBotones from '../../../../components/hooks/useBotones'
 import EditarStep1 from './EditarStep1'
 import EditarStep2 from './EditarStep2'
@@ -11,29 +11,39 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
     const [componente1, setComponente1] = useState(true)
     const [componente2, setComponente2] = useState(false)
     const [registrosEditados, setRegistrosEditados] = useState([])
+    const [lineaSeleccionada, setLineaSeleccionada] = useState(null)
 
     //--> Pasar al siguiente modal
     const mostrarComponente2 = () => {
-        if (edicion.lineasAsignadas.length>0) {
+        if (edicion.lineasAsignadas.length > 0) {
+            //---> Modificar linea
             let i = 0
-            let objetoEdicion=[edicion.lineasAsignadas[0].config]
+            let objetoLinea = { ...edicion.lineasAsignadas[0].config }
+            objetoLinea.nombre=edicion.lineasAsignadas[0].linea
+            objetoLinea.id=edicion.lineasAsignadas[0].id
+            objetoLinea.tipo="linea"
+            let objetoEdicion = [objetoLinea]
+            //---> Modificar maquinas
             while (i < edicion.lineasAsignadas[0].maquinasConfig.length) {
                 objetoEdicion.push(edicion.lineasAsignadas[0].maquinasConfig[i])
+                objetoEdicion[i+1].tipo="maquina"
                 i++
             }
+            console.log(objetoEdicion)
             setRegistrosEditados(objetoEdicion)
         }
         setComponente1(false)
         setComponente2(true)
-        
     }
 
     const enviarParte2 = () => {
-        const objetoEnviar = { producto: edicion.producto, idEstatus: 2 }
-        Axios.post("http://localhost:8080/productos/config/velocidades", objetoEnviar)
-        console.log("Datos enviados")
+        console.log(registrosEditados)
+        const objetoEnviar = { config: registrosEditados }
         console.log(objetoEnviar)
-        cerrarTodo()
+        // const objetoEnviar = { producto: edicion.producto, idEstatus: 2 }
+        // Axios.put("http://localhost:8080/productos/config/velocidades", objetoEnviar)
+        // console.log("Datos enviados")
+        // cerrarTodo()
     }
 
     const mostrarComponente1 = () => {
@@ -67,7 +77,9 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
             {componente1 && (<EditarStep1
                 componente2={componente2}
                 edicion={edicion}
-                actualizarEdicion={actualizarEdicion} />
+                actualizarEdicion={actualizarEdicion}
+                lineaSeleccionada={lineaSeleccionada}
+                setLineaSeleccionada={setLineaSeleccionada} />
             )}
             {componente2 && (
                 <EditarStep2
