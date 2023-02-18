@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-// import Axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
 import useBotones from '../../../../components/hooks/useBotones'
 import EditarStep1 from './EditarStep1'
 import EditarStep2 from './EditarStep2'
@@ -15,35 +15,68 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
 
     //--> Pasar al siguiente modal
     const mostrarComponente2 = () => {
-        if (edicion.lineasAsignadas.length > 0) {
-            //---> Modificar linea
-            let i = 0
-            let objetoLinea = { ...edicion.lineasAsignadas[0].config }
-            objetoLinea.nombre=edicion.lineasAsignadas[0].linea
-            objetoLinea.id=edicion.lineasAsignadas[0].id
-            objetoLinea.tipo="linea"
-            let objetoEdicion = [objetoLinea]
-            //---> Modificar maquinas
-            while (i < edicion.lineasAsignadas[0].maquinasConfig.length) {
-                objetoEdicion.push(edicion.lineasAsignadas[0].maquinasConfig[i])
-                objetoEdicion[i+1].tipo="maquina"
-                i++
-            }
-            console.log(objetoEdicion)
-            setRegistrosEditados(objetoEdicion)
-        }
         setComponente1(false)
         setComponente2(true)
     }
+    //--> Registros tabla 
+    useEffect(() => {
+        if (lineaSeleccionada) {
+            const datosLinea = edicion.lineasAsignadas.filter(linea => linea.id===lineaSeleccionada)
+            let arregloLM=[]
+            // console.log(datosLinea)
+            if (!datosLinea[0].config) {
+                arregloLM.push({
+                    id: datosLinea[0].id,
+                    tipo: "linea",
+                    nombre: datosLinea[0].linea,
+                    velocidadEstandar: 0,
+                    factorConversionI: 0,
+                    factorConversionO: 0,
+                    habilitado:"false"
+                })
+            } else {
+                arregloLM.push({
+                    id: datosLinea[0].id,
+                    tipo: "linea",
+                    nombre: datosLinea[0].linea,
+                    velocidadEstandar: datosLinea[0].config.velocidadEstandar,
+                    factorConversionI: datosLinea[0].config.factorConversionI,
+                    factorConversionO: datosLinea[0].config.factorConversionO,
+                    habilitado:`${datosLinea[0].config.habilitado}`
+                })
+            }
+            //--> Si hay maquinas configuradas
+            if (datosLinea[0].maquinasConfig) {
+                console.log("Maquinas configuradas")
+            }
+            //--> Si hay maquinas sin configurar
+            if (datosLinea[0].maquinasNoConfig.length>0) {
+                let i = 0
+                while (i < datosLinea[0].maquinasNoConfig.length) {
+                    arregloLM.push({
+                        id: datosLinea[0].maquinasNoConfig[i].id,
+                        tipo: "maquina",
+                        nombre: datosLinea[0].maquinasNoConfig[i].maquina,
+                        velocidadEstandar: 0,
+                        factorConversionI: 0,
+                        factorConversionO: 0,
+                        habilitado:"false"
+                        
+                    })
+                    i++
+                }
+            }
+            // console.log(arregloLM)
+            setRegistrosEditados(arregloLM)
+        }
+    }, [lineaSeleccionada])
 
     const enviarParte2 = () => {
-        console.log(registrosEditados)
         const objetoEnviar = { config: registrosEditados }
+        Axios.put("http://localhost:8080/productos/config/velocidades", objetoEnviar)
+        console.log("Datos enviados")
         console.log(objetoEnviar)
-        // const objetoEnviar = { producto: edicion.producto, idEstatus: 2 }
-        // Axios.put("http://localhost:8080/productos/config/velocidades", objetoEnviar)
-        // console.log("Datos enviados")
-        // cerrarTodo()
+        cerrarTodo()
     }
 
     const mostrarComponente1 = () => {
@@ -73,7 +106,8 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
             header="Editar registro"
             className="p-fluid" 
             onHide={cerrarTodo}
-            footer={componente1 ? botonesStep1 : botonesStep2}>
+            footer={componente1 ? botonesStep1 : botonesStep2}
+        >
             {componente1 && (<EditarStep1
                 componente2={componente2}
                 edicion={edicion}

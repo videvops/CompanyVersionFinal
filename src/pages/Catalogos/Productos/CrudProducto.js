@@ -22,10 +22,7 @@ const getRoute = Environment()
 const CrudProducto = ({titulos, notificaciones}) => {
 //--------------------| Uso de Contextos |--------------------
     const {
-        // createProduct,
-        // updateProduct,
         deleteProduct,
-
         products,
         setProducts
     }=useContext(ProductContext);
@@ -85,7 +82,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         ...product,
         [field]: data,
         });
-        console.log(product);
+        // console.log(product);
     };
     const actualizarEdicion = (data, field) => {
         setEdicion({
@@ -223,7 +220,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
                     cargarDatos={cargarDatos}
                 />)}
 
-            {isLoading&&<Spinner/>}
+            {isLoading && <Spinner />}
             {error&&<p className='uppercase font-bold text-center'>{error}</p>}
 
             <Crear
@@ -231,6 +228,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
                 m2={m2}
                 product={product}
                 titulos={titulos}
+                edicion={edicion}
                 mostrarM1={mostrarM1}
                 mostrarM2={mostrarM2}
                 hideDialog={hideDialog}

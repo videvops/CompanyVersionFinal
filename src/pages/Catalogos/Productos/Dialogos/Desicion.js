@@ -16,6 +16,7 @@ const Desicion = ({
     const nuevaLinea = () => {
         openNew()
         setModalDesicion(false)
+        Axios.get(`http://localhost:8080/productos/getById/${id}`).then(res => setEdicion(res.data))
     }
     //---> Opcion editar registro
     const lineaAsignada = () => {

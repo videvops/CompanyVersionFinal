@@ -1,56 +1,93 @@
 import React, { useEffect, useState } from 'react'
-import { Dialog } from 'primereact/dialog'
+
+import Axios from 'axios'
 import Step1 from './Step1'
 import Step2 from './Step2'
+import { Dialog } from 'primereact/dialog'
 
 const Crear = ({
-    titulos,
-    product,
-    productDialog,
-    updateField,
-    hideDialog,
     m1,
     m2,
+    titulos,
+    edicion,
+    product,
     mostrarM1,
     mostrarM2,
+    hideDialog,
+    updateField,
     objetoParte2,
+    productDialog,
     setObjetoParte2,
 }) => {
-//--------------------| Crear objeto para componente 2 |--------------------
-    const [resultado, setResultado] = useState([])
-    const [tieneAlgo, setTieneAlgo] = useState(false)
-    let arreglo = [{
-                id: product.idLinea,
-                tipo: "linea",
-                nombre: "linea1",
-                velocidadEstandar: null,
-                factorConversionI: null,
-                factorConversionO: null,
-                habilitado: "false"
-            }]
+    //--------------------| Crear objeto para componente 2 |--------------------
+    const [tieneMaquinas, setTieneMaquinas] = useState(false)
+    const [idProducto, setIdProduto] = useState({})
+    const [informacion, setInformacion] = useState({})
+    let arreglo = []
+    //--> Obtiene informacion 
+    useEffect(() => { 
+        if (tieneMaquinas) {
+            Axios.get(`http://localhost:8080/productos/getById/${idProducto}`).then((res) => setInformacion(res.data))
+        }
+        // eslint-disable-next-line
+    }, [tieneMaquinas])
+    //--> Crea tabla de componente 2
     useEffect(() => {
-        if (resultado.length > 0) {
-            let i = 0
-            while (i < resultado.length) {
+        if (informacion.lineasAsignadas) {                                  // Tiene informacion
+            if (informacion.lineasAsignadas[0].maquinasConfig) {            // Tiene maquinas
                 arreglo.push({
-                    id: resultado[i].id,
-                    tipo: "maquina",
-                    nombre: resultado[i].maquina,
-                    velocidadEstandar: null,
-                    factorConversionI: null,
-                    factorConversionO: null,
+                    id: informacion.lineasAsignadas[0].id,
+                    tipo: "linea",
+                    nombre: informacion.lineasAsignadas[0].linea,
+                    velocidadEstandar: informacion.lineasAsignadas[0].config.velocidadEstandar,
+                    factorConversionI: informacion.lineasAsignadas[0].config.factorConversionI,
+                    factorConversionO: informacion.lineasAsignadas[0].config.factorConversionO,
                     habilitado: "false"
                 })
-                i++
+                let i=0
+                while (i < informacion.lineasAsignadas[0].maquinasConfig.length) {
+                    arreglo.push({
+                        id: informacion.lineasAsignadas[0].maquinasConfig[i].id,
+                        tipo: "maquina",
+                        nombre: informacion.lineasAsignadas[0].maquinasConfig[i].nombre,
+                        velocidadEstandar: informacion.lineasAsignadas[0].maquinasConfig[i].velocidadEstandar,
+                        factorConversionI: informacion.lineasAsignadas[0].maquinasConfig[i].factorConversionI,
+                        factorConversionO: informacion.lineasAsignadas[0].maquinasConfig[i].factorConversionO,
+                        habilitado: `${informacion.lineasAsignadas[0].maquinasConfig[i].habilitado}`
+                    })
+                    i++
+                }
+                if (informacion.lineasAsignadas[0].maquinasNoConfig) {
+                    let contador = 0
+                    while (contador < informacion.lineasAsignadas[0].maquinasNoConfig.length) {
+                        arreglo.push({
+                            id: informacion.lineasAsignadas[0].maquinasNoConfig[contador].id,
+                            tipo: "maquina",
+                            nombre: informacion.lineasAsignadas[0].maquinasNoConfig[contador].maquina,
+                            velocidadEstandar: 0,
+                            factorConversionI: 0,
+                            factorConversionO: 0,
+                            habilitado: "false"
+                        })
+                        contador++
+                    }
+                    console.log(informacion.lineasAsignadas[0].maquinasNoConfig)
+                }
+                // console.log(informacion.lineasAsignadas[0].maquinasConfig)
+            } else {                                                        // No tiene maquinas
+                arreglo.push({
+                    id: informacion.lineasAsignadas[0].id,
+                    tipo: "linea",
+                    nombre: informacion.lineasAsignadas[0].linea,
+                    velocidadEstandar: 0,
+                    factorConversionI: 0,
+                    factorConversionO: 0,
+                    habilitado: "false"
+                })
             }
             setObjetoParte2(arreglo)
-            setTieneAlgo(true)
-            // console.log(arreglo)
-        } else {
-            setObjetoParte2(arreglo)
-            setTieneAlgo(false)
-        }// eslint-disable-next-line
-    }, [resultado])
+        } 
+    }, [informacion])
 
 //--------------------| Valor que regresara |--------------------
     return (
@@ -64,22 +101,22 @@ const Crear = ({
         >
             {m1 && (
                 <Step1
+                    edicion={edicion}
+                    product={product}
                     mostrarM2={mostrarM2}
                     hideDialog={hideDialog}
                     updateField={updateField}
-                    product={product}
-                    setResultado={setResultado}
-                />
+                    setIdProduto={setIdProduto}
+                    setTieneMaquinas={setTieneMaquinas} />
             )}
             {m2 && (
                 <Step2
                     mostrarM1={mostrarM1}
                     hideDialog={hideDialog}
                     objetoParte2={objetoParte2}
+                    tieneMaquinas={tieneMaquinas}
                     setObjetoParte2={setObjetoParte2}
-                    tieneAlgo={tieneAlgo}
-                    setTieneAlgo={setTieneAlgo}
-                />
+                    setTieneMaquinas={setTieneMaquinas} />
             )}
         </Dialog>
     )

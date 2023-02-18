@@ -8,7 +8,7 @@ import { MensajeAdvertencia, TextoAdvertencia } from '../../ComponentsCat/Mensaj
 import Environment from '../../../../Environment';
 const getRoute = Environment()
 
-const Step1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) => {
+const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneMaquinas, setIdProduto }) => {
 //--------------------| Dropdown dinamico|--------------------
     //---> Plantas
     const [plantasDisponibles, setPlantasDisponibles] = useState([])
@@ -52,7 +52,14 @@ const Step1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) =>
 //--------------------| Envio de datos  |--------------------
     const enviarDatos = async (datos) => {
         const respuesta = await Axios.post("http://localhost:8080/productos", datos)
-        setResultado(respuesta.data.maquinas)
+        setIdProduto(respuesta.data.id)
+        setTieneMaquinas(respuesta.data.hayMaquinas)
+    }
+    const actualizarDatos = async (datos) => {
+        const datosEditados = await Axios.put(`http://localhost:8080/productos/${edicion.idProducto}`, datos)
+        // console.log(datosEditados.data)
+        setIdProduto(datosEditados.data.id)
+        setTieneMaquinas(datosEditados.data.hayMaquinas)
     }
 
     const enviarParte1 = () => {
@@ -73,10 +80,25 @@ const Step1 = ({ hideDialog, product, updateField, mostrarM2, setResultado }) =>
                 return
             }
         }
-        const objeto = { producto: product.producto, idLinea: product.idLinea }
-        enviarDatos(objeto)
+        if (!edicion) {                 // No es edicion
+            const objetoNuevo = { producto: product.producto, idLinea: product.idLinea }
+            enviarDatos(objetoNuevo)
+        } else {                        // Es edicion
+            const objetoEditado = {
+                producto: product.producto,
+                idLinea: product.idLinea,
+                opcionSeleccionada:"LINEA_NUEVA"
+            }
+            actualizarDatos(objetoEditado) 
+        }
         mostrarM2()
     }
+    //--> Validar nombre de edicion
+    useEffect(() => { 
+        if (edicion) {
+            product.producto = edicion.producto
+        }// eslint-disable-next-line
+    }, [edicion])
     
 //--------------------| Valor que regresara  |--------------------
     return (
