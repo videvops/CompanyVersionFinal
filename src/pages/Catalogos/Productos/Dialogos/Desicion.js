@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Axios from 'axios';
 import { Dialog } from 'primereact/dialog';
 import useBotones from '../../../../components/hooks/useBotones';
@@ -16,19 +16,23 @@ const Desicion = ({
     const nuevaLinea = () => {
         openNew()
         setModalDesicion(false)
-        Axios.get(`http://localhost:8080/productos/getById/${id}`).then(res => setEdicion(res.data))
     }
     //---> Opcion editar registro
     const lineaAsignada = () => {
         setModalEditar(true)
         setModalDesicion(false)
-        Axios.get(`http://localhost:8080/productos/getById/${id}`).then(res => setEdicion(res.data))
     }
     //--> Crear o editar
     const [botonesAccion] = useBotones(
         "Nueva Linea", "", "py-2 p-button-rounded", nuevaLinea,
         "Lineas Asignadas","","py-2 p-button-rounded",lineaAsignada
     )
+    useEffect(() => {
+        if (modalDesicion) {
+            Axios.get(`http://localhost:8080/productos/getById/${id}`).then(res => setEdicion(res.data))
+        }
+        // eslint-disable-next-line
+    }, [modalDesicion])
 
 //--------------------| Valor que regresara |--------------------
     return (

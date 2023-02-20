@@ -4,6 +4,8 @@ import Axios from 'axios'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import { Dialog } from 'primereact/dialog'
+import Environment from '../../../../Environment'
+const getRoute = Environment();
 
 const Crear = ({
     m1,
@@ -27,7 +29,7 @@ const Crear = ({
     //--> Obtiene informacion 
     useEffect(() => { 
         if (tieneMaquinas) {
-            Axios.get(`http://localhost:8080/productos/getById/${idProducto}`).then((res) => setInformacion(res.data))
+            Axios.get(getRoute+`/productos/getById/${idProducto}`).then((res) => setInformacion(res.data))
         }
         // eslint-disable-next-line
     }, [tieneMaquinas])

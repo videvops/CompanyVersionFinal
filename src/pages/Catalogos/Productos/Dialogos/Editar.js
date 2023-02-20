@@ -5,16 +5,29 @@ import EditarStep1 from './EditarStep1'
 import EditarStep2 from './EditarStep2'
 
 import { Dialog } from 'primereact/dialog'
+import { MensajeAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes'
 
-const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => {
+import Environment from '../../../../Environment'
+const getRoute = Environment()
+
+const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion, setEdicion, edicionVacio }) => {
     //--> Variables para componentes
     const [componente1, setComponente1] = useState(true)
     const [componente2, setComponente2] = useState(false)
     const [registrosEditados, setRegistrosEditados] = useState([])
     const [lineaSeleccionada, setLineaSeleccionada] = useState(null)
+    const [validarParte1, setValidarParte1] = useState(false)
+    const mensaje="Escoje una linea"
 
     //--> Pasar al siguiente modal
     const mostrarComponente2 = () => {
+        if (!lineaSeleccionada) {
+            setValidarParte1(true)
+            setTimeout(() => {
+                setValidarParte1(false)
+            }, 3000);
+            return
+        }
         setComponente1(false)
         setComponente2(true)
     }
@@ -73,7 +86,7 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
 
     const enviarParte2 = () => {
         const objetoEnviar = { config: registrosEditados }
-        Axios.put("http://localhost:8080/productos/config/velocidades", objetoEnviar)
+        Axios.put(getRoute + "/productos/config/velocidades", objetoEnviar)
         console.log("Datos enviados")
         console.log(objetoEnviar)
         cerrarTodo()
@@ -87,6 +100,9 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
         setModalEditar(false)
         setComponente1(true)
         setComponente2(false)
+        setEdicion(edicionVacio)
+        setRegistrosEditados([])
+        setLineaSeleccionada(null)
     }
     //---> Cancelar o guardar el registro
     const [botonesStep1] = useBotones(
@@ -120,6 +136,7 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion }) => 
                     registrosEditados={registrosEditados} setRegistrosEditados={setRegistrosEditados}
                 />
             )}
+            {validarParte1 && <MensajeAdvertencia>{mensaje}</MensajeAdvertencia>}
         </Dialog>
     )
 }

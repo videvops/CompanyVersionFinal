@@ -56,6 +56,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
     const hideDialog = () => {
         setProductDialog(false);
         mostrarM1()
+        setEdicion(edicionVacio)
     }
     //------> Ocultar dialogo de eliminar 1 producto
     const hideDeleteProductDialog = () => {
@@ -89,7 +90,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         ...edicion,
         [field]: data,
         });
-        console.log(edicion);
+        // console.log(edicion);
     };
 
     //------> Eliminar 1 producto
@@ -115,7 +116,6 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setModalDesicion(true)
         setDataProducto(informacion)
         // console.log(informacion)
-
     }
 
 //--------------------| Botones en pantalla |--------------------
@@ -163,7 +163,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setIsLoading(true)
         setError(null)
         try{
-            const respuesta = await Axios.post(getRoute+"/productos/filter", informacion)
+            const respuesta = await Axios.post(getRoute + "/productos/filter", informacion)
             const datos = await respuesta.data.registros
             const total = await respuesta.data.numTotalReg
             setProducts(datos)  
@@ -181,7 +181,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         }// eslint-disable-next-line
     }, [filas]);
 
-//--------------------| Modal |--------------------
+//--------------------| Modal Creacion |--------------------
     const [m1, setM1] = useState(true)
     const [m2, setM2] = useState(false)
     const [objetoParte2, setObjetoParte2] = useState([])
@@ -217,8 +217,8 @@ const CrudProducto = ({titulos, notificaciones}) => {
                     setPagina={setPagina}
                     totalRegistros={totalRegistros}
                     titulo={titulos.TituloTabla}
-                    cargarDatos={cargarDatos}
-                />)}
+                    cargarDatos={cargarDatos} />
+            )}
 
             {isLoading && <Spinner />}
             {error&&<p className='uppercase font-bold text-center'>{error}</p>}
@@ -247,9 +247,12 @@ const CrudProducto = ({titulos, notificaciones}) => {
 
             <Editar
                 edicion={edicion}
+                setEdicion={setEdicion}
                 modalEditar={modalEditar}
+                edicionVacio={edicionVacio}
                 setModalEditar={setModalEditar}
-                actualizarEdicion={actualizarEdicion} />
+                actualizarEdicion={actualizarEdicion}
+            />
 
             <EliminarUno
                 product={product}

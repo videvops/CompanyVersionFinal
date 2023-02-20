@@ -51,12 +51,12 @@ const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneM
     }
 //--------------------| Envio de datos  |--------------------
     const enviarDatos = async (datos) => {
-        const respuesta = await Axios.post("http://localhost:8080/productos", datos)
+        const respuesta = await Axios.post(getRoute+"/productos", datos)
         setIdProduto(respuesta.data.id)
         setTieneMaquinas(respuesta.data.hayMaquinas)
     }
     const actualizarDatos = async (datos) => {
-        const datosEditados = await Axios.put(`http://localhost:8080/productos/${edicion.idProducto}`, datos)
+        const datosEditados = await Axios.put(getRoute+`/productos/${edicion.idProducto}`, datos)
         // console.log(datosEditados.data)
         setIdProduto(datosEditados.data.id)
         setTieneMaquinas(datosEditados.data.hayMaquinas)
@@ -95,10 +95,13 @@ const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneM
     }
     //--> Validar nombre de edicion
     useEffect(() => { 
-        if (edicion) {
+        if (edicion.idProducto) {
             product.producto = edicion.producto
-        }// eslint-disable-next-line
-    }, [edicion])
+        } else {
+            product.producto = ""
+        }
+        // eslint-disable-next-line
+    }, [edicion.idProducto])
     
 //--------------------| Valor que regresara  |--------------------
     return (
