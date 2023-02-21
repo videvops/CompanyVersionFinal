@@ -10,6 +10,7 @@ import { InputNumber } from 'primereact/inputnumber';
 const Step2 = ({
     mostrarM1,
     hideDialog,
+    idProducto,
     objetoParte2,
     tieneMaquinas,
     setObjetoParte2,
@@ -63,7 +64,7 @@ const Step2 = ({
 
 //--------------------| Envio de datos  |--------------------
     const enviarParte2 = () => {
-        const objetoEnviar = { config: objetoParte2 }
+        const objetoEnviar = { idProducto: idProducto, config: objetoParte2 }
         Axios.post("http://localhost:8080/productos/config/velocidades", objetoEnviar)
         console.log("Datos enviados")
         console.log(objetoEnviar)

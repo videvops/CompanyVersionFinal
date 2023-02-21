@@ -28,10 +28,7 @@ const Crear = ({
     //--> Obtiene informacion 
     useEffect(() => { 
         if (tieneMaquinas) {
-            Axios.get(getRoute + `/productos/getById/${idProducto}`).then((res) => {
-                setInformacion(res.data)
-                console.log(res.data)
-            })
+            Axios.get(getRoute + `/productos/getById/${idProducto}`).then((res) => setInformacion(res.data))
         }
         // eslint-disable-next-line
     }, [tieneMaquinas])
@@ -111,7 +108,8 @@ const Crear = ({
                     objetoParte2={objetoParte2}
                     tieneMaquinas={tieneMaquinas}
                     setObjetoParte2={setObjetoParte2}
-                    setTieneMaquinas={setTieneMaquinas} />
+                    setTieneMaquinas={setTieneMaquinas}
+                    idProducto={informacion.idProducto} />
             )}
         </Dialog>
     )

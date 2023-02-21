@@ -112,13 +112,13 @@ const TablaProducto = ({
                     style={{ textAlign: 'center' }}
                     filter filterPlaceholder="Buscar"
                 />
-                <Column
+                {/* <Column
                     field="fechaCreacion"
                     header="Fecha de creación"
                     sortable
                     style={{ textAlign: 'center' }}
                     filter filterPlaceholder="Buscar"
-                />
+                /> */}
                 <Column
                     header="Editar"
                     body={actionBodyTemplate}

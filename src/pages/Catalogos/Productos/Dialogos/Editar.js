@@ -85,7 +85,7 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion, setEd
     }, [lineaSeleccionada])
 
     const enviarParte2 = () => {
-        const objetoEnviar = { config: registrosEditados }
+        const objetoEnviar = { idProducto: edicion.idProducto, config: registrosEditados }
         Axios.put(getRoute + "/productos/config/velocidades", objetoEnviar)
         console.log("Datos enviados")
         console.log(objetoEnviar)
