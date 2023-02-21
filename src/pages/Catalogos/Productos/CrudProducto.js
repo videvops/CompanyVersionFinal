@@ -27,7 +27,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setProducts
     }=useContext(ProductContext);
 
-    const edicionVacio = { idProducto: null, producto: "", lineasAsignadas: [{ id: null, linea: "", config: null, maqinasConfig: null }] }
+    const edicionVacio = { idProducto: null, producto: "", lineasAsignadas: null }
 //--------------------| Variables |--------------------
     //---> Objetos
     const [edicion, setEdicion] = useState(edicionVacio)        // Informacion para actualizar

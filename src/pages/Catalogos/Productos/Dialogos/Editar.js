@@ -17,7 +17,7 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion, setEd
     const [registrosEditados, setRegistrosEditados] = useState([])
     const [lineaSeleccionada, setLineaSeleccionada] = useState(null)
     const [validarParte1, setValidarParte1] = useState(false)
-    const mensaje="Escoje una linea"
+    const mensaje="Por favor escoje una linea"
 
     //--> Pasar al siguiente modal
     const mostrarComponente2 = () => {

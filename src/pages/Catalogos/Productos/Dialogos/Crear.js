@@ -25,69 +25,62 @@ const Crear = ({
     const [tieneMaquinas, setTieneMaquinas] = useState(false)
     const [idProducto, setIdProduto] = useState({})
     const [informacion, setInformacion] = useState({})
-    let arreglo = []
     //--> Obtiene informacion 
     useEffect(() => { 
         if (tieneMaquinas) {
-            Axios.get(getRoute+`/productos/getById/${idProducto}`).then((res) => setInformacion(res.data))
+            Axios.get(getRoute + `/productos/getById/${idProducto}`).then((res) => {
+                setInformacion(res.data)
+                console.log(res.data)
+            })
         }
         // eslint-disable-next-line
     }, [tieneMaquinas])
     //--> Crea tabla de componente 2
     useEffect(() => {
-        if (informacion.lineasAsignadas) {                                  // Tiene informacion
-            if (informacion.lineasAsignadas[0].maquinasConfig) {            // Tiene maquinas
-                arreglo.push({
-                    id: informacion.lineasAsignadas[0].id,
-                    tipo: "linea",
-                    nombre: informacion.lineasAsignadas[0].linea,
-                    velocidadEstandar: informacion.lineasAsignadas[0].config.velocidadEstandar,
-                    factorConversionI: informacion.lineasAsignadas[0].config.factorConversionI,
-                    factorConversionO: informacion.lineasAsignadas[0].config.factorConversionO,
-                    habilitado: "false"
-                })
-                let i=0
-                while (i < informacion.lineasAsignadas[0].maquinasConfig.length) {
-                    arreglo.push({
-                        id: informacion.lineasAsignadas[0].maquinasConfig[i].id,
-                        tipo: "maquina",
-                        nombre: informacion.lineasAsignadas[0].maquinasConfig[i].nombre,
-                        velocidadEstandar: informacion.lineasAsignadas[0].maquinasConfig[i].velocidadEstandar,
-                        factorConversionI: informacion.lineasAsignadas[0].maquinasConfig[i].factorConversionI,
-                        factorConversionO: informacion.lineasAsignadas[0].maquinasConfig[i].factorConversionO,
-                        habilitado: `${informacion.lineasAsignadas[0].maquinasConfig[i].habilitado}`
-                    })
-                    i++
-                }
-                if (informacion.lineasAsignadas[0].maquinasNoConfig) {
-                    let contador = 0
-                    while (contador < informacion.lineasAsignadas[0].maquinasNoConfig.length) {
-                        arreglo.push({
-                            id: informacion.lineasAsignadas[0].maquinasNoConfig[contador].id,
-                            tipo: "maquina",
-                            nombre: informacion.lineasAsignadas[0].maquinasNoConfig[contador].maquina,
-                            velocidadEstandar: 0,
-                            factorConversionI: 0,
-                            factorConversionO: 0,
-                            habilitado: "false"
-                        })
-                        contador++
-                    }
-                    console.log(informacion.lineasAsignadas[0].maquinasNoConfig)
-                }
-                // console.log(informacion.lineasAsignadas[0].maquinasConfig)
-            } else {                                                        // No tiene maquinas
-                arreglo.push({
+        if (informacion.lineasAsignadas) {               // Tiene informacion
+            let arregloLM=[]
+            if (!informacion.lineasAsignadas[0].config) {
+                arregloLM.push({
                     id: informacion.lineasAsignadas[0].id,
                     tipo: "linea",
                     nombre: informacion.lineasAsignadas[0].linea,
                     velocidadEstandar: 0,
                     factorConversionI: 0,
                     factorConversionO: 0,
-                    habilitado: "false"
+                    habilitado:"false"
+                })
+            } else {
+                arregloLM.push({
+                    id: informacion.lineasAsignadas[0].id,
+                    tipo: "linea",
+                    nombre: informacion.lineasAsignadas[0].linea,
+                    velocidadEstandar: informacion.lineasAsignadas[0].config.velocidadEstandar,
+                    factorConversionI: informacion.lineasAsignadas[0].config.factorConversionI,
+                    factorConversionO: informacion.lineasAsignadas[0].config.factorConversionO,
+                    habilitado:`${informacion.lineasAsignadas[0].config.habilitado}`
                 })
             }
-            setObjetoParte2(arreglo)
+            //--> Si hay maquinas configuradas
+            if (informacion.lineasAsignadas[0].maquinasConfig) {
+                console.log("Maquinas configuradas")
+            }
+            //--> Si hay maquinas sin configurar
+            if (informacion.lineasAsignadas[0].maquinasNoConfig.length>0) {
+                let i = 0
+                while (i < informacion.lineasAsignadas[0].maquinasNoConfig.length) {
+                    arregloLM.push({
+                        id: informacion.lineasAsignadas[0].maquinasNoConfig[i].id,
+                        tipo: "maquina",
+                        nombre: informacion.lineasAsignadas[0].maquinasNoConfig[i].maquina,
+                        velocidadEstandar: 0,
+                        factorConversionI: 0,
+                        factorConversionO: 0,
+                        habilitado:"false"
+                    })
+                    i++
+                }
+            }
+            setObjetoParte2(arregloLM)
         } 
     }, [informacion])
 

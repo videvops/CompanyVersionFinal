@@ -80,10 +80,14 @@ const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneM
                 return
             }
         }
-        if (!edicion) {                 // No es edicion
+        if (!edicion.idProducto) {                 // No es edicion
+            console.log("Nuevo producto")
+            console.log(edicion.idProducto)
             const objetoNuevo = { producto: product.producto, idLinea: product.idLinea }
             enviarDatos(objetoNuevo)
         } else {                        // Es edicion
+            console.log("Producto Editado")
+            console.log(edicion.idProducto)
             const objetoEditado = {
                 producto: product.producto,
                 idLinea: product.idLinea,
