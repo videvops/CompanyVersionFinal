@@ -1,29 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { Dropdown } from 'primereact/dropdown';
-import { Paginator } from 'primereact/paginator';
+// import { Paginator } from 'primereact/paginator';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 
 const TablaProducto = ({
-    BotonesCabezal,
-    ExportarRegistros,
     dt,
-    products,
-    selectedProducts,
-    setSelectedProducts,
-    actionBodyTemplate,
-    paginacion,
-    first,
-    setFirst,
     filas,
+    first,
     pagina,
-    setPagina,
-    totalRegistros,
     titulo,
-    cargarDatos
+    products,
+    setFirst,
+    setPagina,
+    paginacion,
+    cargarDatos,
+    BotonesCabezal,
+    totalRegistros,
+    selectedProducts,
+    ExportarRegistros,
+    actionBodyTemplate,
+    setSelectedProducts,
 }) => {
+//--------------------| Componente Lazy |--------------------
+    const [lazyState, setlazyState] = useState({
+        first: 0,
+        rows: 5,
+        page: 0,
+        sortField: null,
+        sortOrder: null,
+        filters: {
+            producto: { value: '', matchMode: 'contains' },
+            area: { value: '', matchMode: 'contains' },
+            planta: { value: '', matchMode: 'contains' },
+        }
+    })
+    
+    useEffect(() => { 
+        // accionLazy()
+        console.log(lazyState)
+    }, [lazyState])
+    
+    // const accionLazy = () => {
+    //     console.log("Cambio algo")
+    // }
+
+    const onPage = (event) => {
+        setlazyState(event.filters)
+    };
+    //--> Filtros por columna
+    const onFilter = (event) => {
+        setlazyState({ ...lazyState, filters: event.filters })
+    }
+    
 //--------------------| Plantilla |--------------------
     const [pageInputTooltip, setPageInputTooltip] = useState('Presiona \'Enter\' para cambiar de pagina.')
     const onPageInputKeyDown = (event, options) => {
@@ -81,59 +112,49 @@ const TablaProducto = ({
             <DataTable
                 header={titulo}
                 ref={dt} 
-                value={products} 
+                value={products}
+                //--> Paginacion
+                paginator paginatorTemplate={plantilla} first={first} rows={filas}
+                totalRecords={totalRegistros} rowsPerPageOptions={[5, 10, 15, 20]} onPage={paginacion}
+                //--> Lazy
+                lazy onFilter={onFilter} filters={lazyState.filters}
+
                 selection={selectedProducts} 
                 onSelectionChange={(e) => setSelectedProducts(e.value)} 
                 showGridlines 
-                emptyMessage="No se encontraron resultados."
-                responsiveLayout="scroll"
                 filterDisplay="row"
+                responsiveLayout="scroll"
+                emptyMessage="No se encontraron resultados."
             >
-                {/* // CAMBIAR.............. */}
-                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}/>
+                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false} />
                 <Column
-                    field="producto"
-                    header="Producto"
-                    sortable
+                    field="producto" header="Producto"
+                    sortable filter filterPlaceholder="Buscar"
                     style={{ textAlign: 'center' }}
-                    filter filterPlaceholder="Buscar"
                 />
                 <Column
-                    field="area"
-                    header="Area"
-                    sortable
+                    field="area" header="Area"
+                    sortable filter filterPlaceholder="Buscar"
                     style={{ textAlign: 'center' }}
-                    filter filterPlaceholder="Buscar"
                 />
                 <Column
-                    field="planta"
-                    header="Planta"
-                    sortable
+                    field="planta" header="Planta"
+                    sortable filter filterPlaceholder="Buscar"
                     style={{ textAlign: 'center' }}
-                    filter filterPlaceholder="Buscar"
                 />
-                {/* <Column
-                    field="fechaCreacion"
-                    header="Fecha de creación"
-                    sortable
-                    style={{ textAlign: 'center' }}
-                    filter filterPlaceholder="Buscar"
-                /> */}
                 <Column
-                    header="Editar"
-                    body={actionBodyTemplate}
-                    exportable={false}
-                    style={{ minWidth: '3rem' }}
+                    header="Editar" body={actionBodyTemplate}
+                    style={{ minWidth: '3rem' }} exportable={false}
                 />
+                
             </DataTable>
-            <Paginator
+            {/* <Paginator
                 template={plantilla}
                 first={first}
                 rows={filas}
                 totalRecords={totalRegistros}
                 rowsPerPageOptions={[5, 10, 15, 20]}
-                onPageChange={paginacion}
-            />
+                onPageChange={paginacion} /> */}
         </div>
     )
 }

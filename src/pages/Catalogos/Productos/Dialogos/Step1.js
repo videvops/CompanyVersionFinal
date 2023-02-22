@@ -25,8 +25,19 @@ const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneM
     //---> Lineas
     const [lineasDisponibles, setLineasDisponibles] = useState([])
     useEffect(() => {
-        if(product.idArea!==''){
-            Axios.get(getRoute+`/lineas/area/${product.idArea}`).then(res=>setLineasDisponibles(res.data))
+        if (edicion.idProducto) {
+            console.log("Es edicion")
+            if (product.idArea !== '') {
+                Axios.get(getRoute + `/lineas/producto/area/${product.idArea}/producto/${edicion.idProducto}`).then(res => {
+                    setLineasDisponibles(res.data)
+                    console.log(res.data)
+                })
+            }
+        } else {
+            console.log("No es edicion")
+            if (product.idArea !== '') {
+                Axios.get(getRoute + `/lineas/area/${product.idArea}`).then(res => setLineasDisponibles(res.data))
+            }
         }
     }, [product.idArea])
 
