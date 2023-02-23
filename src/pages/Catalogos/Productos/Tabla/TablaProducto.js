@@ -25,6 +25,7 @@ const TablaProducto = ({
     setSelectedProducts,
 }) => {
 //--------------------| Componente Lazy |--------------------
+    let loadLazyTimeout = null
     const [lazyState, setlazyState] = useState({
         first: 0,
         rows: 5,
@@ -32,29 +33,46 @@ const TablaProducto = ({
         sortField: null,
         sortOrder: null,
         filters: {
-            producto: { value: '', matchMode: 'contains' },
-            area: { value: '', matchMode: 'contains' },
-            planta: { value: '', matchMode: 'contains' },
+            'producto': { value: '', matchMode: 'contains' },
+            'area': { value: '', matchMode: 'contains' },
+            'planta': { value: '', matchMode: 'contains' },
         }
     })
     
     useEffect(() => { 
-        // accionLazy()
-        console.log(lazyState)
-    }, [lazyState])
+        lazyAccion()
+    }, [lazyState]) // eslint-disable-line react-hooks/exhaustive-deps
     
-    // const accionLazy = () => {
-    //     console.log("Cambio algo")
-    // }
+    const lazyAccion = () => {
+        if (loadLazyTimeout) {
+            clearTimeout(loadLazyTimeout);
+        }
+        loadLazyTimeout = setTimeout(() => {
+            // customerService.getCustomers({ lazyEvent: JSON.stringify(lazyParams) }).then(data => {
+            //     setTotalRecords(data.totalRecords);
+            //     setCustomers(data.customers);
+            //     setLoading(false);
+            // });
+            console.log("Peticion enviada")
+            console.log(lazyState)
+            // const objetoBackEnd = { lazyEvent: JSON.stringify(lazyState) }
+            console.log(JSON.stringify(lazyState))
+        }, Math.random() * 1000 + 250);
+    }
 
     const onPage = (event) => {
-        setlazyState(event.filters)
-    };
+        console.log(event)
+        paginacion()
+        setLazyParams({ ...lazyState, page: event.page, rows: event.rows })
+    }
     //--> Filtros por columna
     const onFilter = (event) => {
+        event['first'] = 0;
         setlazyState({ ...lazyState, filters: event.filters })
     }
-    
+    const onSort = (event) => {
+        setlazyState({ ...lazyState, sortField: event.sortField,sortOrder:event.sortOrder })
+    }
 //--------------------| Plantilla |--------------------
     const [pageInputTooltip, setPageInputTooltip] = useState('Presiona \'Enter\' para cambiar de pagina.')
     const onPageInputKeyDown = (event, options) => {
@@ -110,42 +128,36 @@ const TablaProducto = ({
             <Toolbar className="mb-4" left={BotonesCabezal} right={ExportarRegistros}  />
 
             <DataTable
-                header={titulo}
-                ref={dt} 
-                value={products}
+                //--> Se mostrara en pantalla
+                ref={dt} header={titulo} value={products}
                 //--> Paginacion
                 paginator paginatorTemplate={plantilla} first={first} rows={filas}
-                totalRecords={totalRegistros} rowsPerPageOptions={[5, 10, 15, 20]} onPage={paginacion}
+                totalRecords={totalRegistros} rowsPerPageOptions={[5, 10, 15, 20]} onPage={onPage}
                 //--> Lazy
                 lazy onFilter={onFilter} filters={lazyState.filters}
-
+                onSort={onSort} sortField={lazyState.sortField} sortOrder={lazyState.sortOrder}
+                //--> Seleccionar 1 o muchos registros
                 selection={selectedProducts} 
                 onSelectionChange={(e) => setSelectedProducts(e.value)} 
-                showGridlines 
-                filterDisplay="row"
-                responsiveLayout="scroll"
-                emptyMessage="No se encontraron resultados."
+                //--> Caracterizticas de la tabla
+                showGridlines filterDisplay="row" responsiveLayout="scroll" emptyMessage="No hay resultados."
             >
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false} />
                 <Column
                     field="producto" header="Producto"
                     sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }}
-                />
+                    style={{ textAlign: 'center' }} />
                 <Column
                     field="area" header="Area"
                     sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }}
-                />
+                    style={{ textAlign: 'center' }} />
                 <Column
                     field="planta" header="Planta"
                     sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }}
-                />
+                    style={{ textAlign: 'center' }} />
                 <Column
                     header="Editar" body={actionBodyTemplate}
-                    style={{ minWidth: '3rem' }} exportable={false}
-                />
+                    style={{ minWidth: '3rem' }} exportable={false} />
                 
             </DataTable>
             {/* <Paginator
@@ -154,7 +166,7 @@ const TablaProducto = ({
                 rows={filas}
                 totalRecords={totalRegistros}
                 rowsPerPageOptions={[5, 10, 15, 20]}
-                onPageChange={paginacion} /> */}
+                onPageChange={onPage} /> */}
         </div>
     )
 }
