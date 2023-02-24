@@ -54,9 +54,9 @@ const TablaProducto = ({
             //     setLoading(false);
             // });
             console.log("Peticion enviada")
-            console.log(lazyState)
+            // console.log(lazyState)
             // const objetoBackEnd = { lazyEvent: JSON.stringify(lazyState) }
-            console.log(JSON.stringify(lazyState))
+            // console.log(JSON.stringify(lazyState))
         }, Math.random() * 1000 + 250);
     }
 

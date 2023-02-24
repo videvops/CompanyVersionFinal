@@ -17,6 +17,7 @@ import { productoVacio } from './Objetos/ProductoVacio';
 import Environment from '../../../Environment';
 import Desicion from './Dialogos/Desicion';
 import Editar from './Dialogos/Editar';
+import Error from '../../../components/Error/Error';
 const getRoute = Environment()
 
 const CrudProducto = ({titulos, notificaciones}) => {
@@ -221,7 +222,8 @@ const CrudProducto = ({titulos, notificaciones}) => {
             )}
 
             {isLoading && <Spinner />}
-            {error&&<p className='uppercase font-bold text-center'>{error}</p>}
+            {/* {error&&<p className='uppercase font-bold text-center'>{error}</p>} */}
+            {error && <Error texto={error}/>}
 
             <Crear
                 m1={m1}
