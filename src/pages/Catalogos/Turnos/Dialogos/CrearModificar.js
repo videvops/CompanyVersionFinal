@@ -5,7 +5,8 @@ import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
-import { MensajeAdvertencia, TextoAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
+// import { MensajeAdvertencia, TextoAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
+import { MensajeAdvertencia, TextoAdvertencia } from '../../../../components/mensajes/Mensajes'
 
 import Environment from '../../../../Environment';
 const getRoute = Environment()

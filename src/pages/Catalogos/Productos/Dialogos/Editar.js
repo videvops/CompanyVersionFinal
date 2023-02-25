@@ -5,7 +5,7 @@ import EditarStep1 from './EditarStep1'
 import EditarStep2 from './EditarStep2'
 
 import { Dialog } from 'primereact/dialog'
-import { MensajeAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes'
+import { MensajeAdvertencia } from '../../../../components/mensajes/Mensajes'
 
 import Environment from '../../../../Environment'
 const getRoute = Environment()
@@ -81,7 +81,7 @@ const Editar = ({ modalEditar, setModalEditar, edicion, actualizarEdicion, setEd
             }
             // console.log(arregloLM)
             setRegistrosEditados(arregloLM)
-        }
+        }// eslint-disable-next-line
     }, [lineaSeleccionada])
 
     const enviarParte2 = () => {

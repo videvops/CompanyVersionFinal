@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-import { MensajeAdvertencia, TextoAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
+import { MensajeAdvertencia, TextoAdvertencia } from '../../../../components/mensajes/Mensajes';
 
 import Environment from '../../../../Environment';
 const getRoute = Environment()
@@ -38,7 +38,7 @@ const Step1 = ({ edicion, hideDialog, product, updateField, mostrarM2, setTieneM
             if (product.idArea !== '') {
                 Axios.get(getRoute + `/lineas/area/${product.idArea}`).then(res => setLineasDisponibles(res.data))
             }
-        }
+        }// eslint-disable-next-line
     }, [product.idArea])
 
 //--------------------| Validar campos  |--------------------

@@ -5,6 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 // import { Paginator } from 'primereact/paginator';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
+import { TablaVacia } from '../../../../components/mensajes/Mensajes';
 
 const TablaProducto = ({
     dt,
@@ -120,53 +121,58 @@ const TablaProducto = ({
                 </>
             )
         }
-    };
+    }
 
 //--------------------| Valor que regresara |--------------------
     return (
         <div className="card">
             <Toolbar className="mb-4" left={BotonesCabezal} right={ExportarRegistros}  />
-
-            <DataTable
-                //--> Se mostrara en pantalla
-                ref={dt} header={titulo} value={products}
-                //--> Paginacion
-                paginator paginatorTemplate={plantilla} first={first} rows={filas}
-                totalRecords={totalRegistros} rowsPerPageOptions={[5, 10, 15, 20]} onPage={onPage}
-                //--> Lazy
-                lazy onFilter={onFilter} filters={lazyState.filters}
-                onSort={onSort} sortField={lazyState.sortField} sortOrder={lazyState.sortOrder}
-                //--> Seleccionar 1 o muchos registros
-                selection={selectedProducts} 
-                onSelectionChange={(e) => setSelectedProducts(e.value)} 
-                //--> Caracterizticas de la tabla
-                showGridlines filterDisplay="row" responsiveLayout="scroll" emptyMessage="No hay resultados."
-            >
-                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false} />
-                <Column
-                    field="producto" header="Producto"
-                    sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }} />
-                <Column
-                    field="area" header="Area"
-                    sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }} />
-                <Column
-                    field="planta" header="Planta"
-                    sortable filter filterPlaceholder="Buscar"
-                    style={{ textAlign: 'center' }} />
-                <Column
-                    header="Editar" body={actionBodyTemplate}
-                    style={{ minWidth: '3rem' }} exportable={false} />
-                
-            </DataTable>
-            {/* <Paginator
-                template={plantilla}
-                first={first}
-                rows={filas}
-                totalRecords={totalRegistros}
-                rowsPerPageOptions={[5, 10, 15, 20]}
-                onPageChange={onPage} /> */}
+            {products.length > 0 ? (
+                <div>
+                    <DataTable
+                        //--> Se mostrara en pantalla
+                        ref={dt} header={titulo} value={products}
+                        //--> Paginacion
+                        paginator paginatorTemplate={plantilla} first={first} rows={filas}
+                        totalRecords={totalRegistros} rowsPerPageOptions={[5, 10, 15, 20]} onPage={onPage}
+                        //--> Lazy
+                        lazy onFilter={onFilter} filters={lazyState.filters}
+                        onSort={onSort} sortField={lazyState.sortField} sortOrder={lazyState.sortOrder}
+                        //--> Seleccionar 1 o muchos registros
+                        selection={selectedProducts} 
+                        onSelectionChange={(e) => setSelectedProducts(e.value)} 
+                        //--> Caracterizticas de la tabla
+                        showGridlines filterDisplay="row" responsiveLayout="scroll" emptyMessage="No hay resultados."
+                    >
+                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false} />
+                        <Column
+                            field="producto" header="Producto"
+                            sortable filter filterPlaceholder="Buscar"
+                            style={{ textAlign: 'center' }} />
+                        <Column
+                            field="area" header="Area"
+                            sortable filter filterPlaceholder="Buscar"
+                            style={{ textAlign: 'center' }} />
+                        <Column
+                            field="planta" header="Planta"
+                            sortable filter filterPlaceholder="Buscar"
+                            style={{ textAlign: 'center' }} />
+                        <Column
+                            header="Editar" body={actionBodyTemplate}
+                            style={{ minWidth: '3rem' }} exportable={false} />
+                        
+                    </DataTable>
+                    {/* <Paginator
+                        template={plantilla}
+                        first={first}
+                        rows={filas}
+                        totalRecords={totalRegistros}
+                        rowsPerPageOptions={[5, 10, 15, 20]}
+                        onPageChange={onPage} /> */}
+                </div>
+            ) : (
+                    <TablaVacia categoria="productos" />
+            )}
         </div>
     )
 }

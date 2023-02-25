@@ -78,7 +78,7 @@ const Crear = ({
                 }
             }
             setObjetoParte2(arregloLM)
-        } 
+        } // eslint-disable-next-line
     }, [informacion])
 
 //--------------------| Valor que regresara |--------------------

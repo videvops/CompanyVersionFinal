@@ -4,10 +4,9 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Calendar } from "primereact/calendar";
 import { MultiSelect } from "primereact/multiselect";
-import { MensajeFiltro } from "../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes";
-// import { formatearFecha } from "../../helpers/funciones";
-import Environment from "../../../Environment";
+import { MensajeFiltro } from "../../mensajes/Mensajes";
 
+import Environment from "../../../Environment";
 const getRoute = Environment()
 
 const Cabezal = ({ setRegistros, setCargando }) => {

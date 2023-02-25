@@ -1,8 +1,8 @@
 import React from 'react'
-// responsivo
-const Error = ({ texto }) => {
+
+const ErrorSistema = ({ texto }) => {
     return (
-        <div className='card-container yellow-container overflow-hidden w-8'>
+        <div className='card-container yellow-container overflow-hidden w-8' style={{ display: 'flex', justifyContent: 'center' }}>
             <div className='relative bg-yellow-400 border-round border-1 border-yellow-400'>
                 <div className='absolute top-0 left-0 px-4 py-3 w-full font-bold text-center text-4xl'>
                     Algo salió mal
@@ -16,4 +16,4 @@ const Error = ({ texto }) => {
     )
 }
 
-export default Error
+export default ErrorSistema

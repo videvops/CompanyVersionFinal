@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Axios from 'axios';
-//CAMBIAR...
+
 import Crear from './Dialogos/Crear';
 import Spinner from '../../../components/loader/Spinner';
 import Exportar from './Botones/Exportar';
@@ -9,15 +9,15 @@ import EliminarUno from './Dialogos/EliminarUno';
 import EliminarVarios from './Dialogos/EliminarVarios';
 import { ProductContext } from '../ComponentsCat/Contexts/ProductContext';
 import { leftToolbarTemplate } from '../ComponentsCat/Botones/AgregarEliminar'
-//CAMBIAR...
+
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { productoVacio } from './Objetos/ProductoVacio';
-
-import Environment from '../../../Environment';
 import Desicion from './Dialogos/Desicion';
 import Editar from './Dialogos/Editar';
-import Error from '../../../components/Error/Error';
+import ErrorSistema from '../../../components/error/ErrorSistema';
+
+import Environment from '../../../Environment';
 const getRoute = Environment()
 
 const CrudProducto = ({titulos, notificaciones}) => {
@@ -60,22 +60,16 @@ const CrudProducto = ({titulos, notificaciones}) => {
         setEdicion(edicionVacio)
     }
     //------> Ocultar dialogo de eliminar 1 producto
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
-    }
+    const hideDeleteProductDialog = () => { setDeleteProductDialog(false) }
     //------> Ocultar dialogo de eliminar varios productos
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
-    }
+    const hideDeleteProductsDialog = () => { setDeleteProductsDialog(false) }
     //------> Ventana para eliminar 1 producto
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
     }
     //------> Ventana para eliminar varios productos
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    }
+    const confirmDeleteSelected = () => { setDeleteProductsDialog(true) }
 
 //--------------------| Acciones de crud |--------------------
     //------> Actualizar campo de producto
@@ -203,27 +197,29 @@ const CrudProducto = ({titulos, notificaciones}) => {
             <Toast ref={toast} />
             {!isLoading && !error && (
                 <TablaProducto
-                    BotonesCabezal={BotonesCabezal} 
-                    ExportarRegistros={ExportarRegistros} 
                     dt={dt} 
                     products={products} 
-                    selectedProducts={selectedProducts} 
-                    setSelectedProducts={setSelectedProducts} 
-                    actionBodyTemplate={actionBodyTemplate}
-                    paginacion={paginacion}
+                    cargarDatos={cargarDatos}
+                    //--> paginacion
                     first={first}
-                    setFirst={setFirst}
                     filas={filas}
                     pagina={pagina}
+                    setFirst={setFirst}
                     setPagina={setPagina}
+                    paginacion={paginacion}
                     totalRegistros={totalRegistros}
+                    //--> Acciones de tabla
+                    BotonesCabezal={BotonesCabezal} 
+                    selectedProducts={selectedProducts} 
+                    ExportarRegistros={ExportarRegistros} 
+                    actionBodyTemplate={actionBodyTemplate}
+                    setSelectedProducts={setSelectedProducts} 
                     titulo={titulos.TituloTabla}
-                    cargarDatos={cargarDatos} />
+                />
             )}
 
             {isLoading && <Spinner />}
-            {/* {error&&<p className='uppercase font-bold text-center'>{error}</p>} */}
-            {error && <Error texto={error}/>}
+            {error && <ErrorSistema texto={error}/>}
 
             <Crear
                 m1={m1}
@@ -253,8 +249,7 @@ const CrudProducto = ({titulos, notificaciones}) => {
                 modalEditar={modalEditar}
                 edicionVacio={edicionVacio}
                 setModalEditar={setModalEditar}
-                actualizarEdicion={actualizarEdicion}
-            />
+                actualizarEdicion={actualizarEdicion} />
 
             <EliminarUno
                 product={product}

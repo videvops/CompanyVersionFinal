@@ -31,3 +31,13 @@ export const TextoAdvertencia = ({children}) => {
         </p>
     )
 }
+
+export const TablaVacia = ({ categoria }) => {
+    return (
+        <div>
+            <h5 className="uppercase text-center">Sin registros.</h5>
+            <p className="text-lg">Lo sentimos, la tabla no cuenta con {categoria} todavia.</p>
+            <p className="text-lg">Ingrese al menos un registro.</p>
+        </div>
+    )
+}

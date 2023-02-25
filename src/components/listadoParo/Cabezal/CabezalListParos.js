@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { MultiSelect } from 'primereact/multiselect'
 import { formatearFecha } from '../../helpers/funciones'
-import { MensajeFiltro } from '../../../pages/Catalogos/ComponentsCat/Mensajes/Mensajes'
+import { MensajeFiltro } from '../../mensajes/Mensajes'
 import Environment from '../../../Environment'
 
 const getRoute = Environment()

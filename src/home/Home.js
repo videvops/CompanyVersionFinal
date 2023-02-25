@@ -14,6 +14,7 @@ import StatusLineas from "../pages/StatusLineas";
 
 
 //----------------| Catalogos |----------------
+import Desperdicio from "../pages/Desperdicio";
 import ListadoParos from "../pages/ListadoParos";
 // import CatalogoRoles from "../pages/Catalogos/Roles/CatalogoRoles";
 import CatalogoAreas from "../pages/Catalogos/Areas/CatalogoAreas";
@@ -187,7 +188,7 @@ const Home = ({ setLogueado }) => {
                 { label: "Tiempo muerto por maquina", icon: "pi pi-fw pi-list text-blue-500", to: "/listadoParos" },
                 // { label: "Variables de Proceso", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
                 // { label: "Pareto modos de falla", icon: "pi pi-fw pi-mobile text-blue-500", to: "/button" },
-                // { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
+                { label: "Desperdicio", icon: "pi pi-fw pi-mobile text-blue-500", to: "/desperdicio" },
             ],
         },
         {
@@ -268,6 +269,7 @@ const Home = ({ setLogueado }) => {
                     <Route path="/indicadoresTurno" component={IndicadoresTurno} />
                     <Route path="/statusLineas" component={StatusLineas} />
                     <Route path="/listadoParos" component={ListadoParos} />
+                    <Route path="/desperdicio" component={Desperdicio} />
                     {/* <Route path="/desperdicio" component={Desperdecio} /> */}
                     {/* <Route path="/button" component={ButtonDemo} /> */}
                     <Route path="/catalogoAreas" component={CatalogoAreas} />

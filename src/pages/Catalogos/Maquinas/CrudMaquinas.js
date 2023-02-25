@@ -183,7 +183,7 @@ const Crud = (props) => {
 
     //--------------------| Obtener registros de back-end |--------------------
     // eslint-disable-next-line
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);// eslint-disable-next-line
     const [error, setError] = useState(null);
 
     async function CargarDatos() {

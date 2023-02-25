@@ -5,7 +5,8 @@ import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { statusDisponibles } from '../../ComponentsCat/Constantes/constantes';
-import { TextoAdvertencia, MensajeAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
+// import { TextoAdvertencia, MensajeAdvertencia } from '../../ComponentsCat/Mensajes/Mensajes';
+import { TextoAdvertencia, MensajeAdvertencia } from '../../../../components/mensajes/Mensajes'
 
 import Environment from '../../../../Environment';
 
